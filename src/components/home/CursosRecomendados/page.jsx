@@ -15,6 +15,7 @@ export default function CursosRecomendados() {
           <a
             href={item.href}
             key={item.id}
+            target="_blank"
             className="w-[360px]sm:min-w-[600px] lg:min-w-[600px] flex flex-col sm:flex-row rounded-md hover:shadow-md duration-300"
           >
             <div className="relative w-[260px] lg:w-[330px] aspect-square rounded-md overflow-hidden">
@@ -25,7 +26,7 @@ export default function CursosRecomendados() {
                 layout="fill"
               />
             </div>
-            <div className="sm:w-6/12 flex flex-col justify-center p-2 xs:p-3">
+            <div className="sm:w-6/12 flex flex-col  p-2 xs:p-3">
               <h3 className="text-lg text-red-400">{item.titulo}</h3>
               <p className="text-base text-gray-500 py-4">{item.descripcion}</p>
               <p className="text-sm text-gray-500">{item.autor}</p>
