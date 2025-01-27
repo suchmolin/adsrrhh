@@ -5,20 +5,20 @@ export default function SeccionDescriptiva() {
   return (
     <div className="w-full flex justify-center">
       <div className="w-[290px] xs:w-[370px] sm:w-[630px] md:w-[760px] lg:w-[1030px] xl:w-[1250px] flex flex-col lg:flex-row justify-center items-center">
-        <div className="w-9/12 sm:w-6/12 lg:w-5/12 aspect-square relative">
+        <div className="w-11/12 sm:w-8/12 lg:w-6/12 aspect-square relative">
           <Image
-            src="/img/findingjob.png"
+            src="/img/findingjob2.png"
             alt="finding job"
             objectFit="contain"
             layout="fill"
           />
         </div>
         <div className="w-12/12 sm:w-9/12 lg:w-7/12 sm:px-4 flex flex-col text-center lg:text-start">
-          <h2 className="text-2xl lg:text-3xl text-azulads font-bold mb-4 font-[monserrat-bold]">
-            ADS Recursos Humanos, Eleva tu carrera profesional al siguiente
-            nivel junto a nosotros.
+          <h2 className="text-2xl lg:text-3xl text-azuloscuroads font-bold mb-4 font-[monserrat-bold]">
+            <span className="text-azulads">ADS Recursos Humanos,</span> Eleva tu
+            carrera profesional al siguiente nivel junto a nosotros.
           </h2>
-          <h3 className="text-azuloscuroads text-xl lg:text-2xl mb-4 font-[monserrat-bold]">
+          <h3 className="text-azuloscuroads  lg:text-lg font-[monserrat-bold]">
             Tu siguiente empleo te está esperando.
           </h3>
           <p className="text-gray-700 mb-4">

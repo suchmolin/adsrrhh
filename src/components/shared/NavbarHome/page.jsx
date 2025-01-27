@@ -5,17 +5,20 @@ export default function NavbarHome() {
   return (
     <nav className="absolute w-full h-[130px] flex px-10 justify-between items-center z-50">
       <div className="flex gap-7 md:gap-10 h-full items-center text-azuloscuroads text-xl">
-        <div className="h-full aspect-square relative">
+        <Link
+          href="/reclutamiento"
+          className="h-full aspect-square relative hover:scale-[102%] duration-300"
+        >
           <Image
             src="/img/logoadsrrhh.png"
             alt="ads recursos humanos"
             objectFit="contain"
             layout="fill"
           />
-        </div>
+        </Link>
         <Link
           className="hidden sm:block hover:scale-105 duration-300 hover:text-azulads"
-          href="#"
+          href="reclutamiento/candidato/registro"
         >
           Buscar Empleo
         </Link>

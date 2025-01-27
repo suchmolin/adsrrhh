@@ -3,9 +3,11 @@ import SelectEstados from "../SelectEstados/page"
 
 export default function SearcherGeneral() {
   return (
-    <div className="absolute bottom-10 md:bottom-20 w-11/12 md:h-[100px] bg-azulads/20 rounded-xl flex gap-4 items-center px-10 py-10 flex-col md:flex-row">
+    <div className="absolute bottom-7 md:bottom-20 w-11/12 md:h-[100px] bg-azulads/40 rounded-xl flex gap-4 items-center px-10 py-10 flex-col md:flex-row">
       <div className="w-full md:w-7/12 flex flex-col justify-center-center">
-        <label htmlFor="search">Buscar ofertas de:</label>
+        <label className="text-white" htmlFor="search">
+          Buscar ofertas de:
+        </label>
         <div className="flex">
           <input
             id="search"
@@ -19,7 +21,7 @@ export default function SearcherGeneral() {
         </div>
       </div>
       <div className="w-full md:w-5/12  flex flex-col">
-        <span>Ciudad:</span>
+        <span className="text-white">Ciudad:</span>
         <SelectEstados />
       </div>
     </div>

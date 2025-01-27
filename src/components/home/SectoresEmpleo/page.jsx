@@ -13,7 +13,13 @@ export default function SectoresEmpleo() {
       {
         breakpoint: 1050,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: 800,
+        settings: {
+          slidesToShow: 2,
         },
       },
       {
@@ -25,7 +31,7 @@ export default function SectoresEmpleo() {
     ],
   }
   return (
-    <div className="w-full flex flex-col justify-center items-center py-10">
+    <div className="w-full flex flex-col justify-center items-center py-10  overflow-hidden">
       <div className="w-[290px] xs:w-[370px] sm:w-[630px] md:w-[760px] lg:w-[1030px] xl:w-[1250px] ">
         <h2 className="text-4xl text-azulads font-[monserrat-bold] mb-7 text-center sm:text-start">
           Sectores de empleo
@@ -35,19 +41,21 @@ export default function SectoresEmpleo() {
       <div className="w-[290px] xs:w-[370px] sm:w-[630px] md:w-[760px] lg:w-[1030px] xl:w-[1250px] slider-container">
         <Slider {...settings}>
           {sectoresempleo.map((item) => (
-            <div key={item.id} className="flex justify-center items-center">
-              <div className="w-[250px] aspect-square flex flex-col items-center gap-3">
-                <div className="relative w-full aspect-square rounded-md overflow-hidden">
-                  <Image
-                    src={item.img}
-                    alt="sector empleo"
-                    objectFit="cover"
-                    layout="fill"
-                  />
+            <div key={item.id}>
+              <div className="w-full flex justify-center items-center pb-10">
+                <div className="w-[250px] aspect-square flex flex-col items-center gap-3">
+                  <div className="relative w-full aspect-square rounded-md overflow-hidden">
+                    <Image
+                      src={item.img}
+                      alt="sector empleo"
+                      objectFit="cover"
+                      layout="fill"
+                    />
+                  </div>
+                  <p className="text-xl text-azulads text-center">
+                    {item.titulo}
+                  </p>
                 </div>
-                <p className="text-xl text-azulads text-center">
-                  {item.titulo}
-                </p>
               </div>
             </div>
           ))}

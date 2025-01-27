@@ -6,9 +6,26 @@ import "slick-carousel/slick/slick-theme.css"
 
 export default function CustomersHome() {
   const customers = [
-    { id: "lerobotica", img: "/img/logoLerobotica.png" },
-    { id: "fyrlois", img: "/img/logoFyrlois.png" },
-    { id: "booster", img: "/img/logoBooster.png" },
+    {
+      id: "lerobotica",
+      img: "/img/logoLerobotica.png",
+      banner: "/img/customers/leroboticabanner.png",
+    },
+    {
+      id: "fyrlois",
+      img: "/img/logoFyrlois.png",
+      banner: "/img/customers/fyrloisbanner.png",
+    },
+    {
+      id: "booster",
+      img: "/img/logoBooster.png",
+      banner: "/img/customers/boostermathbanner.png",
+    },
+    {
+      id: "adspublicidad",
+      img: "/img/logoAdsPublicidad.png",
+      banner: "/img/customers/adspublicidadbanner.png",
+    },
   ]
   const settings = {
     infinite: true,
@@ -41,12 +58,17 @@ export default function CustomersHome() {
         </h2>
       </div>
 
-      <div className="w-[290px] xs:w-[370px] sm:w-[630px] md:w-[760px] lg:w-[1030px] xl:w-[1250px]  justify-center items-center gap-x-20 gap-y-10 slider-container">
+      <div className="w-[290px] xs:w-[370px] sm:w-[630px] md:w-[760px] lg:w-[1030px] xl:w-[1250px]  slider-container">
         <Slider {...settings}>
           {customers.map((item) => (
             <div key={item.id} className="py-4">
-              <div className="w-[250px] xs:w-[330px] sm:w-[400px] h-[170px] flex items-center bg-gray-200 rounded-lg">
-                <div className="CShadow bg-white/80 relative px-7 py-1 rounded-lg -ml-10">
+              <div
+                style={{
+                  backgroundImage: `url(${item.banner})`,
+                }}
+                className="w-[250px] xs:w-[330px] sm:w-[400px] h-[170px] flex items-center rounded-lg bg-cover bg-center bg-no-repeat"
+              >
+                <div className="CShadow bg-white/90 relative px-7 py-1 rounded-lg -ml-10">
                   <div className="w-[120px] aspect-video relative">
                     <Image
                       src={item.img}
