@@ -16,14 +16,14 @@ export default function FooterHome() {
           </div>
           <div className="grid grid-cols-2 gap-8 sm:mt-4 sm:grid-cols-3 sm:gap-6">
             <div>
-              <Footer.Title title="Resgistro" />
+              <Footer.Title title="Resgistro" className="text-azulads" />
               <Footer.LinkGroup col>
                 <Footer.Link href="#">Candidato</Footer.Link>
                 <Footer.Link href="#">Empresa</Footer.Link>
               </Footer.LinkGroup>
             </div>
             <div>
-              <Footer.Title title="Legal" />
+              <Footer.Title title="Legal" className="text-azulads" />
               <Footer.LinkGroup col>
                 <Footer.Link href="#">Política de privacidad</Footer.Link>
                 <Footer.Link href="#">Términos y condiciones</Footer.Link>

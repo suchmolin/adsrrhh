@@ -5,7 +5,7 @@ export default function CursosRecomendados() {
   return (
     <div className="w-full flex flex-col justify-center items-center py-10">
       <div className="w-[290px] xs:w-[370px] sm:w-[630px] md:w-[760px] lg:w-[1030px] xl:w-[1250px]">
-        <h2 className="text-4xl text-red-500 mb-7 text-center sm:text-start">
+        <h2 className="text-4xl text-azulads font-[monserrat-bold] mb-7 text-center sm:text-start">
           Cursos Recomendados
         </h2>
       </div>
@@ -27,7 +27,7 @@ export default function CursosRecomendados() {
               />
             </div>
             <div className="sm:w-6/12 flex flex-col  p-2 xs:p-3">
-              <h3 className="text-lg text-red-400">{item.titulo}</h3>
+              <h3 className="text-lg text-azulads">{item.titulo}</h3>
               <p className="text-base text-gray-500 py-4">{item.descripcion}</p>
               <p className="text-sm text-gray-500">{item.autor}</p>
             </div>

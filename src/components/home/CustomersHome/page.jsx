@@ -1,4 +1,8 @@
+"use client"
 import Image from "next/image"
+import Slider from "react-slick"
+import "slick-carousel/slick/slick.css"
+import "slick-carousel/slick/slick-theme.css"
 
 export default function CustomersHome() {
   const customers = [
@@ -6,24 +10,56 @@ export default function CustomersHome() {
     { id: "fyrlois", img: "/img/logoFyrlois.png" },
     { id: "booster", img: "/img/logoBooster.png" },
   ]
+  const settings = {
+    infinite: true,
+    slidesToShow: 2,
+    slidesToScroll: 1,
+    autoplay: true,
+    speed: 10000,
+    autoplaySpeed: 1,
+    cssEase: "linear",
+    responsive: [
+      {
+        breakpoint: 1050,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+      {
+        breakpoint: 640,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
+  }
   return (
-    <div className="w-full flex justify-center items-center py-10">
-      <div className="w-[290px] xs:w-[370px] sm:w-[630px] md:w-[760px] lg:w-[1030px] xl:w-[1250px] flex justify-center items-center gap-x-20 gap-y-10 flex-wrap">
-        {customers.map((item) => (
-          <div
-            key={item.id}
-            className="CShadow2 p-4 bg-white relative rounded-md"
-          >
-            <div className="w-[200px] aspect-video bg-white relative">
-              <Image
-                src={item.img}
-                alt="logo marca1"
-                objectFit="contain"
-                layout="fill"
-              />
+    <div className="w-full flex flex-col justify-center items-center py-10  overflow-hidden">
+      <div className="w-[290px] xs:w-[370px] sm:w-[630px] md:w-[760px] lg:w-[1030px] xl:w-[1250px] ">
+        <h2 className="text-3xl xs:text-4xl text-azulads mb-7 text-center font-[monserrat-bold]">
+          Empresas Afiliadas
+        </h2>
+      </div>
+
+      <div className="w-[290px] xs:w-[370px] sm:w-[630px] md:w-[760px] lg:w-[1030px] xl:w-[1250px]  justify-center items-center gap-x-20 gap-y-10 slider-container">
+        <Slider {...settings}>
+          {customers.map((item) => (
+            <div key={item.id} className="py-4">
+              <div className="w-[250px] xs:w-[330px] sm:w-[400px] h-[170px] flex items-center bg-gray-200 rounded-lg">
+                <div className="CShadow bg-white/80 relative px-7 py-1 rounded-lg -ml-10">
+                  <div className="w-[120px] aspect-video relative">
+                    <Image
+                      src={item.img}
+                      alt="logo marca1"
+                      objectFit="contain"
+                      layout="fill"
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </Slider>
       </div>
     </div>
   )

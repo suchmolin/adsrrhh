@@ -18,8 +18,14 @@ export default {
       xxl: "1536px",
       xxxl: "2000px",
     },
+    fontFamily: {
+      customFont: ["monserrat"],
+    },
     extend: {
-      colors: {},
+      colors: {
+        azulads: "#005aa9",
+        azuloscuroads: "#404d6a",
+      },
     },
   },
   plugins: [flowbite.plugin()],

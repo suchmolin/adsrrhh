@@ -1,23 +1,21 @@
-import SelectEstados from "@/components/shared/SelectEstados/page"
-import { FaSearch } from "react-icons/fa"
+import SearcherGeneral from "@/components/shared/SearcherGeneral/page"
+import { BiSolidQuoteLeft } from "react-icons/bi"
+import { BiSolidQuoteRight } from "react-icons/bi"
+
 export default function HeaderHome() {
   return (
-    <div className="w-full h-[400px] flex justify-center items-center bg-gray-50">
-      <div className="w-[290px] xs:w-[370px] sm:w-[630px] md:w-[760px] lg:w-[1030px] xl:w-[1250px] flex justify-center items-center">
-        <div className="w-11/12 md:h-[100px] bg-gray-300/90 rounded-md flex gap-4 items-center mt-32 px-10 py-5 flex-col md:flex-row">
-          <div className="w-full md:w-7/12 flex items-center">
-            <input
-              className="w-full rounded-md text-gray-600 ring-0 border-none outline-none focus:ring-red-400 placeholder:text-gray-400 pr-10"
-              type="text"
-              placeholder="Cargo, vacantes, empleo..."
-            />
-            <button>
-              <FaSearch className="text-2xl text-red-400 -ml-9 hover:scale-105 duration-300 cursor-pointer" />
-            </button>
-          </div>
-          <div className="w-full md:w-5/12 ">
-            <SelectEstados />
-          </div>
+    <div className="w-full h-[700px] flex justify-center items-center bg-gradient-to-r from-white to-gray-200">
+      <div className="w-[290px] xs:w-[370px] sm:w-[630px] md:w-[760px] lg:w-[1030px] xl:w-[1250px] h-full flex flex-col justify-center relative sm:px-10">
+        <div className="relative w-fit">
+          <BiSolidQuoteLeft className="absolute -top-36 sm:-top-40 md:-top-16 -left-2 sm:-left-12 text-azulads/20 text-4xl sm:text-7xl" />
+          <h1 className="sm:w-[550px] CTextShadow text-4xl xs:text-5xl sm:text-7xl font-bold leading-none -mt-32 md:-mt-10 text-azuloscuroads text-center sm:text-start font-[monserrat-bold]">
+            Oportunidades que te conectan
+            <span className="text-azulads block">con el éxito</span>
+          </h1>
+          <BiSolidQuoteRight className="absolute bottom-0 xs:-bottom-4 sm:-bottom-10 right-6 sm:right-24 text-azulads/20 text-4xl sm:text-7xl" />
+        </div>
+        <div className="w-full flex justify-center">
+          <SearcherGeneral />
         </div>
       </div>
     </div>

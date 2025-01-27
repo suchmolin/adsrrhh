@@ -1,31 +1,32 @@
 import Link from "next/link"
 import NavbarHomeResp from "../NavbarHomeResp/page"
+import Image from "next/image"
 export default function NavbarHome() {
   return (
-    <nav className="absolute CShadow w-full h-[80px] flex px-10 justify-between items-center bg-white/95">
-      <div className="flex gap-7 md:gap-10 h-full items-center">
-        <h1 className="text-4xl text-black">ADS RRHH</h1>
+    <nav className="absolute w-full h-[130px] flex px-10 justify-between items-center z-50">
+      <div className="flex gap-7 md:gap-10 h-full items-center text-azuloscuroads text-xl">
+        <div className="h-full aspect-square relative">
+          <Image
+            src="/img/logoadsrrhh.png"
+            alt="ads recursos humanos"
+            objectFit="contain"
+            layout="fill"
+          />
+        </div>
         <Link
-          className="hidden sm:block text-gray-400 hover:text-red-500 hover:scale-105 duration-300"
+          className="hidden sm:block hover:scale-105 duration-300 hover:text-azulads"
           href="#"
         >
           Buscar Empleo
         </Link>
-      </div>
-      <div className="hidden h-full sm:flex gap-7 md:gap-10 items-center">
         <Link
-          className="CShadow2 rounded-sm px-4 py-2 text-white bg-red-400 hover:scale-105 duration-300"
+          className="hidden sm:block hover:scale-105 duration-300 hover:text-azulads"
           href="#"
         >
-          Postulante
-        </Link>
-        <Link
-          className="CShadow2 rounded-sm px-4 py-2 bg-white text-red-400 hover:scale-105 duration-300"
-          href="#"
-        >
-          Empresa
+          Registro de Empresa
         </Link>
       </div>
+
       <NavbarHomeResp />
     </nav>
   )

@@ -16,7 +16,7 @@ export default function SelectEstados() {
   }
   return (
     <Select theme={customTheme} id="estados">
-      <option value="">Ubicacion 🚏</option>
+      <option value="">Toda Venezuela</option>
       {estados.map((estado) => (
         <option key={estado} value={estado}>
           {estado}
