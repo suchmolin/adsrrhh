@@ -6,7 +6,7 @@ export default function NavbarHome() {
     <nav className="absolute w-full h-[130px] flex px-10 justify-between items-center z-50">
       <div className="flex gap-7 md:gap-10 h-full items-center text-azuloscuroads text-xl">
         <Link
-          href="/reclutamiento"
+          href="/"
           className="h-full aspect-square relative hover:scale-[102%] duration-300"
         >
           <Image
@@ -18,7 +18,7 @@ export default function NavbarHome() {
         </Link>
         <Link
           className="hidden sm:block hover:scale-105 duration-300 hover:text-azulads"
-          href="reclutamiento/candidato/registro"
+          href="/candidato/registro"
         >
           Buscar Empleo
         </Link>

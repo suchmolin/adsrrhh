@@ -51,7 +51,7 @@ export default function CustomersHome() {
     ],
   }
   return (
-    <div className="w-full flex flex-col justify-center items-center py-10  overflow-hidden">
+    <div className="w-full flex flex-col justify-center items-center pt-10  overflow-hidden">
       <div className="w-[290px] xs:w-[370px] sm:w-[630px] md:w-[760px] lg:w-[1030px] xl:w-[1250px] ">
         <h2 className="text-3xl xs:text-4xl text-azulads mb-7 text-center font-[monserrat-bold]">
           Empresas Afiliadas

@@ -7,7 +7,7 @@ export default function HeaderHome() {
   return (
     <div className="w-full h-[700px] flex justify-center items-center bg-gradient-to-r from-white to-gray-200 relative">
       <Image
-        src="/img/headerhome.png"
+        src="/img/headerHome.png"
         alt="header home"
         layout="fill"
         objectFit="cover"
