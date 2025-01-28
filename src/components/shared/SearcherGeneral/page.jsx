@@ -11,12 +11,12 @@ export default function SearcherGeneral() {
         <div className="flex">
           <input
             id="search"
-            className="w-full rounded-md text-gray-600 ring-0 border-none outline-none focus:ring-red-400 placeholder:text-gray-400 pr-10"
+            className="w-full rounded-md text-gray-600 ring-0 border-none outline-none focus:ring-azulads placeholder:text-gray-400 pr-10"
             type="text"
             placeholder="Puesto, oferta o palabra clave"
           />
           <button>
-            <FaSearch className="text-2xl text-red-400 -ml-9 hover:scale-105 duration-300 cursor-pointer" />
+            <FaSearch className="text-2xl text-azulads -ml-9 hover:scale-105 duration-300 cursor-pointer" />
           </button>
         </div>
       </div>
