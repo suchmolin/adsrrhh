@@ -29,13 +29,19 @@ export default function CustomersHome() {
   ]
   const settings = {
     infinite: true,
-    slidesToShow: 2,
+    slidesToShow: 3,
     slidesToScroll: 1,
     autoplay: true,
     speed: 10000,
     autoplaySpeed: 1,
     cssEase: "linear",
     responsive: [
+      {
+        breakpoint: 1280,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
       {
         breakpoint: 1050,
         settings: {
