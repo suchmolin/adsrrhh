@@ -1,4 +1,5 @@
 import valEmail from "./email"
+import validateExistEmail from "./emailExistRegisterCand"
 
 const resetErrorFrom = (setError) => {
   setError({ status: false, msg: "" })
@@ -7,7 +8,7 @@ const resetErrorFrom = (setError) => {
     .forEach((input) => input.classList.remove("border-red-400"))
 }
 
-export const validateFirstForm = (
+export const validateFirstForm = async (
   e,
   setError,
   data,
@@ -20,6 +21,16 @@ export const validateFirstForm = (
     setError({
       status: true,
       msg: "Correo electrónico inválido",
+    })
+    document.getElementById("email_from").classList.add("border-red-400")
+    return
+  }
+  const validateEmailExist = await validateExistEmail(data.email_from)
+
+  if (validateEmailExist) {
+    setError({
+      status: true,
+      msg: "Este correo ya está registrado",
     })
     document.getElementById("email_from").classList.add("border-red-400")
     return
@@ -87,4 +98,28 @@ export const validateSecondForm = (
   }
 
   setEtapaForm(etapaForm + 1)
+}
+
+export const validateThirdForm = (e, setError, data) => {
+  e.preventDefault()
+  resetErrorFrom(setError)
+  if (data.type_id === "") {
+    setError({ status: true, msg: "Debe proporcionar un grado de instruccion" })
+    return false
+  }
+  if (
+    data.year_of_experience === "" ||
+    parseInt(data.year_of_experience) < 0 ||
+    parseInt(data.year_of_experience) > 50
+  ) {
+    setError({ status: true, msg: "Años de experiencia inválido" })
+    return false
+  }
+  if (data.salary_expected === "" || parseInt(data.salary_expected) < 0) {
+    setError({
+      status: true,
+      msg: "Proporcione una expectativa salarial correcta",
+    })
+    return false
+  }
 }

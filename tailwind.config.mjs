@@ -25,6 +25,7 @@ export default {
       colors: {
         azulads: "#005aa9",
         azuloscuroads: "#404d6a",
+        azulclaroads: "#e5f2ff",
       },
     },
   },

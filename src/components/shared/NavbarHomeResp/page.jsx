@@ -12,7 +12,7 @@ export default function NavbarHomeResp() {
         onClick={() => setIsOpen(true)}
         className="p-2 rounded-sm CShadow2 bg-azulads text-white"
       >
-        <MdOutlineMenu className="text-3xl " />
+        <MdOutlineMenu className="text-2xl " />
       </button>
       <DrawerMenuHome isOpen={isOpen} setIsOpen={setIsOpen} />
     </div>

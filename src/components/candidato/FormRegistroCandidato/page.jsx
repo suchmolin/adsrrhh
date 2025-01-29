@@ -1,15 +1,20 @@
 "use client"
+import getSelectProfession from "@/functions/get/getSelectProfession"
+import getSelectTypeId from "@/functions/get/getSelectTypeId"
+import sendFormRegisterCandidate from "@/functions/post/sendFormRegisterCandidate"
 
-import DragandDropFile from "@/components/shared/DragandDropFile/page"
 import {
   validateFirstForm,
   validateSecondForm,
+  validateThirdForm,
 } from "@/functions/validate/formRegistroCandidatos"
 import { FileInput, Label, Radio, Select, TextInput } from "flowbite-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export default function FormRegistroCandidato() {
-  const [etapaForm, setEtapaForm] = useState(1)
+  const [selectTypeId, setSelectTypeId] = useState([])
+  const [selectProfession, setSelectProfession] = useState([])
+  const [etapaForm, setEtapaForm] = useState(3)
   const [error, setError] = useState({ status: false, msg: "" })
   const [data, setData] = useState({
     email_from: "",
@@ -24,6 +29,7 @@ export default function FormRegistroCandidato() {
     address: "",
     partner_phone: "",
     type_id: "",
+    profession_id: "",
     otrogradodeinstruccion: "",
     year_of_experience: "",
     residence_change: "",
@@ -40,13 +46,20 @@ export default function FormRegistroCandidato() {
     },
   }
 
-  const submitForm = (e) => {
-    e.preventDefault()
-    console.log({
+  const submitForm = async (e) => {
+    if (!validateThirdForm(e, setError, data)) return
+
+    const response = await sendFormRegisterCandidate({
       ...data,
       file: document.getElementById("file-upload").files[0],
     })
+    console.log(response)
   }
+
+  useEffect(() => {
+    getSelectTypeId().then((res) => setSelectTypeId(res))
+    getSelectProfession().then((res) => setSelectProfession(res))
+  }, [])
 
   return (
     <div className="w-6/12">
@@ -56,7 +69,7 @@ export default function FormRegistroCandidato() {
       <form
         action="#"
         onSubmit={(e) => submitForm(e)}
-        className="w-full rounded-lg my-5 bg-[#e5f2ff] px-10 py-10 flex gap-2 flex-wrap"
+        className="w-full rounded-lg my-5 bg-azulclaroads px-10 py-10 flex gap-2 flex-wrap"
       >
         {etapaForm === 1 && (
           <>
@@ -173,7 +186,7 @@ export default function FormRegistroCandidato() {
                     }
                     id="masculino"
                     name="gender"
-                    value="masculino"
+                    value="male"
                   />
                   <Label htmlFor="united-state">Masculino</Label>
                 </div>
@@ -184,7 +197,7 @@ export default function FormRegistroCandidato() {
                     }
                     id="femenino"
                     name="gender"
-                    value="femenino"
+                    value="female"
                   />
                   <Label htmlFor="united-state">Femenino</Label>
                 </div>
@@ -195,9 +208,9 @@ export default function FormRegistroCandidato() {
                     }
                     id="otrogenero"
                     name="gender"
-                    value="otrogenero"
+                    value="other"
                   />
-                  <Label htmlFor="united-state">Otro:</Label>
+                  <Label htmlFor="united-state">Otro</Label>
                 </div>
                 {data.gender === "otrogenero" && (
                   <TextInput
@@ -318,57 +331,34 @@ export default function FormRegistroCandidato() {
                 required
               >
                 <option value="">Seleccione</option>
-                <option value="Médico Cirujano">Médico Cirujano</option>
-                <option value="Licenciatura en Enfermería">
-                  Licenciatura en Enfermería
-                </option>
-                <option value="Arquitectura">Arquitectura</option>
-                <option value="Licenciatura en Nutrición y Dietética">
-                  Licenciatura en Nutrición y Dietética
-                </option>
-                <option value="Abogado">Abogado</option>
-                <option value="Licenciatura en Contabilidad">
-                  Licenciatura en Contabilidad
-                </option>
-                <option value="Ingeniería en Informatica">
-                  Ingeniería en Informatica
-                </option>
-                <option value="Licenciatura en Comunicación Social">
-                  Licenciatura en Comunicación Social
-                </option>
-                <option value="Licenciatura en Finanzas">
-                  Licenciatura en Finanzas
-                </option>
-                <option value="Licenciatura en Economía">
-                  Licenciatura en Economía
-                </option>
-                <option value="Diseño Grafico">Diseño Grafico</option>
-                <option value="Licenciatura en Educación">
-                  Licenciatura en Educación
-                </option>
-                <option value="Filosofía y Letras">Filosofía y Letras</option>
-                <option value="OtrComercio Internacionalo">
-                  OtrComercio Internacionalo
-                </option>
-                <option value="Licenciatura en Administración">
-                  Licenciatura en Administración
-                </option>
-                <option value="Licenciatura en Psicología">
-                  Licenciatura en Psicología
-                </option>
-                <option value="Relacionista Industrial">
-                  Relacionista Industrial
-                </option>
-                <option value="Bachiller">Bachiller</option>
-                <option value="Educación Básica">Educación Básica</option>
-                <option value="Técnico Superior Universitario">
-                  Técnico Superior Universitario
-                </option>
-                <option value="otrogrado">Otro</option>
+                {selectTypeId.map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.name}
+                  </option>
+                ))}
               </Select>
             </div>
-            {data.gradodeinstruccion === "otrogrado" && (
-              <div className="w-4/12">
+            <div className="w-5/12">
+              <div className="mb-2 block">
+                <Label htmlFor="profession_id" value="Profesión" />
+              </div>
+              <Select
+                onChange={(e) =>
+                  setData({ ...data, profession_id: e.target.value })
+                }
+                id="profession_id"
+                required
+              >
+                <option value="">Seleccione</option>
+                {selectProfession.map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.name}
+                  </option>
+                ))}
+              </Select>
+            </div>
+            {data.profession_id === "94" && (
+              <div className="w-5/12">
                 <div className="mb-2 block">
                   <Label htmlFor="otrogradodeinstruccion" value="Especifique" />
                 </div>
@@ -405,6 +395,8 @@ export default function FormRegistroCandidato() {
                 theme={customTheme}
                 id="year_of_experience"
                 type="number"
+                min="0"
+                max="50"
                 required
               />
             </div>
@@ -459,7 +451,7 @@ export default function FormRegistroCandidato() {
               <div className="mb-2 block">
                 <Label
                   htmlFor="salary_expected"
-                  value="Por favor indique su expectativa salarial (No coloque a convenir)"
+                  value="Por favor indique su expectativa salarial en dolares (USD)"
                 />
               </div>
               <TextInput
@@ -473,6 +465,7 @@ export default function FormRegistroCandidato() {
                 theme={customTheme}
                 id="salary_expected"
                 type="number"
+                min="0"
                 required
               />
             </div>

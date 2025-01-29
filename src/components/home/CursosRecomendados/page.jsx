@@ -10,7 +10,7 @@ export default function CursosRecomendados() {
         </h2>
       </div>
 
-      <div className="w-[290px] xs:w-[370px] sm:w-[630px] md:w-[760px] lg:w-[1030px] xl:w-[1250px] flex flex-row  gap-x-10 gap-y-10 pb-10 relative overflow-x-scroll">
+      <div className="w-[290px] xs:w-[370px] sm:w-[630px] md:w-[760px] lg:w-[1030px] xl:w-[1250px] flex flex-row  gap-x-10 gap-y-10 pb-10 relative overflow-x-scroll px-4">
         {cursos.map((item) => (
           <a
             href={item.href}
@@ -18,7 +18,7 @@ export default function CursosRecomendados() {
             target="_blank"
             className="w-fit flex flex-col rounded-md hover:shadow-md duration-300"
           >
-            <div className="relative w-[260px] lg:w-[330px] aspect-square rounded-md overflow-hidden">
+            <div className="relative w-[260px] lg:w-[330px] aspect-video rounded-md overflow-hidden">
               <Image
                 src={item.img}
                 alt="sector empleo"

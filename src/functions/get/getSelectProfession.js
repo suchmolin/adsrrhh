@@ -1,0 +1,6 @@
+export default async function getSelectProfession() {
+  const resp = await fetch("/api/selectProfession")
+  const json = await resp.json()
+
+  return json
+}
