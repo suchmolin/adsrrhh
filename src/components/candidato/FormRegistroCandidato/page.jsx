@@ -14,7 +14,7 @@ import { useEffect, useState } from "react"
 export default function FormRegistroCandidato() {
   const [selectTypeId, setSelectTypeId] = useState([])
   const [selectProfession, setSelectProfession] = useState([])
-  const [etapaForm, setEtapaForm] = useState(3)
+  const [etapaForm, setEtapaForm] = useState(1)
   const [error, setError] = useState({ status: false, msg: "" })
   const [data, setData] = useState({
     email_from: "",
@@ -62,18 +62,18 @@ export default function FormRegistroCandidato() {
   }, [])
 
   return (
-    <div className="w-6/12">
-      <h1 className="text-3xl text-azulads font-[monserrat-bold]">
+    <div className="w-full sm:w-7/12 px-3 sm:px-0">
+      <h1 className="text-2xl sm:text-3xl text-azulads font-[monserrat-bold]">
         Registro de Candidato
       </h1>
       <form
         action="#"
         onSubmit={(e) => submitForm(e)}
-        className="w-full rounded-lg my-5 bg-azulclaroads px-10 py-10 flex gap-2 flex-wrap"
+        className="w-full rounded-lg my-5 bg-azulclaroads px-5 sm:px-10 py-10 flex gap-2 flex-wrap"
       >
         {etapaForm === 1 && (
           <>
-            <h2 className="text-xl font-[monserrat-bold] text-azulads">
+            <h2 className="text-xl font-[monserrat-bold] text-azulads text-center xs:text-start">
               Datos de inicio de sesión
             </h2>
             <div className="w-full">
@@ -143,7 +143,7 @@ export default function FormRegistroCandidato() {
         {etapaForm === 2 && (
           <>
             <h2 className="text-xl font-[monserrat-bold] text-azulads">
-              Datos de inicio de sesión
+              Información personal
             </h2>
             <div className="w-full">
               <div className="mb-1 block">
@@ -177,7 +177,7 @@ export default function FormRegistroCandidato() {
               />
             </div>
             <div className="w-full flex">
-              <fieldset className="flex  gap-4">
+              <fieldset className="flex flex-col xs:flex-row  gap-4">
                 <legend className="mb-1">Género</legend>
                 <div className="flex items-center gap-2">
                   <Radio
@@ -227,7 +227,7 @@ export default function FormRegistroCandidato() {
               </fieldset>
             </div>
             <div className="w-full flex items-end">
-              <div className="w-6/12">
+              <div className="w-full sm:w-6/12">
                 <div className="mb-1 block">
                   <Label htmlFor="city" value="Ciudad" />
                 </div>
@@ -254,7 +254,7 @@ export default function FormRegistroCandidato() {
                 </Select>
               </div>
               {data.city === "otraciudad" && (
-                <div className="w-6/12">
+                <div className="w-full sm:w-6/12">
                   <TextInput
                     onChange={(e) =>
                       setData({ ...data, otraciudad: e.target.value })
@@ -304,7 +304,7 @@ export default function FormRegistroCandidato() {
             <div className="w-full flex justify-between items-center mt-4">
               <button
                 onClick={() => setEtapaForm(etapaForm - 1)}
-                className="px-4 py-1 bg-azulads text-white rounded-md"
+                className="text-sm xs:text-base px-4 py-1 bg-azulads text-white rounded-md"
               >
                 Volver
               </button>
@@ -312,7 +312,7 @@ export default function FormRegistroCandidato() {
                 onClick={(e) =>
                   validateSecondForm(e, setError, data, setEtapaForm, etapaForm)
                 }
-                className="px-4 py-1 bg-azulads text-white rounded-md"
+                className="text-sm xs:text-base px-4 py-1 bg-azulads text-white rounded-md"
               >
                 Siguiente
               </button>
@@ -321,7 +321,7 @@ export default function FormRegistroCandidato() {
         )}
         {etapaForm === 3 && (
           <>
-            <div className="w-7/12">
+            <div className="w-full sm:w-7/12">
               <div className="mb-2 block">
                 <Label htmlFor="type_id" value="Grado de Instrucción" />
               </div>
@@ -338,7 +338,7 @@ export default function FormRegistroCandidato() {
                 ))}
               </Select>
             </div>
-            <div className="w-5/12">
+            <div className="w-full sm:w-5/12">
               <div className="mb-2 block">
                 <Label htmlFor="profession_id" value="Profesión" />
               </div>
@@ -358,7 +358,7 @@ export default function FormRegistroCandidato() {
               </Select>
             </div>
             {data.profession_id === "94" && (
-              <div className="w-5/12">
+              <div className="w-full sm:w-5/12">
                 <div className="mb-2 block">
                   <Label htmlFor="otrogradodeinstruccion" value="Especifique" />
                 </div>
@@ -484,14 +484,14 @@ export default function FormRegistroCandidato() {
             <div className="w-full flex justify-between mt-4 items-center">
               <button
                 onClick={() => setEtapaForm(etapaForm - 1)}
-                className="px-4 h-fit py-1 bg-azulads text-white rounded-md"
+                className="text-sm xs:text-base px-2 xs:px-4 h-fit py-1 bg-azulads text-white rounded-md"
               >
                 Volver
               </button>
               <input
                 type="submit"
                 value="Finalizar Registro"
-                className="bg-azulads text-white py-1 px-4 block rounded-md mt-2"
+                className="text-sm xs:text-base bg-azulads text-white py-1 px-2 xs:px-4 block rounded-md"
               />
             </div>
           </>

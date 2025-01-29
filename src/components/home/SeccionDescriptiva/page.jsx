@@ -3,25 +3,26 @@ import Link from "next/link"
 
 export default function SeccionDescriptiva() {
   return (
-    <div className="w-full flex justify-center">
-      <div className="w-[290px] xs:w-[370px] sm:w-[630px] md:w-[760px] lg:w-[1030px] xl:w-[1250px] flex flex-col lg:flex-row justify-center items-center">
-        <div className="w-11/12 sm:w-8/12 lg:w-6/12 aspect-square relative">
+    <div className="w-full flex justify-center bg-azulclaroads pt-5 mt-5 overflow-hidden">
+      <div className="w-[290px] xs:w-[370px] sm:w-[630px] md:w-[760px] lg:w-[1030px] xl:w-[1250px] flex flex-col lg:flex-row justify-center items-center lg:items-end">
+        <div className="w-[375px] sm:w-[600px] h-[270px] sm:h-[400px] relative">
           <Image
             src="/img/findingjob2.png"
             alt="finding job"
             objectFit="contain"
             layout="fill"
+            objectPosition="bottom"
           />
         </div>
-        <div className="w-12/12 sm:w-9/12 lg:w-7/12 sm:px-4 flex flex-col text-center lg:text-start">
-          <h2 className="text-2xl lg:text-3xl text-azuloscuroads font-bold mb-4 font-[monserrat-bold]">
+        <div className="w-12/12 sm:w-9/12 lg:w-8/12 sm:px-4 flex flex-col text-center lg:text-start pb-10">
+          <h2 className="text-xl xs:text-2xl lg:text-3xl text-azuloscuroads font-bold mb-4 font-[monserrat-bold]">
             <span className="text-azulads">ADS Recursos Humanos,</span> Eleva tu
             carrera profesional al siguiente nivel junto a nosotros.
           </h2>
-          <h3 className="text-azuloscuroads  lg:text-lg font-[monserrat-bold]">
+          <h3 className="text-azuloscuroads text-sm xs:text-base lg:text-lg font-[monserrat-bold]">
             Tu siguiente empleo te está esperando.
           </h3>
-          <p className="text-gray-700 mb-4">
+          <p className="text-sm xs:text-base text-gray-700 mb-4">
             En ADS Recursos Humanos, creemos en el potencial de cada individuo.
             Nuestra misión es conectarte con el trabajo donde puedas desarrollar
             tus habilidades al máximo y alcanzar tus metas profesionales. Si

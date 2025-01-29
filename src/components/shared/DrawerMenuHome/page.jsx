@@ -1,15 +1,11 @@
 import { Drawer, Sidebar } from "flowbite-react"
 import {
-  HiChartPie,
   HiClipboard,
   HiCollection,
-  HiInformationCircle,
-  HiLogin,
-  HiPencil,
-  HiSearch,
   HiShoppingBag,
   HiUsers,
 } from "react-icons/hi"
+import { FaHouseChimney } from "react-icons/fa6"
 
 export default function DrawerMenuHome({ isOpen, setIsOpen }) {
   const handleClose = () => setIsOpen(false)
@@ -25,31 +21,22 @@ export default function DrawerMenuHome({ isOpen, setIsOpen }) {
             <div>
               <Sidebar.Items>
                 <Sidebar.ItemGroup>
-                  <Sidebar.Item href="/" icon={HiChartPie}>
-                    Dashboard
+                  <Sidebar.Item href="/" icon={FaHouseChimney}>
+                    inicio
+                  </Sidebar.Item>
+                  <Sidebar.Item href="/candidato/registro" icon={HiUsers}>
+                    Buscar Empleo
                   </Sidebar.Item>
                   <Sidebar.Item href="/" icon={HiShoppingBag}>
-                    Products
-                  </Sidebar.Item>
-                  <Sidebar.Item href="/" icon={HiUsers}>
-                    Users list
-                  </Sidebar.Item>
-                  <Sidebar.Item href="/" icon={HiLogin}>
-                    Sign in
-                  </Sidebar.Item>
-                  <Sidebar.Item href="/" icon={HiPencil}>
-                    Sign up
+                    Registrar Empresa
                   </Sidebar.Item>
                 </Sidebar.ItemGroup>
                 <Sidebar.ItemGroup>
                   <Sidebar.Item href="/node_modules" icon={HiClipboard}>
-                    Docs
+                    Politicas de Privacidad
                   </Sidebar.Item>
                   <Sidebar.Item href="/" icon={HiCollection}>
-                    Components
-                  </Sidebar.Item>
-                  <Sidebar.Item href="/" icon={HiInformationCircle}>
-                    Help
+                    Condiciones de uso
                   </Sidebar.Item>
                 </Sidebar.ItemGroup>
               </Sidebar.Items>
