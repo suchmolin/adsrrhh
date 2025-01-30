@@ -48,12 +48,13 @@ export default function FormRegistroCandidato() {
 
   const submitForm = async (e) => {
     document.getElementById("submitbutton").disabled = true
+
     if (!validateThirdForm(e, setError, data)) return
 
-    const response = await sendFormRegisterCandidate({
-      ...data,
-      file: document.getElementById("file-upload").files[0],
-    })
+    const formData = new FormData()
+    formData.append("file", document.getElementById("file-upload").files[0])
+
+    const response = await sendFormRegisterCandidate(data, formData)
     console.log(response)
   }
 
@@ -70,6 +71,7 @@ export default function FormRegistroCandidato() {
       <form
         onSubmit={(e) => submitForm(e)}
         className="w-full rounded-lg my-5 bg-azulclaroads px-5 sm:px-10 py-10 flex gap-2 flex-wrap"
+        enctype="multipart/form-data"
       >
         {etapaForm === 1 && (
           <>

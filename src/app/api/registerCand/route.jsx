@@ -2,6 +2,7 @@ export async function POST(req, res) {
   try {
     const data = await req.json()
     const url = process.env.URL_ODOO + "/application"
+    console.log(data)
 
     const response = await fetch(url, {
       method: "POST",
