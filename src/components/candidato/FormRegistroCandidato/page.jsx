@@ -61,6 +61,10 @@ export default function FormRegistroCandidato() {
     getSelectTypeId().then((res) => setSelectTypeId(res))
     getSelectProfession().then((res) => setSelectProfession(res))
   }, [])
+  useEffect(() => {
+    console.log(selectTypeId)
+    console.log(selectProfession)
+  }, [selectProfession, selectTypeId])
 
   return (
     <div className="w-full sm:w-7/12 px-3 sm:px-0">
