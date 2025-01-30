@@ -23,6 +23,8 @@ export default async function sendFormRegisterCandidate(data) {
       "Content-Type": "application/json",
     },
   })
-  const json = await resp.json()
-  return json
+
+  return resp.ok
+    ? await resp.json()
+    : { error: "Error al enviar el formulario" }
 }

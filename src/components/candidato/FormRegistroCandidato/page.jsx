@@ -47,6 +47,7 @@ export default function FormRegistroCandidato() {
   }
 
   const submitForm = async (e) => {
+    document.getElementById("submitbutton").disabled = true
     if (!validateThirdForm(e, setError, data)) return
 
     const response = await sendFormRegisterCandidate({
@@ -67,7 +68,6 @@ export default function FormRegistroCandidato() {
         Registro de Candidato
       </h1>
       <form
-        action="#"
         onSubmit={(e) => submitForm(e)}
         className="w-full rounded-lg my-5 bg-azulclaroads px-5 sm:px-10 py-10 flex gap-2 flex-wrap"
       >
@@ -130,6 +130,7 @@ export default function FormRegistroCandidato() {
             )}
             <div className="w-full flex justify-end items-center">
               <button
+                id="1stbutton"
                 onClick={(e) =>
                   validateFirstForm(e, setError, data, setEtapaForm, etapaForm)
                 }
@@ -309,6 +310,7 @@ export default function FormRegistroCandidato() {
                 Volver
               </button>
               <button
+                id="2ndbutton"
                 onClick={(e) =>
                   validateSecondForm(e, setError, data, setEtapaForm, etapaForm)
                 }
@@ -490,8 +492,9 @@ export default function FormRegistroCandidato() {
               </button>
               <input
                 type="submit"
+                id="submitbutton"
                 value="Finalizar Registro"
-                className="text-sm xs:text-base bg-azulads text-white py-1 px-2 xs:px-4 block rounded-md"
+                className="text-sm xs:text-base bg-azulads text-white py-1 px-2 xs:px-4 block rounded-md disabled:opacity-50 disabled:cursor-wait cursor-pointer"
               />
             </div>
           </>

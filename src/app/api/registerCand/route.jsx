@@ -1,6 +1,8 @@
 export async function POST(req, res) {
   const data = await req.json()
-  const url = process.env.URL_ODOO + "/aplication"
+  const url =
+    process.env.URL_ODOO + "/application" ||
+    process.env.URL_ODOO_LOCAL + "/application"
 
   const response = await fetch(url, {
     method: "POST",
