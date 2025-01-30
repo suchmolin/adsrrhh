@@ -16,7 +16,6 @@ export const validateFirstForm = async (
   etapaForm
 ) => {
   e.preventDefault()
-  document.getElementById("1stbutton").disabled = true
   resetErrorFrom(setError)
   if (!valEmail(data.email_from)) {
     setError({
@@ -26,6 +25,7 @@ export const validateFirstForm = async (
     document.getElementById("email_from").classList.add("border-red-400")
     return
   }
+
   const validateEmailExist = await validateExistEmail(data.email_from)
 
   if (validateEmailExist) {
@@ -47,7 +47,7 @@ export const validateFirstForm = async (
     document.getElementById("confirmpassword").classList.add("border-red-400")
     return
   }
-  document.getElementById("1stbutton").disabled = false
+
   setEtapaForm(etapaForm + 1)
 }
 
@@ -59,7 +59,7 @@ export const validateSecondForm = (
   etapaForm
 ) => {
   e.preventDefault()
-  document.getElementById("2ndbutton").disabled = true
+
   resetErrorFrom(setError)
   if (data.partner_name === "") {
     setError({ status: true, msg: "Nombre y Apellido inválido" })
@@ -98,7 +98,7 @@ export const validateSecondForm = (
     setError({ status: true, msg: "Debe proporcionar un número de teléfono" })
     return
   }
-  document.getElementById("2ndbutton").disabled = false
+
   setEtapaForm(etapaForm + 1)
 }
 
