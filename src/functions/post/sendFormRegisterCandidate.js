@@ -16,15 +16,23 @@ export default async function sendFormRegisterCandidate(data) {
     name: "Candidatos DB",
   }
 
-  const resp = await fetch("/api/registerCand", {
-    method: "POST",
-    body: JSON.stringify(data),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
+  try {
+    const resp = await fetch("/api/registerCand", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    if (!resp.ok) {
+      throw new Error(`HTTP error! status: ${resp.status}`)
+    }
 
-  return resp.ok
-    ? await resp.json()
-    : { error: "Error al enviar el formulario" }
+    const json = await resp.json()
+
+    return json
+  } catch (error) {
+    console.error("Error fetching register candidate:", error)
+    throw error
+  }
 }
