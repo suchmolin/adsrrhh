@@ -5,7 +5,6 @@ export default async function getSelectTypeId() {
       throw new Error(`HTTP error! status: ${resp.status}`)
     }
     const json = await resp.json()
-    console.log({ typeid: json })
 
     return json
   } catch (error) {

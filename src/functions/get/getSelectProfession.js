@@ -5,7 +5,6 @@ export default async function getSelectProfession() {
       throw new Error(`HTTP error! status: ${resp.status}`)
     }
     const json = await resp.json()
-    console.log({ profession: json })
 
     return json
   } catch (error) {

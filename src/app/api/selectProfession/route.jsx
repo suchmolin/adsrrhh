@@ -8,7 +8,6 @@ export async function GET() {
     }
 
     const json = await response.json()
-    console.log({ apiprofession: json })
 
     return new Response(JSON.stringify(json), {
       status: 200,
