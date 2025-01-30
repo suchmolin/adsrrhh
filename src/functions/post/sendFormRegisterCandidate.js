@@ -14,6 +14,7 @@ export default async function sendFormRegisterCandidate(data) {
     salary_expected: parseInt(data.salary_expected),
     year_of_experience: parseInt(data.year_of_experience),
     name: "Candidatos DB",
+    company_id: "ADS Recursos humanos",
   }
 
   try {
