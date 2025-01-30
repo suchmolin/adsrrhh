@@ -1,8 +1,15 @@
 export default async function getSelectTypeId() {
-  const resp = await fetch("/api/selectTypeId")
-  const json = await resp.json()
+  try {
+    const resp = await fetch("/api/selectTypeId")
+    if (!resp.ok) {
+      throw new Error(`HTTP error! status: ${resp.status}`)
+    }
+    const json = await resp.json()
+    console.log({ typeid: json })
 
-  console.log({ typeid: await resp.json() })
-
-  return json
+    return json
+  } catch (error) {
+    console.error("Error fetching type ID:", error)
+    throw error
+  }
 }
