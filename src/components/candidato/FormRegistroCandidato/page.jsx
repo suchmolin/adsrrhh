@@ -359,7 +359,7 @@ export default function FormRegistroCandidato() {
                 ))}
               </Select>
             </div>
-            {data.profession_id === "94" && (
+            {data.profession_id === "93" && (
               <div className="w-full sm:w-5/12">
                 <div className="mb-2 block">
                   <Label htmlFor="otrogradodeinstruccion" value="Especifique" />

@@ -33,7 +33,7 @@ export default function SeccionDescriptiva() {
           <div className="flex justify-center lg:justify-start">
             <Link
               className="CShadow2 rounded-sm px-4 py-2 text-white bg-azulads hover:scale-105 duration-300 text-center w-fit"
-              href="#"
+              href="/candidato/registro"
             >
               Comienza la Busqueda
             </Link>

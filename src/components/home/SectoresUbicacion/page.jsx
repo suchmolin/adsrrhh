@@ -33,7 +33,7 @@ export default function SectoresUbicacion() {
             key={item.id}
             className="w-10/12 sm:w-5/12 md:w-3/12 flex flex-col items-center gap-3"
           >
-            <div className="relative w-full aspect-square rounded-md overflow-hidden">
+            <div className="relative w-full aspect-video rounded-md overflow-hidden">
               <Image
                 src={item.img}
                 alt="sector empleo"
@@ -41,7 +41,9 @@ export default function SectoresUbicacion() {
                 layout="fill"
               />
             </div>
-            <p className="text-2xl text-azulads">{item.titulo}</p>
+            <p className="text-center text-xl lg:text-2xl text-azulads">
+              {item.titulo}
+            </p>
           </div>
         ))}
       </div>

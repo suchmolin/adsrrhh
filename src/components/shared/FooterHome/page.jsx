@@ -18,7 +18,7 @@ export default function FooterHome() {
             <div>
               <Footer.Title title="Resgistro" className="text-azulads" />
               <Footer.LinkGroup col>
-                <Footer.Link href="#">Candidato</Footer.Link>
+                <Footer.Link href="/candidato/registro">Candidato</Footer.Link>
                 <Footer.Link href="#">Empresa</Footer.Link>
               </Footer.LinkGroup>
             </div>

@@ -1,5 +1,6 @@
 import { FaSearch } from "react-icons/fa"
 import SelectEstados from "../SelectEstados/page"
+import Link from "next/link"
 
 export default function SearcherGeneral() {
   return (
@@ -8,16 +9,16 @@ export default function SearcherGeneral() {
         <label className="text-white" htmlFor="search">
           Buscar ofertas de:
         </label>
-        <div className="flex">
+        <div className="flex w-full">
           <input
             id="search"
             className="w-full rounded-md text-gray-600 ring-0 border-none outline-none focus:ring-azulads placeholder:text-gray-400 pr-10"
             type="text"
             placeholder="Puesto, oferta o palabra clave"
           />
-          <button>
+          <Link href="/candidato/registro" className="w-fit flex items-center">
             <FaSearch className="text-2xl text-azulads -ml-9 hover:scale-105 duration-300 cursor-pointer" />
-          </button>
+          </Link>
         </div>
       </div>
       <div className="w-full md:w-5/12  flex flex-col">
