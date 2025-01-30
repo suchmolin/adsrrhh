@@ -1,7 +1,24 @@
 export async function GET() {
-  const url = process.env.URL_ODOO + "/profession"
-  const response = await fetch(url)
-  console.log({ apiprofession: response })
+  try {
+    const url = process.env.URL_ODOO + "/profession"
+    const response = await fetch(url)
 
-  return response
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+
+    const json = await response.json()
+    console.log({ apiprofession: json })
+
+    return new Response(JSON.stringify(json), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    })
+  } catch (error) {
+    console.error("Error fetching profession:", error)
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    })
+  }
 }
