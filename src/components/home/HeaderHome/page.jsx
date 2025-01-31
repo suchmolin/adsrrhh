@@ -5,7 +5,23 @@ import { BiSolidQuoteRight } from "react-icons/bi"
 
 export default function HeaderHome() {
   return (
-    <div className="w-full h-[700px] flex justify-center items-center bg-[url('/img/headerHome3Resp.png')] sm:bg-[url('/img/headerHome2.png')] bg-cover bg-center sm:bg-left relative">
+    <div className="w-full h-[700px] flex justify-center items-center  relative">
+      <Image
+        className="hidden sm:block"
+        src="/img/headerHome2.png"
+        alt="headerBackground"
+        layout="fill"
+        objectFit="cover"
+        objectPosition="left"
+      />
+      <Image
+        className="block sm:hidden"
+        src="/img/headerHome3Resp.png"
+        alt="headerBackground"
+        layout="fill"
+        objectFit="cover"
+        objectPosition="center"
+      />
       <div className="w-[290px] xs:w-[370px] sm:w-[630px] md:w-[760px] lg:w-[1030px] xl:w-[1250px] h-full flex flex-col justify-center relative sm:px-10">
         <div className="relative w-fit ml-1">
           <BiSolidQuoteLeft className="absolute top-2 sm:-top-40 md:-top-16 left-2 sm:-left-12 text-azulads/20 text-4xl sm:text-7xl" />

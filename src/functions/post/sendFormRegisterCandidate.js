@@ -8,12 +8,8 @@ export default async function sendFormRegisterCandidate(data, formData) {
   }
   data = {
     ...data,
-    type_id: parseInt(data.type_id),
     has_vehicle: data.has_vehicle === "true",
     residence_change: data.residence_change === "true",
-    salary_expected: parseInt(data.salary_expected),
-    year_of_experience: parseInt(data.year_of_experience),
-    profession: parseInt(data.profession),
     name: "Candidatos DB",
     company_id: "ADS Recursos humanos",
   }
@@ -28,21 +24,15 @@ export default async function sendFormRegisterCandidate(data, formData) {
       {
         method: "POST",
         body: formData,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        mode: "no-cors",
         cache: "no-cache",
       }
     )
-    console.log("resp", resp)
 
     if (!resp.ok) {
       throw new Error(`HTTP error! status: ${resp.status}`)
     }
 
     const json = await resp.json()
-    console.log("json", json)
 
     return json
   } catch (error) {

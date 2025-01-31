@@ -24,5 +24,6 @@
     "postcss": "8",
     "prettier": "3.4.2",
     "tailwindcss": "3.4.1"
-  }
+  },
+   "proxy": "https://g396cxxh-8069.use2.devtunnels.ms"
 }

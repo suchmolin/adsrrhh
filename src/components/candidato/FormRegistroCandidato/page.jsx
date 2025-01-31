@@ -10,8 +10,10 @@ import {
 } from "@/functions/validate/formRegistroCandidatos"
 import { FileInput, Label, Radio, Select, TextInput } from "flowbite-react"
 import { useEffect, useState } from "react"
+import RegCandidatoModal from "../RegCandidatoModal/page"
 
 export default function FormRegistroCandidato() {
+  const [regExitoso, setRegExitoso] = useState(false)
   const [selectTypeId, setSelectTypeId] = useState([])
   const [selectProfession, setSelectProfession] = useState([])
   const [etapaForm, setEtapaForm] = useState(1)
@@ -55,7 +57,8 @@ export default function FormRegistroCandidato() {
     formData.append("file", document.getElementById("file-upload").files[0])
 
     const response = await sendFormRegisterCandidate(data, formData)
-    console.log(response)
+
+    if (response.status === "ok") setRegExitoso(true)
   }
 
   useEffect(() => {
@@ -71,7 +74,7 @@ export default function FormRegistroCandidato() {
       <form
         onSubmit={(e) => submitForm(e)}
         className="w-full rounded-lg my-5 bg-azulclaroads px-5 sm:px-10 py-10 flex gap-2 flex-wrap"
-        enctype="multipart/form-data"
+        encType="multipart/form-data"
       >
         {etapaForm === 1 && (
           <>
@@ -502,6 +505,10 @@ export default function FormRegistroCandidato() {
           </>
         )}
       </form>
+      <RegCandidatoModal
+        regExitoso={regExitoso}
+        partner_name={data.partner_name}
+      />
     </div>
   )
 }
