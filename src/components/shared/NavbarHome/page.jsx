@@ -24,7 +24,7 @@ export default function NavbarHome() {
         </Link>
         <Link
           className="hidden sm:block hover:scale-105 duration-300 hover:text-azulads"
-          href="#"
+          href="/empresa/registro"
         >
           Registro de Empresa
         </Link>

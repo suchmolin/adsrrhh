@@ -27,7 +27,7 @@ export default function DrawerMenuHome({ isOpen, setIsOpen }) {
                   <Sidebar.Item href="/candidato/registro" icon={HiUsers}>
                     Buscar Empleo
                   </Sidebar.Item>
-                  <Sidebar.Item href="/" icon={HiShoppingBag}>
+                  <Sidebar.Item href="/empresa/registro" icon={HiShoppingBag}>
                     Registrar Empresa
                   </Sidebar.Item>
                 </Sidebar.ItemGroup>

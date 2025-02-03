@@ -1,7 +1,7 @@
 import FormRegistroCandidato from "@/components/candidato/FormRegistroCandidato/page"
 import SeccionRegistrado from "@/components/candidato/SeccionRegistrado/page"
 import FooterHome from "@/components/shared/FooterHome/page"
-import NavbarHome from "@/components/shared/NavbarHome/page"
+
 import Link from "next/link"
 import { FaAngleLeft } from "react-icons/fa6"
 
