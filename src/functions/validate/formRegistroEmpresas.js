@@ -62,12 +62,14 @@ export const validateSecondForm = async (e, setError, data) => {
     document.getElementById("name").classList.add("border-red-400")
     return
   }
-  if (data.vat === "") {
+  if (data.identification_card === "") {
     setError({
       status: true,
       msg: "RIF inválido",
     })
-    document.getElementById("vat").classList.add("border-red-400")
+    document
+      .getElementById("identification_card")
+      .classList.add("border-red-400")
     return
   }
   return true

@@ -3,7 +3,7 @@ import FooterHome from "@/components/shared/FooterHome/page"
 
 import Link from "next/link"
 import { FaAngleLeft } from "react-icons/fa6"
-import SeccionRegistradoEmpresa from "@/components/candidato/SeccionRegistrado/page"
+import SeccionRegistradoEmpresa from "@/components/empresa/SeccionRegistradoEmpresa/page"
 
 export default function RegistroEmpresaPage() {
   return (

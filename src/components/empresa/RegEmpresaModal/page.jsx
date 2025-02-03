@@ -11,7 +11,7 @@ export default function RegEmpresaModal({ regExitoso, name }) {
           <FiCheckSquare className="text-[250px] text-green-400" />
         </div>
         <p className="text-3xl text-azulads font-[monserrat-bold] text-center mb-5">
-          Registro de Candidato Exitoso
+          Registro de Empresa Exitoso
         </p>
         <p className="text-xl text-gray-700  text-center">
           Gracias {name} por participar en nuestro proceso de pre-registro.

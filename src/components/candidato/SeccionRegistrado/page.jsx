@@ -1,11 +1,11 @@
 import Image from "next/image"
 
-export default function SeccionRegistradoEmpresa() {
+export default function SeccionRegistradoCandidato() {
   return (
     <div className="hidden sm:block w-5/12  px-4 ">
       <div className="w-full rounded-xl overflow-hidden mb-4 h-[130px] lg:h-[160px] relative">
         <Image
-          src="/img/registerpageempresa.jpg"
+          src="/img/registerpage.png"
           alt="register image 1"
           objectFit="cover"
           layout="fill"
@@ -13,7 +13,7 @@ export default function SeccionRegistradoEmpresa() {
       </div>
       <div className="w-full rounded-xl overflow-hidden mb-4 h-[130px] lg:h-[160px] relative">
         <Image
-          src="/img/registerpageempresa2.jpg"
+          src="/img/registerpage2.png"
           alt="register image 1"
           objectFit="cover"
           layout="fill"
@@ -21,7 +21,7 @@ export default function SeccionRegistradoEmpresa() {
       </div>
       <div className="w-full rounded-xl overflow-hidden mb-4 h-[130px] lg:h-[160px] relative">
         <Image
-          src="/img/registerpageempresa3.jpg"
+          src="/img/registerpage3.png"
           alt="register image 1"
           objectFit="cover"
           layout="fill"

@@ -20,7 +20,7 @@ export default function FormRegistroCandidato() {
     password: "",
     confirmpassword: "",
     name: "",
-    vat: "",
+    identification_card: "",
     country_id: "",
     city: "",
     street: "",
@@ -158,13 +158,15 @@ export default function FormRegistroCandidato() {
             </div>
             <div className="w-full sm:w-4/12">
               <div className="mb-1 block">
-                <Label htmlFor="vat" value="RIF" />
+                <Label htmlFor="identification_card" value="RIF" />
               </div>
               <TextInput
-                onChange={(e) => setData({ ...data, vat: e.target.value })}
-                value={data.vat}
+                onChange={(e) =>
+                  setData({ ...data, identification_card: e.target.value })
+                }
+                value={data.identification_card}
                 theme={customTheme}
-                id="vat"
+                id="identification_card"
                 type="text"
                 placeholder="RIF"
                 required
