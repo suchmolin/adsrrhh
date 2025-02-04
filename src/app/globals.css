@@ -24,7 +24,7 @@
 
 /*text shadow*/
 .CTextShadow{
-  text-shadow: -3px 2px 4px rgba(88,77,77,0.6);
+  text-shadow: -2px 1px 4px rgba(88,77,77,0.6);
 }
 
 input[type=number]::-webkit-inner-spin-button,

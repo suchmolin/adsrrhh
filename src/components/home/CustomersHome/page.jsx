@@ -8,7 +8,7 @@ export default function CustomersHome() {
   const customers = [
     {
       id: "lerobotica",
-      img: "/img/logoLerobotica.png",
+      img: "/img/logoLeroboticaVertical.png",
       banner: "/img/customers/leroboticabanner.png",
     },
     {
