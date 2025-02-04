@@ -1,3 +1,4 @@
+import BlogCursosHome from "@/components/home/BlogCursosHome/page"
 import CursosRecomendados from "@/components/home/CursosRecomendados/page"
 import CustomersHome from "@/components/home/CustomersHome/page"
 import HeaderHome from "@/components/home/HeaderHome/page"
@@ -19,6 +20,7 @@ export default function ReclutamientoLandingPage() {
       <SecEmpresaHome />
       <SectoresEmpleo />
       <SecEmpleoHome />
+      <BlogCursosHome />
       <SectoresUbicacion />
       <SecPrimerEmpleoHome />
       <CursosRecomendados />
