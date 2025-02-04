@@ -8,14 +8,11 @@ export default async function sendFormRegisterEmpresa(data, formData) {
       formData.append(key, data[key])
     })
 
-    const resp = await fetch(
-      "https://g396cxxh-8069.use2.devtunnels.ms/hr/company",
-      {
-        method: "POST",
-        body: formData,
-        cache: "no-cache",
-      }
-    )
+    const resp = await fetch("https://fyr-lois-2024.odoo.com/hr/company", {
+      method: "POST",
+      body: formData,
+      cache: "no-cache",
+    })
 
     if (!resp.ok) {
       throw new Error(`HTTP error! status: ${resp.status}`)
