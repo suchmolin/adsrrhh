@@ -6,7 +6,7 @@ export default function BlogCursosHome() {
     <div className="w-full flex justify-center py-5 sm:py-12">
       <div className="w-[290px] xs:w-[370px] sm:w-[630px] md:w-[760px] lg:w-[1030px] xl:w-[1250px] flex flex-wrap lg:flex-nowrap justify-center gap-10 overflow-hidden">
         <Link
-          href="#"
+          href="/blog"
           className="w-full sm:w-10/12 md:w-9/12 lg:w-6/12 xl:w-5/12 h-[370px] sm:h-[350px] flex relative items-end group"
         >
           <div className="w-6/12 h-full absolute">
