@@ -23,6 +23,8 @@ export default function FormRegistroCandidato() {
     password: "",
     confirmpassword: "",
     partner_name: "",
+    type_of_identification_card: "V",
+    identification_card: "",
     birth_date: "",
     gender: "",
     otrogenero: "",
@@ -148,10 +150,10 @@ export default function FormRegistroCandidato() {
         )}
         {etapaForm === 2 && (
           <>
-            <h2 className="text-xl font-[monserrat-bold] text-azulads">
+            <h2 className="w-full text-xl font-[monserrat-bold] text-azulads">
               Información personal
             </h2>
-            <div className="w-full">
+            <div className="w-full md:w-5/12">
               <div className="mb-1 block">
                 <Label htmlFor="partner_name" value="Nombres y Apellidos" />
               </div>
@@ -167,6 +169,44 @@ export default function FormRegistroCandidato() {
                 required
               />
             </div>
+            <div className=":w-2/12">
+              <div className="mb-1 block">
+                <Label htmlFor="type_of_identification_card" value="-" />
+              </div>
+              <Select
+                onChange={(e) =>
+                  setData({
+                    ...data,
+                    type_of_identification_card: e.target.value,
+                  })
+                }
+                id="type_of_identification_card"
+                required
+              >
+                <option value="V">V</option>
+                <option value="E">E</option>
+                <option value="NA">No aplica</option>
+              </Select>
+            </div>
+            <div className="w-9/12 md:w-4/12">
+              <div className="mb-1 block">
+                <Label
+                  htmlFor="identification_card"
+                  value="Numero de identificación"
+                />
+              </div>
+              <TextInput
+                onChange={(e) =>
+                  setData({ ...data, identification_card: e.target.value })
+                }
+                value={data.identification_card}
+                theme={customTheme}
+                id="identification_card"
+                type="number"
+                required
+              />
+            </div>
+
             <div className="w-full">
               <div className="mb-1 block">
                 <Label htmlFor="birth_date" value="Fecha de nacimiento" />

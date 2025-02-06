@@ -39,7 +39,7 @@ export default function BlogCursosHome() {
           </div>
         </Link>
         <Link
-          href="#"
+          href="#cursosRecomendados"
           className="w-full sm:w-10/12 md:w-9/12 lg:w-6/12 xl:w-5/12 h-[370px] sm:h-[350px] flex relative items-end group"
         >
           <div className="w-7/12 h-full absolute -right-7">

@@ -1,6 +1,7 @@
 export async function POST(req, res) {
   const data = await req.json()
-  const url = process.env.URL_ODOO + "/validate/exist/candidate/email"
+  const url =
+    process.env.URL_ODOO + "/validate/exist/candidate/identification_card"
 
   const response = await fetch(url, {
     method: "POST",

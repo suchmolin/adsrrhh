@@ -1,4 +1,5 @@
 import valEmail from "./email"
+import validateExistIdCandidate from "./emailExistIdCand"
 import validateExistEmail from "./emailExistRegisterCand"
 
 const resetErrorFrom = (setError) => {
@@ -51,7 +52,7 @@ export const validateFirstForm = async (
   setEtapaForm(etapaForm + 1)
 }
 
-export const validateSecondForm = (
+export const validateSecondForm = async (
   e,
   setError,
   data,
@@ -66,6 +67,30 @@ export const validateSecondForm = (
     document.getElementById("partner_name").classList.add("border-red-400")
     return
   }
+  if (
+    data.identification_card === "" ||
+    data.identification_card.length < 6 ||
+    data.identification_card.length > 10
+  ) {
+    setError({ status: true, msg: "Numero de identificaciónn inválido" })
+    document
+      .getElementById("identification_card")
+      .classList.add("border-red-400")
+    return
+  }
+  const validateIdExist = await validateExistIdCandidate(data)
+
+  if (validateIdExist) {
+    setError({
+      status: true,
+      msg: "Documento de identición ya registrado",
+    })
+    document
+      .getElementById("identification_card")
+      .classList.add("border-red-400")
+    return
+  }
+
   if (data.birth_date === "") {
     setError({ status: true, msg: "Fecha de nacimiento no válida" })
     document.getElementById("birth_date").classList.add("border-red-400")

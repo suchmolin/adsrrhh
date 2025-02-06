@@ -3,7 +3,10 @@ import { cursos } from "@/data/cursos"
 
 export default function CursosRecomendados() {
   return (
-    <div className="w-full flex flex-col justify-center items-center py-10 overflow-hidden">
+    <div
+      id="cursosRecomendados"
+      className="w-full flex flex-col justify-center items-center py-10 overflow-hidden"
+    >
       <div className="w-[290px] xs:w-[370px] sm:w-[630px] md:w-[760px] lg:w-[1030px] xl:w-[1250px]">
         <h2 className="text-4xl text-azulads font-[monserrat-bold] mb-7 text-center sm:text-start">
           Cursos Recomendados

@@ -348,7 +348,7 @@ export const data = [
   },
   {
     id: "tu-primera-oportunidad-para-brillar-en-el-mundolaboral",
-    titulo: "¡Tu Primera Oportunidad para Brillar en elMundo Laboral!",
+    titulo: "¡Tu Primera Oportunidad para Brillar en el Mundo Laboral!",
     descripcion:
       "¿Estás listo para 🚀 lanzar tu carrera y adquirir experiencia REAL en el mundo laboral? ¡Los programas de prácticas profesionales son tu boleto de entrada!",
     img: "/img/blog/laptop-computer-develops-website-page-holds-papers-works-cozy-coffee-shop-modern-technologies.jpg",
