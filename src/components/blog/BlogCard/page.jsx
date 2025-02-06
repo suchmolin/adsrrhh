@@ -15,14 +15,16 @@ export default function BlogCard({ item }) {
           layout="fill"
         />
       </div>
-      <div className="w-full p-4">
-        <h3 className="text-xl text-azuloscuroads font-[monserrat-bold] mb-4">
-          {item.titulo}
-        </h3>
-        <p className="text-gray-700 mb-4">{item.descripcion}</p>
+      <div className="w-full h-full p-4 flex flex-col justify-between">
+        <div className="w-full">
+          <h3 className="text-xl text-azuloscuroads font-[monserrat-bold] mb-4">
+            {item.titulo}
+          </h3>
+          <p className="text-gray-700 mb-4 text-sm">{item.descripcion}</p>
+        </div>
         <div className="w-full flex flex-wrap gap-2">
           {item.cat.map((cat) => (
-            <span className="px-2 py-1 text-white bg-azulads rounded-md">
+            <span className="text-sm px-2 py-1 text-white bg-azulads rounded-md">
               {cat}
             </span>
           ))}

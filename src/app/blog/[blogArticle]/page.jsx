@@ -1,6 +1,7 @@
 import Image from "next/image"
 import { data } from "@/data/blog"
 import NavbarHome from "@/components/shared/NavbarHome/page"
+import FooterHome from "@/components/shared/FooterHome/page"
 
 export default async function ArticulosBlog({ params }) {
   const { blogArticle } = await params
@@ -155,6 +156,7 @@ export default async function ArticulosBlog({ params }) {
           ))}
         </div>
       </div>
+      <FooterHome />
     </>
   )
 }
