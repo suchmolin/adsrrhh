@@ -43,7 +43,7 @@ export const cursos = [
     titulo:
       "Copilot en PowerPoint: crea presentaciones impactantes con inteligencia artificial",
     descripcion:
-      "Domina el uso de Copilot en PowerPoint para llevar tus presentaciones a un nuevo nivel con la ayuda de la inteligencia artificial. Este curso te enseñará a interactuar eficazmente con Copilot, mejorando tu productividad y la calidad de tus presentaciones.",
+      "Domina el uso de Copilot en PowerPoint para llevar tus presentaciones a un nuevo nivel con la ayuda de la inteligencia artificial. Este curso te enseñará a interactuar eficazmente con Copilot...",
     img: "/img/cursos/1719008986128.jpeg",
     href: "https://es.linkedin.com/learning/copilot-en-powerpoint-crea-presentaciones-impactantes-con-inteligencia-artificial?upsellOrderOrigin=share_android_learning_path_learning&trk=share_android_learning_path_learning",
   },

@@ -7,7 +7,7 @@ export const data = [
     img: "/img/blog/business-executives-holding-dairy.jpg",
     cat: ["Empresas", "Reclutamiento"],
     autor: "ADS Recursos Humanos",
-    fotoAutor: "/img/logoadsrrhh.png",
+    fotoAutor: "/img/logoadsrrhh2.png",
     fechaPublicado: "Febrero 06, 2025",
     imgPrincipal: "/img/blog/business-executives-holding-dairy.jpg",
     contenido: [
@@ -146,7 +146,7 @@ export const data = [
     img: "/img/blog/young-student-girl-business-lady-glasses-watch-transperent-wall-with-lot-paper-stickers-it.jpg",
     cat: ["Empleo", "Tendencias"],
     autor: "ADS Recursos Humanos",
-    fotoAutor: "/img/logoadsrrhh.png",
+    fotoAutor: "/img/logoadsrrhh2.png",
     fechaPublicado: "Febrero 06, 2025",
     imgPrincipal:
       "/img/blog/young-student-girl-business-lady-glasses-watch-transperent-wall-with-lot-paper-stickers-it.jpg",
@@ -264,7 +264,7 @@ export const data = [
     img: "/img/blog/student-online-cute-young-guy-studying-computer-glasses-green-shirt-smiling-with-cup.jpg",
     cat: ["Empleo", "Remoto", "Presencial"],
     autor: "ADS Recursos Humanos",
-    fotoAutor: "/img/logoadsrrhh.png",
+    fotoAutor: "/img/logoadsrrhh2.png",
     fechaPublicado: "Febrero 06, 2025",
     imgPrincipal:
       "/img/blog/student-online-cute-young-guy-studying-computer-glasses-green-shirt-smiling-with-cup.jpg",
@@ -354,7 +354,7 @@ export const data = [
     img: "/img/blog/laptop-computer-develops-website-page-holds-papers-works-cozy-coffee-shop-modern-technologies.jpg",
     cat: ["Empleo", "Oportunidad"],
     autor: "ADS Recursos Humanos",
-    fotoAutor: "/img/logoadsrrhh.png",
+    fotoAutor: "/img/logoadsrrhh2.png",
     fechaPublicado: "Febrero 06, 2025",
     imgPrincipal:
       "/img/blog/laptop-computer-develops-website-page-holds-papers-works-cozy-coffee-shop-modern-technologies.jpg",
@@ -462,7 +462,7 @@ export const data = [
     img: "/img/blog/girl-coding-interactive-screen.jpg",
     cat: ["Reclutamiento", "Inteligencia Artificial"],
     autor: "Fyr Lois",
-    fotoAutor: "/img/logoadsrrhh.png",
+    fotoAutor: "/img/logoadsrrhh2.png",
     fechaPublicado: "Febrero 06, 2025",
     imgPrincipal: "/img/blog/girl-coding-interactive-screen.jpg",
     contenido: [

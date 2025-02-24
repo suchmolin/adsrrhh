@@ -9,13 +9,17 @@ export default function SelectEstados() {
     field: {
       select: {
         colors: {
-          gray: "border-0 ring-0 focus:border-red-400 focus:ring-red-400 text-gray-600",
+          gray: "border-0 ring-0 focus:border-primary focus:ring-primary text-gray-600",
         },
       },
     },
   }
   return (
-    <Select theme={customTheme} id="estados">
+    <Select
+      theme={customTheme}
+      id="estados"
+      className="border border-gray-300 rounded-md "
+    >
       <option value="">Toda Venezuela</option>
       {estados.map((estado) => (
         <option key={estado} value={estado}>

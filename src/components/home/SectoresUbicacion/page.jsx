@@ -22,7 +22,7 @@ export default function SectoresUbicacion() {
   return (
     <div className="w-full flex flex-col justify-center items-center py-10">
       <div className="w-[290px] xs:w-[370px] sm:w-[630px] md:w-[760px] lg:w-[1030px] xl:w-[1250px] ">
-        <h2 className="text-4xl text-azulads font-[monserrat-bold] mb-7 text-center sm:text-start">
+        <h2 className="text-4xl text-primary font-[monserrat-bold] mb-7 text-center sm:text-start">
           Ubicación
         </h2>
       </div>
@@ -33,7 +33,7 @@ export default function SectoresUbicacion() {
             key={item.id}
             className="w-10/12 sm:w-5/12 md:w-3/12 flex flex-col items-center gap-3"
           >
-            <div className="relative w-full aspect-video rounded-md overflow-hidden">
+            <div className="relative w-full aspect-video rounded-xl overflow-hidden">
               <Image
                 src={item.img}
                 alt="sector empleo"
@@ -41,7 +41,7 @@ export default function SectoresUbicacion() {
                 layout="fill"
               />
             </div>
-            <p className="text-center text-xl lg:text-2xl text-azulads">
+            <p className="text-center text-xl lg:text-2xl text-primary">
               {item.titulo}
             </p>
           </div>

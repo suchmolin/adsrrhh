@@ -14,6 +14,14 @@
   font-family: 'monserrat-black';
   src: url('/fonts/Montserrat-Black.ttf');
 }
+@font-face {
+  font-family: 'poppins';
+  src: url('/fonts/Poppins-Regular.ttf');
+}
+@font-face {
+  font-family: 'poppins-extrabold';
+  src: url('/fonts/Poppins-ExtraBold.ttf');
+}
 
 *{
   scroll-behavior: smooth;
@@ -38,13 +46,13 @@ input[type=number]::-webkit-outer-spin-button {
     }
 input[type=number] { -moz-appearance:textfield; }
 
-.slick-slider > button {
+.slick-slider-custom > button {
   border-radius: 50%;
   background-color: #005aa9 !important;
   padding-top: 3px;
   width: 30px;
   height: 30px;
 }
-.slick-slider > button:hover {
+.slick-slider-custom > button:hover {
   background-color: #005aa9 !important;
 }

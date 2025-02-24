@@ -1,7 +1,12 @@
 import { Footer } from "flowbite-react"
 import { BsFacebook, BsInstagram, BsLinkedin } from "react-icons/bs"
+import { FiPhone } from "react-icons/fi"
+import { FaInstagram } from "react-icons/fa"
+import { MdOutlineMail } from "react-icons/md"
+import { GrLocation } from "react-icons/gr"
 
 export default function FooterHome() {
+  const classContact = "inline text-primary mr-2 text-lg"
   return (
     <Footer container>
       <div className="w-full">
@@ -9,21 +14,41 @@ export default function FooterHome() {
           <div>
             <Footer.Brand
               href="/"
-              src="/img/logoadsrrhh.png"
+              src="/img/logoadsrrhh2.png"
               alt="ADS RRHH Logo"
-              name=""
             />
           </div>
-          <div className="grid grid-cols-2 gap-8 sm:mt-4 sm:grid-cols-3 sm:gap-6">
+          <div className="grid sm:grid-cols-3 gap-8 sm:mt-4 grid-cols-1 sm:gap-6 lg:pr-32">
             <div>
-              <Footer.Title title="Resgistro" className="text-azulads" />
+              <Footer.Title title="Contacto" className="text-primary" />
+              <Footer.LinkGroup col>
+                <Footer.Link href="#">
+                  <FiPhone className={classContact} />
+                  +584123408754
+                </Footer.Link>
+                <Footer.Link href="#">
+                  <FaInstagram className={classContact} />
+                  @adsrrhh
+                </Footer.Link>
+                <Footer.Link href="#">
+                  <MdOutlineMail className={classContact} />
+                  info@adsrrhh.com
+                </Footer.Link>
+                <Footer.Link href="#">
+                  <GrLocation className={classContact} />
+                  Torre A piso 5 Oficina 503 CCCT
+                </Footer.Link>
+              </Footer.LinkGroup>
+            </div>
+            <div>
+              <Footer.Title title="Resgistro" className="text-primary" />
               <Footer.LinkGroup col>
                 <Footer.Link href="/candidato/registro">Candidato</Footer.Link>
                 <Footer.Link href="#">Empresa</Footer.Link>
               </Footer.LinkGroup>
             </div>
             <div>
-              <Footer.Title title="Legal" className="text-azulads" />
+              <Footer.Title title="Legal" className="text-primary" />
               <Footer.LinkGroup col>
                 <Footer.Link href="#">Política de privacidad</Footer.Link>
                 <Footer.Link href="#">Términos y condiciones</Footer.Link>

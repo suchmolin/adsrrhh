@@ -23,6 +23,12 @@ export default {
     },
     extend: {
       colors: {
+        primary: "#000d7a",
+        secondary: "#47d7ac",
+        amarilloads: "#ffd200",
+        lavenderads: "#876df2",
+        purpuraads: "#8932ce",
+        grisads: "#f4f4f4",
         azulads: "#005aa9",
         azuloscuroads: "#404d6a",
         azulclaroads: "#e5f2ff",

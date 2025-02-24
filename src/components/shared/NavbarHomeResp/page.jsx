@@ -10,7 +10,7 @@ export default function NavbarHomeResp() {
     <div className="flex sm:hidden h-full items-center">
       <button
         onClick={() => setIsOpen(true)}
-        className="p-2 rounded-sm CShadow2 bg-azulads text-white"
+        className="p-2 rounded-sm CShadow2 bg-primary text-white"
       >
         <MdOutlineMenu className="text-2xl " />
       </button>

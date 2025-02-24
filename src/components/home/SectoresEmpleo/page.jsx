@@ -39,7 +39,7 @@ export default function SectoresEmpleo() {
       </div>
 
       <div className="w-[290px] xs:w-[370px] sm:w-[630px] md:w-[760px] lg:w-[1030px] xl:w-[1250px] slider-container">
-        <Slider {...settings}>
+        <Slider {...settings} className="slick-slider-custom">
           {sectoresempleo.map((item) => (
             <div key={item.id}>
               <div className="w-full flex justify-center items-center pb-10">
