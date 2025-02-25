@@ -4,7 +4,7 @@ import Link from "next/link"
 export default function AcademiaCorporativaHome() {
   return (
     <div className="w-full flex justify-center bg-grisads pt-10 overflow-hidden">
-      <div className="w-[290px] xs:w-[370px] sm:w-[630px] md:w-[760px] lg:w-[1030px] xl:w-[1250px] flex flex-col lg:flex-row justify-center items-center">
+      <div className="w-[290px] xs:w-[370px] sm:w-[630px] md:w-[760px] lg:w-[1030px] xl:w-[1250px] flex flex-col lg:flex-row-reverse justify-center items-center">
         <div className="w-[375px] sm:w-[600px] h-[270px] sm:h-[500px] relative scale-x-[-1]">
           <Image
             src="/img/cademiacorporativaimg.png"
@@ -67,10 +67,10 @@ export default function AcademiaCorporativaHome() {
           </ul>
           <div className="flex justify-center lg:justify-start pb-10">
             <Link
-              className="rounded-md px-4 py-2 text-white bg-secondary hover:scale-105 duration-300 text-center w-fit font-[monserrat-bold]"
+              className="rounded-md px-4 py-2 text-white bg-secondary hover:scale-105 duration-300 text-center w-fit font-[monserrat-bold] text-xl"
               href="/candidato/registro"
             >
-              ¿Lo hacemos juntos?
+              Empezar
             </Link>
           </div>
         </div>

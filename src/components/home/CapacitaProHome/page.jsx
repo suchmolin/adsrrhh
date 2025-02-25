@@ -70,7 +70,7 @@ export default function CapacitaProHome() {
               className="rounded-md px-4 py-2 text-white bg-primary hover:scale-105 duration-300 text-center w-fit font-[monserrat-bold]"
               href="/candidato/registro"
             >
-              ¡Transforma tu futuro!
+              Comenzar
             </Link>
           </div>
         </div>

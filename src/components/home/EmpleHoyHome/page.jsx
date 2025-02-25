@@ -3,9 +3,9 @@ import Link from "next/link"
 
 export default function EmpleHoyHome() {
   return (
-    <div className="w-full flex justify-center bg-white pt-5 overflow-hidden">
-      <div className="w-[290px] xs:w-[370px] sm:w-[630px] md:w-[760px] lg:w-[1030px] xl:w-[1250px] flex flex-col lg:flex-row justify-center items-center lg:items-end">
-        <div className="w-[375px] sm:w-[600px] h-[270px] sm:h-[400px] relative">
+    <div className="w-full flex justify-center bg-white pt-10 overflow-hidden">
+      <div className="w-[290px] xs:w-[370px] sm:w-[630px] md:w-[760px] lg:w-[1030px] xl:w-[1250px] flex flex-col lg:flex-row-reverse  justify-center items-center">
+        <div className="w-[375px] sm:w-[600px] h-[270px] sm:h-[500px] relative">
           <Image
             src="/img/emplehoyimg.png"
             alt="finding job"
@@ -14,8 +14,8 @@ export default function EmpleHoyHome() {
             objectPosition="bottom"
           />
         </div>
-        <div className="w-12/12 sm:w-9/12 lg:w-6/12 sm:px-4 flex flex-col items-center lg:items-start text-center lg:text-start ">
-          <h2 className="text-6xl text-primary font-bold mb-4 font-[poppins-extrabold] flex items-center">
+        <div className="w-12/12 sm:w-9/12 lg:w-5/12 sm:px-4 flex flex-col items-center lg:items-start text-center lg:text-start ">
+          <h2 className="text-5xl xs:text-6xl text-primary font-bold mb-4 font-[poppins-extrabold] flex items-center">
             EmpleH
             <Image
               src="/img/odeemplehoy.png"
@@ -63,12 +63,12 @@ export default function EmpleHoyHome() {
               Conexión directa con empresas en búsqueda de talento
             </li>
           </ul>
-          <div className="flex justify-center lg:justify-start">
+          <div className="flex justify-center lg:justify-start pb-10">
             <Link
-              className="rounded-md px-4 py-2 text-white bg-secondary hover:scale-105 duration-300 text-center w-fit  font-[monserrat-bold]"
+              className="rounded-md px-4 py-2 text-white bg-secondary hover:scale-105 duration-300 text-center w-fit  font-[monserrat-bold] text-xl"
               href="/candidato/registro"
             >
-              ¿Listo para dar el primer paso?
+              Acceder
             </Link>
           </div>
         </div>

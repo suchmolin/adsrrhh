@@ -7,7 +7,7 @@ export default function NavbarHome() {
       <div className="flex gap-7 md:gap-10 h-full items-center text-azuloscuroads text-xl">
         <Link
           href="/"
-          className="w-[140px] sm:h-full aspect-square relative hover:scale-[102%] duration-300"
+          className="w-[110px] sm:w-[140px] sm:h-full aspect-square relative hover:scale-[102%] duration-300"
         >
           <Image
             src="/img/logoadsrrhh2.png"

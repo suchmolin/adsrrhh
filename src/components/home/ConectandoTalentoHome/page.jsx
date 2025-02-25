@@ -66,10 +66,10 @@ export default function ConectandoTalentoHome() {
           </ul>
           <div className="flex justify-center lg:justify-start pb-10">
             <Link
-              className="rounded-md px-4 py-2 text-white bg-primary hover:scale-105 duration-300 text-center w-fit font-[monserrat-bold]"
+              className="rounded-md px-4 py-2 text-white bg-primary hover:scale-105 duration-300 text-center w-fit font-[monserrat-bold] text-xl"
               href="/candidato/registro"
             >
-              ¡Conecta con talentos!
+              Conectar
             </Link>
           </div>
         </div>
