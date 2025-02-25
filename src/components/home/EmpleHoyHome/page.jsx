@@ -3,7 +3,7 @@ import Link from "next/link"
 
 export default function EmpleHoyHome() {
   return (
-    <div className="w-full flex justify-center bg-white pt-10 overflow-hidden">
+    <div className="w-full flex justify-center bg-grisads pt-10 overflow-hidden">
       <div className="w-[290px] xs:w-[370px] sm:w-[630px] md:w-[760px] lg:w-[1030px] xl:w-[1250px] flex flex-col lg:flex-row-reverse  justify-center items-center">
         <div className="w-[375px] sm:w-[600px] h-[270px] sm:h-[500px] relative">
           <Image

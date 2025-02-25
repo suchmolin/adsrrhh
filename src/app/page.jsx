@@ -18,17 +18,17 @@ export default function ReclutamientoLandingPage() {
     <>
       <NavbarHome />
       <HeaderHome />
-      <CustomersHome />
       <SeresHumanosComoTu />
       <EmpleHoyHome />
-      <SectoresUbicacion />
-      <ConectandoTalentoHome />
       <MiPrimerEmpleoHome />
+      <ConectandoTalentoHome />
+      <CustomersHome />
       <CapacitaProHome />
-      <CursosRecomendados />
       <AcademiaCorporativaHome />
+      <CursosRecomendados />
 
       <BlogCursosHome />
+      <SectoresUbicacion />
       {/* <SectoresEmpleo /> */}
       <FooterHome />
     </>

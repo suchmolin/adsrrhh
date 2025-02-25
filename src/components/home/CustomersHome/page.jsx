@@ -29,7 +29,7 @@ export default function CustomersHome() {
   ]
   const settings = {
     infinite: true,
-    slidesToShow: 3,
+    slidesToShow: 4,
     slidesToScroll: 1,
     autoplay: true,
     speed: 10000,
@@ -39,19 +39,19 @@ export default function CustomersHome() {
       {
         breakpoint: 1280,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 3,
         },
       },
       {
         breakpoint: 1050,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 3,
         },
       },
       {
-        breakpoint: 640,
+        breakpoint: 750,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 2,
         },
       },
     ],
@@ -65,24 +65,17 @@ export default function CustomersHome() {
       </div>
 
       <div className="w-full  slider-container">
-        <Slider {...settings}>
+        <Slider {...settings} className=" bg-primary">
           {customers.map((item) => (
-            <div key={item.id} className="py-4">
-              <div
-                style={{
-                  backgroundImage: `url(${item.banner})`,
-                }}
-                className="w-[250px] xs:w-[330px] sm:w-[400px] h-[170px] flex items-center rounded-lg bg-cover bg-center bg-no-repeat"
-              >
-                <div className="CShadow bg-white/90 relative px-7 py-1 rounded-lg -ml-10">
-                  <div className="w-[120px] aspect-video relative">
-                    <Image
-                      src={item.img}
-                      alt="logo marca1"
-                      objectFit="contain"
-                      layout="fill"
-                    />
-                  </div>
+            <div key={item.id} className="bg-primary">
+              <div className="CShadow w-fit bg-white relative px-7 py-1 rounded-lg -ml-10">
+                <div className="w-[100px] xs:w-[120px] sm:w-[180px] aspect-video relative">
+                  <Image
+                    src={item.img}
+                    alt="logo marca1"
+                    objectFit="contain"
+                    layout="fill"
+                  />
                 </div>
               </div>
             </div>

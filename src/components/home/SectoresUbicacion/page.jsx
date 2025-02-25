@@ -2,16 +2,16 @@ import Image from "next/image"
 
 export default function SectoresUbicacion() {
   const ubicacion = [
+    {
+      id: "distritocapital",
+      titulo: "Distrito Capital",
+      img: "/img/caracas.jpeg",
+    },
     { id: "puertoordaz", titulo: "Puerto Ordaz", img: "/img/poz.jpg" },
     {
       id: "barquisimeto",
       titulo: "Barquisimeto",
       img: "/img/barquisimeto.jpg",
-    },
-    {
-      id: "distritocapital",
-      titulo: "Distrito Capital",
-      img: "/img/caracas.jpeg",
     },
     {
       id: "maturin",
