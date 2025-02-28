@@ -9,6 +9,7 @@ import {
 import { FileInput, Label, Radio, Select, TextInput } from "flowbite-react"
 import { useEffect, useState } from "react"
 import RegEmpresaModal from "../RegEmpresaModal/page"
+import Image from "next/image"
 
 export default function FormRegistroCandidato() {
   const [selectCountry, setSelectCountry] = useState([])
@@ -31,7 +32,7 @@ export default function FormRegistroCandidato() {
     field: {
       input: {
         colors: {
-          gray: "border-gray-300 bg-gray-50 text-gray-900 focus:border-azulads focus:ring-azulads",
+          gray: "border-gray-300 bg-gray-50 text-gray-900 focus:border-primary focus:ring-primary",
         },
       },
     },
@@ -55,17 +56,27 @@ export default function FormRegistroCandidato() {
 
   return (
     <div className="w-full sm:w-7/12 px-3 sm:px-0">
-      <h1 className="text-2xl sm:text-3xl text-azulads font-[monserrat-bold]">
-        Registro de Empresa
-      </h1>
       <form
         onSubmit={(e) => submitForm(e)}
-        className="w-full rounded-lg my-5 bg-azulclaroads px-5 sm:px-10 py-10 flex gap-x-2 gap-y-3 flex-wrap"
+        className="w-full rounded-lg my-5 bg-white CShadow3 px-5 sm:px-10 py-10 flex gap-x-2 gap-y-3 flex-wrap"
         encType="multipart/form-data"
       >
+        <div className="w-full flex flex-col items-center">
+          <div className="relative w-[100px] aspect-video">
+            <Image
+              src="/img/logoadsrrhh2.png"
+              layout="fill"
+              objectFit="contain"
+              alt="Ads Recursos Humanos Logo"
+            />
+          </div>
+          <h1 className="text-xl sm:text-2xl text-primary font-[monserrat-bold]">
+            Registro de Empresa
+          </h1>
+        </div>
         {etapaForm === 1 && (
           <>
-            <h2 className="text-xl font-[monserrat-bold] text-azulads text-center xs:text-start">
+            <h2 className="text-xl font-[monserrat-bold] text-primary text-center xs:text-start">
               Datos de inicio de sesión
             </h2>
             <div className="w-full">
@@ -129,7 +140,7 @@ export default function FormRegistroCandidato() {
                 onClick={(e) =>
                   validateFirstForm(e, setError, data, setEtapaForm, etapaForm)
                 }
-                className="px-4 py-1 bg-azulads text-white rounded-md"
+                className="px-4 py-1 bg-primary text-white rounded-md"
               >
                 Siguiente
               </button>
@@ -138,7 +149,7 @@ export default function FormRegistroCandidato() {
         )}
         {etapaForm === 2 && (
           <>
-            <h2 className="w-full text-xl font-[monserrat-bold] text-azulads">
+            <h2 className="w-full text-xl font-[monserrat-bold] text-primary">
               Información de la empresa
             </h2>
 
@@ -274,7 +285,7 @@ export default function FormRegistroCandidato() {
             <div className="w-full flex justify-between mt-4 items-center">
               <button
                 onClick={() => setEtapaForm(etapaForm - 1)}
-                className="text-sm xs:text-base px-2 xs:px-4 h-fit py-1 bg-azulads text-white rounded-md"
+                className="text-sm xs:text-base px-2 xs:px-4 h-fit py-1 bg-primary text-white rounded-md"
               >
                 Volver
               </button>
@@ -282,7 +293,7 @@ export default function FormRegistroCandidato() {
                 type="submit"
                 id="submitbutton"
                 value="Finalizar Registro"
-                className="text-sm xs:text-base bg-azulads text-white py-1 px-2 xs:px-4 block rounded-md disabled:opacity-50 disabled:cursor-wait cursor-pointer"
+                className="text-sm xs:text-base bg-primary text-white py-1 px-2 xs:px-4 block rounded-md disabled:opacity-50 disabled:cursor-wait cursor-pointer"
               />
             </div>
           </>
