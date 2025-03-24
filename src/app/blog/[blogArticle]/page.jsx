@@ -43,7 +43,7 @@ export default async function ArticulosBlog({ params }) {
             <>
               {item.titulo && (
                 <h2
-                  key={"titulo" + i}
+                  key={item.titulo}
                   className="text-[#001A70] text-3xl sm:text-4xl py-10 px-5 font-bold"
                 >
                   {item.titulo}
@@ -61,7 +61,7 @@ export default async function ArticulosBlog({ params }) {
                 item.texto.map((parr, i) => {
                   return parr.indexOf("<<") >= 0 ? (
                     <p
-                      key={"texto" + i}
+                      key={item.parr}
                       className="text-gray-500 text-lg py-5 px-1 md:px-5"
                     >
                       {parr.slice(0, parr.indexOf("<<"))}
@@ -118,12 +118,12 @@ export default async function ArticulosBlog({ params }) {
                 })}
               {item.ul && (
                 <ul
-                  key={"ul" + i}
+                  key={item.ul}
                   className="text-gray-500 text-lg py-5 px-1 md:px-5"
                 >
                   {item.ul.map((li, i) => {
                     return li.indexOf("<b>") >= 0 ? (
-                      <li key={"li" + i} className="list-disc">
+                      <li key={item.li} className="list-disc">
                         {li.slice(0, li.indexOf("<b>"))}
                         <span className="font-bold">
                           {li.slice(li.indexOf("<b>") + 3, li.indexOf("</b>"))}

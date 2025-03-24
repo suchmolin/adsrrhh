@@ -43,7 +43,7 @@ export default function FormRegistroCandidato() {
   }, [])
 
   const submitForm = async (e) => {
-    //document.getElementById("submitbutton").disabled = true
+    document.getElementById("submitbutton").disabled = true
     if (!validateSecondForm(e, setError, data)) return
 
     const formData = new FormData()

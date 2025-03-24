@@ -1,7 +1,7 @@
+import BuscasEmpleoLoginCandidato from "@/components/candidato/BuscasEmpleoLoginCandidato/page"
 import LoginCandidato from "@/components/candidato/LoginCandidato/page"
 import FooterHome from "@/components/shared/FooterHome/page"
 import NavbarHome from "@/components/shared/NavbarHome/page"
-import BuscasEmpleoLoginCandidato from "../BuscasEmpleoLoginCandidato/page"
 
 export default function CandidateLoginPage() {
   return (

@@ -33,7 +33,7 @@ export default function BlogPage() {
               alt={data[0].titulo}
             />
           </div>
-          <div className="w-[330px] md:w-5/12 p-4 rounded-xl bg-white ">
+          <div className="w-[330px] md:w-5/12 h-[300px] p-4 rounded-xl bg-white ">
             <div className="w-full h-full p-4 flex flex-col justify-between">
               <div className="w-full">
                 <h3 className="text-xl text-primary font-[monserrat-bold] mb-4">
