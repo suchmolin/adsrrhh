@@ -26,7 +26,7 @@ export default function SeresHumanosComoTu() {
             Somos una empresa que conecta talentos y organizaciones con
             oportunidades de crecimiento a nivel global. Facilitamos el acceso a
             empleos, contrataciones y capacitaciones que impulsan el desarrollo
-            personal y profesiona
+            personal y profesional
           </p>
         </div>
       </div>
