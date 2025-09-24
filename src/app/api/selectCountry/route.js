@@ -1,6 +1,6 @@
 export async function GET() {
   try {
-    const url = process.env.URL_ODOO + "/countries"
+    const url = process.env.NEXT_PUBLIC_API_BASE_URL + "/hr/countries"
     const response = await fetch(url)
 
     if (!response.ok) {

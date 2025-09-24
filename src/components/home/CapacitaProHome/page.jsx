@@ -15,7 +15,7 @@ export default function CapacitaProHome() {
           />
         </div>
         <div className="w-12/12 sm:w-9/12 lg:w-6/12 sm:px-4 flex flex-col text-center lg:text-start pt-5 items-center lg:items-start">
-          <h2 className="text-5xl sm:text-6xl text-primary font-bold mb-4 font-[poppins-extrabold] relative w-fit">
+          <div className="text-5xl sm:text-6xl text-primary font-bold mb-4 font-[poppins-extrabold] relative w-fit">
             <div className="absolute -top-5 sm:-top-6 -left-5 sm:-left-6">
               <div className="relative w-[50px] sm:w-[60px] aspect-square">
                 <Image
@@ -26,8 +26,8 @@ export default function CapacitaProHome() {
                 />
               </div>
             </div>
-            CapacitaPro
-          </h2>
+            <span>CapacitaPro</span>
+          </div>
           <h3 className="text-primary text-sm xs:text-base lg:text-4xl font-[monserrat-bold] mb-4">
             Tu talento. Tu poder.Tu futuro.
           </h3>

@@ -18,23 +18,23 @@ export const validateFirstForm = async (
 ) => {
   e.preventDefault()
   resetErrorFrom(setError)
-  if (!valEmail(data.email_from)) {
+  if (!valEmail(data.email)) {
     setError({
       status: true,
       msg: "Correo electrónico inválido",
     })
-    document.getElementById("email_from").classList.add("border-red-400")
+    document.getElementById("email").classList.add("border-red-400")
     return
   }
 
-  const validateEmailExist = await validateExistEmail(data.email_from)
+  const validateEmailExist = await validateExistEmail(data.email)
 
   if (validateEmailExist) {
     setError({
       status: true,
       msg: "Este correo ya está registrado",
     })
-    document.getElementById("email_from").classList.add("border-red-400")
+    document.getElementById("email").classList.add("border-red-400")
     return
   }
   if (data.password.length < 6 || data.password.length > 12) {

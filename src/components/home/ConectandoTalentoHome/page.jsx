@@ -16,7 +16,7 @@ export default function ConectandoTalentoHome() {
           />
         </div>
         <div className="w-12/12 sm:w-9/12 lg:w-6/12 sm:px-4 flex flex-col text-center lg:text-start ">
-          <h2 className="text-5xl sm:text-6xl text-primary font-bold mb-4 font-[poppins-extrabold] ">
+          <div className="text-5xl sm:text-6xl text-primary font-bold mb-4 font-[poppins-extrabold]">
             Conectando <br />
             <span className=" flex items-center flex-col lg:flex-row">
               Talentos
@@ -26,7 +26,7 @@ export default function ConectandoTalentoHome() {
                 <FaStar />
               </span>
             </span>
-          </h2>
+          </div>
           <h3 className="text-primary text-3xl sm:text-4xl font-[monserrat-bold] mb-4">
             ¡Qué tu día, sean todos los días!
           </h3>

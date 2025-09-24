@@ -15,7 +15,7 @@ export default function MiPrimerEmpleoHome() {
           />
         </div>
         <div className="w-12/12 sm:w-9/12 lg:w-6/12 sm:px-4 flex flex-col text-center lg:text-start items-center lg:items-start">
-          <h2 className="text-4xl xs:text-6xl text-primary font-bold mb-4 font-[poppins-extrabold] relative w-fit pr-10 xs:pr-14 text-left">
+          <div className="text-4xl xs:text-6xl text-primary font-bold mb-4 font-[poppins-extrabold] relative w-fit pr-10 xs:pr-14 text-left">
             <div className="absolute right-0 top-2">
               <div className="relative w-[80px] xs:w-[120px] aspect-square">
                 <Image
@@ -26,9 +26,11 @@ export default function MiPrimerEmpleoHome() {
                 />
               </div>
             </div>
-            Mi Primer <br />
-            Empleo
-          </h2>
+            <span>
+              Mi Primer <br />
+              Empleo
+            </span>
+          </div>
           <h3 className="text-primary text-xl xs:text-4xl font-[monserrat-bold] mb-4">
             ¡Voy por mi primer empleo!
           </h3>

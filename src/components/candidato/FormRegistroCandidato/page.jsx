@@ -20,20 +20,20 @@ export default function FormRegistroCandidato() {
   const [etapaForm, setEtapaForm] = useState(1)
   const [error, setError] = useState({ status: false, msg: "" })
   const [data, setData] = useState({
-    email_from: "",
+    email: "",
     password: "",
     confirmpassword: "",
-    partner_name: "",
+    name: "",
     type_of_identification_card: "V",
     identification_card: "",
-    birth_date: "",
+    born_date: "",
     gender: "",
     otrogenero: "",
     city: "",
     otraciudad: "",
-    address: "",
-    partner_phone: "",
-    type_id: "",
+    street: "",
+    phone: "",
+    degree_type_id: "",
     profession_id: "",
     otrogradodeinstruccion: "",
     year_of_experience: "",
@@ -96,15 +96,15 @@ export default function FormRegistroCandidato() {
             </h2>
             <div className="w-full">
               <div className="mb-1 block">
-                <Label htmlFor="email_from" value="Correo electrónico" />
+                <Label htmlFor="email" value="Correo electrónico" />
               </div>
               <TextInput
                 onChange={(e) => {
-                  setData({ ...data, email_from: e.target.value })
+                  setData({ ...data, email: e.target.value })
                 }}
-                value={data.email_from}
+                value={data.email}
                 theme={customTheme}
-                id="email_from"
+                id="email"
                 type="email"
                 placeholder="example@email.com"
                 required
@@ -170,11 +170,11 @@ export default function FormRegistroCandidato() {
               </div>
               <TextInput
                 onChange={(e) =>
-                  setData({ ...data, partner_name: e.target.value })
+                  setData({ ...data, name: e.target.value })
                 }
-                value={data.partner_name}
+                value={data.name}
                 theme={customTheme}
-                id="partner_name"
+                id="name"
                 type="Text"
                 placeholder="Nombres y Apellidos"
                 required
@@ -224,11 +224,11 @@ export default function FormRegistroCandidato() {
               </div>
               <TextInput
                 onChange={(e) =>
-                  setData({ ...data, birth_date: e.target.value })
+                  setData({ ...data, born_date: e.target.value })
                 }
-                value={data.birth_date}
+                value={data.born_date}
                 theme={customTheme}
-                id="birth_date"
+                id="born_date"
                 type="date"
                 required
               />
@@ -243,7 +243,7 @@ export default function FormRegistroCandidato() {
                     }
                     id="masculino"
                     name="gender"
-                    value="male"
+                    value="M"
                   />
                   <Label htmlFor="united-state">Masculino</Label>
                 </div>
@@ -254,7 +254,7 @@ export default function FormRegistroCandidato() {
                     }
                     id="femenino"
                     name="gender"
-                    value="female"
+                    value="F"
                   />
                   <Label htmlFor="united-state">Femenino</Label>
                 </div>
@@ -263,11 +263,11 @@ export default function FormRegistroCandidato() {
                     onChange={(e) =>
                       setData({ ...data, gender: e.target.value })
                     }
-                    id="otrogenero"
+                    id="no_responder"
                     name="gender"
-                    value="other"
+                    value="N/A"
                   />
-                  <Label htmlFor="united-state">Otro</Label>
+                  <Label htmlFor="united-state">No responder</Label>
                 </div>
                 {data.gender === "otrogenero" && (
                   <TextInput
@@ -330,10 +330,10 @@ export default function FormRegistroCandidato() {
                 <Label htmlFor="address" value="Dirección de habitación" />
               </div>
               <TextInput
-                onChange={(e) => setData({ ...data, address: e.target.value })}
-                value={data.address}
+                onChange={(e) => setData({ ...data, street: e.target.value })}
+                value={data.street}
                 theme={customTheme}
-                id="address"
+                id="street"
                 type="Text"
                 placeholder="Dirección de habitación"
                 required
@@ -345,11 +345,11 @@ export default function FormRegistroCandidato() {
               </div>
               <TextInput
                 onChange={(e) =>
-                  setData({ ...data, partner_phone: e.target.value })
+                  setData({ ...data, phone: e.target.value })
                 }
-                value={data.partner_phone}
+                value={data.phone}
                 theme={customTheme}
-                id="partner_phone"
+                id="phone"
                 type="number"
                 placeholder="+584141234567"
                 required
@@ -384,8 +384,8 @@ export default function FormRegistroCandidato() {
                 <Label htmlFor="type_id" value="Grado de Instrucción" />
               </div>
               <Select
-                onChange={(e) => setData({ ...data, type_id: e.target.value })}
-                id="type_id"
+                onChange={(e) => setData({ ...data, degree_type_id: e.target.value })}
+                id="degree_type_id"
                 required
               >
                 <option value="">Seleccione</option>

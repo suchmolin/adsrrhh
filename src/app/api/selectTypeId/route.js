@@ -1,6 +1,9 @@
 export async function GET() {
   try {
-    const url = process.env.URL_ODOO + "/type_id"
+    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL
+    console.log("Base URL:", baseUrl)
+    const url = baseUrl + "/hr/type_id"
+    console.log("Full URL:", url)
     const response = await fetch(url)
 
     if (!response.ok) {

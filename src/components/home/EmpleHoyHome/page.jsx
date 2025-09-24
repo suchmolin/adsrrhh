@@ -15,7 +15,7 @@ export default function EmpleHoyHome() {
           />
         </div>
         <div className="w-12/12 sm:w-9/12 lg:w-5/12 sm:px-4 flex flex-col items-center lg:items-start text-center lg:text-start ">
-          <h2 className="text-5xl xs:text-6xl text-primary font-bold mb-4 font-[poppins-extrabold] flex items-center">
+          <div className="text-5xl xs:text-6xl text-primary font-bold mb-4 font-[poppins-extrabold] flex items-center">
             EmpleH
             <Image
               src="/img/odeemplehoy.png"
@@ -24,7 +24,7 @@ export default function EmpleHoyHome() {
               height={50}
             />{" "}
             y
-          </h2>
+          </div>
           <h3 className="text-primary text-4xl font-[monserrat-bold] mb-4">
             ¡Hoy SÍ, hoy es tu día!
           </h3>

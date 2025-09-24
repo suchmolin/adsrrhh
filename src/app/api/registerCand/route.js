@@ -1,7 +1,7 @@
 export async function POST(req, res) {
   try {
     const data = await req.json()
-    const url = process.env.URL_ODOO + "/application"
+    const url = process.env.NEXT_PUBLIC_API_BASE_URL + "/hr/application"
     console.log(data)
 
     const response = await fetch(url, {

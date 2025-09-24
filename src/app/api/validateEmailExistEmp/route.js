@@ -1,6 +1,6 @@
 export async function POST(req, res) {
   const data = await req.json()
-  const url = process.env.URL_ODOO + "/validate/exist/company"
+  const url = process.env.NEXT_PUBLIC_API_BASE_URL + "/hr/validate/exist/company"
 
   const response = await fetch(url, {
     method: "POST",

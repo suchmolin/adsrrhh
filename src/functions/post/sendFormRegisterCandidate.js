@@ -10,8 +10,8 @@ export default async function sendFormRegisterCandidate(data, formData) {
     ...data,
     has_vehicle: data.has_vehicle === "true",
     residence_change: data.residence_change === "true",
-    name: "Candidatos DB",
     company_id: "ADS Recursos humanos",
+    
   }
 
   try {
@@ -19,7 +19,7 @@ export default async function sendFormRegisterCandidate(data, formData) {
       formData.append(key, data[key])
     })
 
-    const resp = await fetch("https://fyr-lois-2024.odoo.com/hr/application", {
+    const resp = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/hr/job_seeker`, {
       method: "POST",
       body: formData,
       cache: "no-cache",
@@ -30,8 +30,12 @@ export default async function sendFormRegisterCandidate(data, formData) {
     }
 
     const json = await resp.json()
+    
 
-    return json
+  if (json && json.job_seeker) {
+    window.location.href = `/candidato/perfil/${json.job_seeker}`;
+  }
+  return true
   } catch (error) {
     console.error("Error fetching register candidate:", error)
     throw error

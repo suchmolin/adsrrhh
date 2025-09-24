@@ -22,21 +22,21 @@ export default function FooterHome() {
             <div>
               <Footer.Title title="Contacto" className="text-primary" />
               <Footer.LinkGroup col>
-                <Footer.Link href="#">
+                <Footer.Link href="#" className="flex items-center">
                   <FiPhone className={classContact} />
-                  +584123408754
+                  <span>+584123408754</span>
                 </Footer.Link>
-                <Footer.Link href="#">
+                <Footer.Link href="#" className="flex items-center">
                   <FaInstagram className={classContact} />
-                  @adsrrhh
+                  <span>@adsrrhh</span>
                 </Footer.Link>
-                <Footer.Link href="#">
+                <Footer.Link href="#" className="flex items-center">
                   <MdOutlineMail className={classContact} />
-                  info@adsrrhh.com
+                  <span>info@adsrrhh.com</span>
                 </Footer.Link>
-                <Footer.Link href="#">
+                <Footer.Link href="#" className="flex items-center">
                   <GrLocation className={classContact} />
-                  Torre A piso 5 Oficina 503 CCCT
+                  <span>Torre A piso 5 Oficina 503 CCCT</span>
                 </Footer.Link>
               </Footer.LinkGroup>
             </div>
