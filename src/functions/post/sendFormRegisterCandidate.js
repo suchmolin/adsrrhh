@@ -1,3 +1,5 @@
+import { setCookie } from '../../utils/cookies.js'
+
 export default async function sendFormRegisterCandidate(data, formData) {
   if (data.gender === "otrogenero") data = { ...data, gender: data.otrogenero }
   if (data.city === "otraciudad") data = { ...data, city: data.otraciudad }
@@ -33,6 +35,9 @@ export default async function sendFormRegisterCandidate(data, formData) {
     
 
   if (json && json.job_seeker) {
+    // Create session cookie for the registered candidate
+    setCookie('candidato_session', json.job_seeker, 7)
+    
     window.location.href = `/candidato/perfil/${json.job_seeker}`;
   }
   return true
