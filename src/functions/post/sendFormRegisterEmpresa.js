@@ -8,7 +8,7 @@ export default async function sendFormRegisterEmpresa(data, formData) {
       formData.append(key, data[key])
     })
 
-    const resp = await fetch("https://fyr-lois-2024.odoo.com/hr/company", {
+    const resp = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/hr/company`, {
       method: "POST",
       body: formData,
       cache: "no-cache",

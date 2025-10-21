@@ -25,13 +25,26 @@ export function deleteCookie(name) {
 }
 
 export function hasValidSession() {
+  const candidatoSession = getCookie('candidato_session')
+  const empresaSession = getCookie('empresa_session')
+  return (candidatoSession !== null && candidatoSession !== '') || 
+         (empresaSession !== null && empresaSession !== '')
+}
+
+export function hasValidCandidatoSession() {
   const sessionId = getCookie('candidato_session')
+  return sessionId !== null && sessionId !== ''
+}
+
+export function hasValidEmpresaSession() {
+  const sessionId = getCookie('empresa_session')
   return sessionId !== null && sessionId !== ''
 }
 
 export function logout() {
   deleteCookie('candidato_session')
+  deleteCookie('empresa_session')
   if (typeof window !== 'undefined') {
-    window.location.href = '/candidato/login'
+    window.location.href = '/'
   }
 }

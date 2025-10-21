@@ -17,7 +17,7 @@ export default function FormRegistroCandidato() {
   const [etapaForm, setEtapaForm] = useState(1)
   const [error, setError] = useState({ status: false, msg: "" })
   const [data, setData] = useState({
-    email_from: "",
+    email: "",
     password: "",
     confirmpassword: "",
     name: "",
@@ -44,14 +44,26 @@ export default function FormRegistroCandidato() {
 
   const submitForm = async (e) => {
     document.getElementById("submitbutton").disabled = true
-    if (!validateSecondForm(e, setError, data)) return
 
-    const formData = new FormData()
-    formData.append("file", document.getElementById("file-upload").files[0])
+    const validationResult = await validateSecondForm(e, setError, data);
 
-    const response = await sendFormRegisterEmpresa(data, formData)
+    if (!validationResult) {
+      document.getElementById("submitbutton").disabled = false;
+      return;
+    } else {
+      const formData = new FormData()
+      formData.append("file", document.getElementById("file-upload").files[0])
 
-    if (response.status === "ok") setRegExitoso(true)
+      const response = await sendFormRegisterEmpresa(data, formData)
+      if (response.status === "ok" && response.Company) {
+        document.cookie = `empresa_session=${response.Company}; path=/; max-age=${7 * 24 * 60 * 60}; secure; samesite=strict`
+        window.location.href = `/empresa/perfil/${response.Company}`;
+        return;
+      }
+    }
+
+
+    //if (response.status === "ok") setRegExitoso(true)
   }
 
   return (
@@ -82,17 +94,17 @@ export default function FormRegistroCandidato() {
             <div className="w-full">
               <div className="mb-1 block">
                 <Label
-                  htmlFor="email_from"
+                  htmlFor="email"
                   value="Correo electrónico corporativo"
                 />
               </div>
               <TextInput
                 onChange={(e) => {
-                  setData({ ...data, email_from: e.target.value })
+                  setData({ ...data, email: e.target.value })
                 }}
-                value={data.email_from}
+                value={data.email}
                 theme={customTheme}
-                id="email_from"
+                id="email"
                 type="email"
                 placeholder="example@email.com"
                 required
@@ -281,6 +293,10 @@ export default function FormRegistroCandidato() {
                 required
               />
             </div>
+
+            {error.status && (
+              <div className="w-full text-red-400">{error.msg}</div>
+            )}
 
             <div className="w-full flex justify-between mt-4 items-center">
               <button

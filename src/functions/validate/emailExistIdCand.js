@@ -4,6 +4,7 @@ export default async function validateExistIdCandidate(data) {
     body: JSON.stringify({
       identification_card: data.identification_card,
       type_of_identification_card: data.type_of_identification_card,
+      type: "job_seeker"
     }),
     headers: {
       "Content-Type": "application/json",

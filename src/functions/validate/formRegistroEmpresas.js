@@ -1,5 +1,6 @@
 import valEmail from "./email"
 import validateExistEmail from "./emailExistRegisterEmp"
+import validateExistIdCompany from "./emailExistIdEmp"
 
 const resetErrorFrom = (setError) => {
   setError({ status: false, msg: "" })
@@ -17,23 +18,23 @@ export const validateFirstForm = async (
 ) => {
   e.preventDefault()
   resetErrorFrom(setError)
-  if (!valEmail(data.email_from)) {
+  if (!valEmail(data.email)) {
     setError({
       status: true,
       msg: "Correo electrónico inválido",
     })
-    document.getElementById("email_from").classList.add("border-red-400")
+    document.getElementById("email").classList.add("border-red-400")
     return
   }
 
-  //const validateEmailExist = await validateExistEmail(data.email_from)
+  //const validateEmailExist = await validateExistEmail(data.email)
 
   /*if (validateEmailExist) {
     setError({
       status: true,
       msg: "Este correo ya está registrado",
     })
-    document.getElementById("email_from").classList.add("border-red-400")
+    document.getElementById("email").classList.add("border-red-400")
     return
   }*/
   if (data.password.length < 6 || data.password.length > 12) {
@@ -60,7 +61,7 @@ export const validateSecondForm = async (e, setError, data) => {
       msg: "Nombre inválido",
     })
     document.getElementById("name").classList.add("border-red-400")
-    return
+    return false
   }
   if (data.identification_card === "") {
     setError({
@@ -70,7 +71,22 @@ export const validateSecondForm = async (e, setError, data) => {
     document
       .getElementById("identification_card")
       .classList.add("border-red-400")
-    return
+    return false
   }
+  
+  const validateIdExist = await validateExistIdCompany(data)
+  console.log("validateIdExist resultado:", validateIdExist);
+
+  if (validateIdExist == true) {
+    setError({
+      status: true,
+      msg: "RIF ya registrado",
+    })
+    document
+      .getElementById("identification_card")
+      .classList.add("border-red-400")
+    return false
+  }
+  
   return true
 }
