@@ -3,7 +3,7 @@ import { useState } from "react"
 import { MdOutlineMenu } from "react-icons/md"
 import DrawerMenuHome from "../DrawerMenuHome/page"
 
-export default function NavbarHomeResp() {
+export default function NavbarHomeResp({ hasSession = false, profileUrl = "" }) {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -14,7 +14,7 @@ export default function NavbarHomeResp() {
       >
         <MdOutlineMenu className="text-2xl " />
       </button>
-      <DrawerMenuHome isOpen={isOpen} setIsOpen={setIsOpen} />
+      <DrawerMenuHome isOpen={isOpen} setIsOpen={setIsOpen} hasSession={hasSession} profileUrl={profileUrl} />
     </div>
   )
 }

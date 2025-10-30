@@ -75,7 +75,6 @@ export const validateSecondForm = async (e, setError, data) => {
   }
   
   const validateIdExist = await validateExistIdCompany(data)
-  console.log("validateIdExist resultado:", validateIdExist);
 
   if (validateIdExist == true) {
     setError({

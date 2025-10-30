@@ -2,7 +2,6 @@
 
 import CardPerfilCandidato from "@/components/candidato/CardPerfilCandidato/page"
 import CardPerfilEducacion from "@/components/candidato/CardPerfilEducacion/page"
-import NavbarPerfilCandidato from "@/components/candidato/NavbarPerfilCandidato/page"
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState, use } from "react"
@@ -11,6 +10,7 @@ import dynamic from "next/dynamic"
 import NoSSR from "@/components/shared/NoSSR"
 import { useRouter } from "next/navigation"
 import { hasValidSession, getCookie } from "@/utils/cookies"
+import NavbarHome from "@/components/shared/NavbarHome/page"
 
 // Create a client-only wrapper to prevent hydration issues
 const ClientOnly = ({ children, fallback = null }) => {
@@ -99,7 +99,7 @@ export default function PerfilCandidato({ params }) {
   }
   return (
     <NoSSR>
-      <NavbarPerfilCandidato />
+      <NavbarHome />
 
       <ClientOnly fallback={
         <div className="w-full flex justify-center items-center py-20 bg-gray-50" suppressHydrationWarning>
@@ -141,7 +141,7 @@ export default function PerfilCandidato({ params }) {
             </div>
           </div>
         ) : (
-          <div className="w-full flex justify-center items-center py-10 bg-gray-50 relative overflow-hidden" suppressHydrationWarning>
+          <div className="w-full flex justify-center items-center py-10 bg-gray-50 relative overflow-hidden pt-40" suppressHydrationWarning>
             <div className="absolute bottom-0 left-20" suppressHydrationWarning>
               <div className="w-[400px] aspect-video relative" suppressHydrationWarning>
                 <Image

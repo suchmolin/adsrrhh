@@ -1,7 +1,7 @@
 import { Select } from "flowbite-react"
 import { estados } from "@/data/estados"
 
-export default function SelectEstados() {
+export default function SelectEstados({ onCityChange }) {
   const customTheme = {
     root: {
       base: "flex",
@@ -14,11 +14,19 @@ export default function SelectEstados() {
       },
     },
   }
+
+  const handleChange = (e) => {
+    if (onCityChange) {
+      onCityChange(e.target.value)
+    }
+  }
+
   return (
     <Select
       theme={customTheme}
       id="estados"
-      className="border border-gray-300 rounded-md "
+      className="border border-gray-300 rounded-md"
+      onChange={handleChange}
     >
       <option value="">Toda Venezuela</option>
       {estados.map((estado) => (

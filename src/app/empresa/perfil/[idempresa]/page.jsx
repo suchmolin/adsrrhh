@@ -2,10 +2,14 @@
 
 import CardPerfilEmpresa from "@/components/empresa/CardPerfilEmpresa/page"
 import NavbarPerfilEmpresa from "@/components/empresa/NavbarPerfilEmpresa/page"
+import JobOfferCard from "@/components/shared/JobOfferCard/page"
+import ModalCreateJobOffer from "@/components/empresa/ModalCreateJobOffer/page"
+import NotificationModal from "@/components/shared/NotificationModal/page"
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState, use } from "react"
 import getCompany from "@/functions/get/getCompany"
+import getJobOffers from "@/functions/get/getJobOffers"
 import dynamic from "next/dynamic"
 import NoSSR from "@/components/shared/NoSSR"
 import { useRouter } from "next/navigation"
@@ -30,9 +34,15 @@ const ClientOnly = ({ children, fallback = null }) => {
 export default function PerfilEmpresa({ params }) {
     const [idempresa, setIdempresa] = useState(null)
     const [companyData, setCompanyData] = useState(null)
+    const [jobOffers, setJobOffers] = useState([])
+    const [loadingJobOffers, setLoadingJobOffers] = useState(true)
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(true)
     const [sessionChecked, setSessionChecked] = useState(false)
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+    const [selectedOffer, setSelectedOffer] = useState(null)
+    const [notification, setNotification] = useState({ isOpen: false, type: 'info', title: '', message: '' })
     const router = useRouter()
 
     // Unwrap params using React.use() as recommended for Next.js 15
@@ -68,6 +78,24 @@ export default function PerfilEmpresa({ params }) {
         }
     }
 
+    const fetchJobOffers = async () => {
+        try {
+            setLoadingJobOffers(true)
+            const data = await getJobOffers(resolvedParams.idempresa, 1, 8)
+            // The API might return data in different formats, adjust based on actual response
+            if (data.job_offers || Array.isArray(data.job_offers)) {
+                setJobOffers(Array.isArray(data.job_offers) ? data.job_offers : data.job_offers)
+            } else {
+                setJobOffers([])
+            }
+        } catch (err) {
+            console.error("Error fetching job offers:", err)
+            setJobOffers([])
+        } finally {
+            setLoadingJobOffers(false)
+        }
+    }
+
     useEffect(() => {
         const initializePage = async () => {
             // First check session
@@ -79,6 +107,7 @@ export default function PerfilEmpresa({ params }) {
 
             // Then fetch data
             await fetchData()
+            await fetchJobOffers()
         }
 
         initializePage()
@@ -94,6 +123,44 @@ export default function PerfilEmpresa({ params }) {
             console.error("Error refreshing company data:", err)
         } finally {
             setLoading(false)
+        }
+    }
+
+    // Function to show notifications
+    const showNotification = (type, title, message) => {
+        setNotification({ isOpen: true, type, title, message })
+    }
+
+    // Function to handle job offer creation success
+    const handleJobOfferCreated = async (isEdit = false) => {
+        await fetchJobOffers()
+        if (isEdit) {
+            showNotification('success', 'Éxito', 'Oferta laboral actualizada exitosamente')
+        }
+    }
+
+    // Function to handle job offer deletion
+    const handleDeleteJobOffer = async (offer) => {
+        try {
+            const response = await fetch(`/api/jobOffers?id=${offer.id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+
+            if (!response.ok) {
+                throw new Error(`Error al eliminar la oferta: ${response.status}`)
+            }
+
+            // Show success message
+            showNotification('success', 'Éxito', 'Oferta laboral eliminada exitosamente')
+
+            // Refresh the job offers list
+            await fetchJobOffers()
+        } catch (error) {
+            console.error('Error deleting job offer:', error)
+            showNotification('error', 'Error', `Error al eliminar la oferta: ${error.message}`)
         }
     }
     return (
@@ -159,10 +226,80 @@ export default function PerfilEmpresa({ params }) {
                             <div className="w-11/12 sm:w-10/12 md:w-5/12 flex justify-center sm:px-8 pb-10 sm:pb-20 md:pb-52" suppressHydrationWarning>
                                 <CardPerfilEmpresa companyData={companyData} empresaId={idempresa} />
                             </div>
+                            <div className="w-11/12 sm:w-10/12 md:w-7/12 flex flex-col gap-5 sm:px-7" suppressHydrationWarning>
+                                <div className="w-full flex items-center justify-between mb-4">
+                                    <h2 className="text-2xl md:text-3xl font-bold text-primary text-center flex-1">
+                                        Ofertas de Trabajo Activas
+                                    </h2>
+                                    <button
+                                        onClick={() => setIsModalOpen(true)}
+                                        className="bg-primary text-white rounded-full p-3 hover:bg-primary/90 transition-colors shadow-md ml-4"
+                                        title="Crear nueva oferta laboral"
+                                    >
+                                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                                        </svg>
+                                    </button>
+                                </div>
+                                {loadingJobOffers ? (
+                                    <div className="flex justify-center items-center py-10">
+                                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                                    </div>
+                                ) : jobOffers.length === 0 ? (
+                                    <div className="text-center py-10 text-gray-600">
+                                        <p>No hay ofertas de trabajo activas</p>
+                                    </div>
+                                ) : (
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        {jobOffers.map((offer, index) => (
+                                            <JobOfferCard
+                                                key={offer.id || index}
+                                                offer={offer}
+                                                companyData={companyData}
+                                                showEditButtons={true}
+                                                onEdit={(offer) => {
+                                                    setSelectedOffer(offer)
+                                                    setIsEditModalOpen(true)
+                                                }}
+                                                onDelete={handleDeleteJobOffer}
+                                            />
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </div>
                 )}
             </ClientOnly>
+
+            {/* Modal for creating job offer */}
+            <ModalCreateJobOffer
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onCreateSuccess={handleJobOfferCreated}
+                companyId={idempresa}
+            />
+
+            {/* Modal for editing job offer */}
+            <ModalCreateJobOffer
+                isOpen={isEditModalOpen}
+                onClose={() => {
+                    setIsEditModalOpen(false)
+                    setSelectedOffer(null)
+                }}
+                onCreateSuccess={() => handleJobOfferCreated(true)}
+                companyId={idempresa}
+                existingOffer={selectedOffer}
+            />
+
+            {/* Notification Modal */}
+            <NotificationModal
+                isOpen={notification.isOpen}
+                onClose={() => setNotification({ ...notification, isOpen: false })}
+                type={notification.type}
+                title={notification.title}
+                message={notification.message}
+            />
         </NoSSR>
     )
 }

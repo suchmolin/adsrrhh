@@ -1,8 +1,6 @@
 export default async function updateJobSeeker(idcandidato, updatedData) {
   try {
     const url = `/api/jobSeeker?id=${idcandidato}`
-    console.log("Updating job seeker at:", url)
-    console.log("Data to update:", updatedData)
     
     // Crear FormData para manejar archivos
     const formData = new FormData()
@@ -26,7 +24,6 @@ export default async function updateJobSeeker(idcandidato, updatedData) {
     }
     
     const json = await resp.json()
-    console.log("Update response:", json)
     return json
   } catch (error) {
     console.error("Error updating job seeker data:", error)

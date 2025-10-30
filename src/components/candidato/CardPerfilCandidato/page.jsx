@@ -59,9 +59,7 @@ export default function CardPerfilCandidato({ jobSeekerData, candidatoId }) {
           throw new Error('No se pudo obtener el ID del candidato');
         }
 
-        console.log('Actualizando imagen de perfil:', imageData);
         const result = await updateJobSeeker(candidatoId, imageData);
-        console.log('Imagen actualizada exitosamente:', result);
 
         // Actualizar los datos originales
         if (jobSeekerData) {
@@ -69,7 +67,7 @@ export default function CardPerfilCandidato({ jobSeekerData, candidatoId }) {
         }
 
       } catch (err) {
-        console.error('Error al actualizar la imagen:', err);
+
         setError(err.message || 'Error al actualizar la imagen');
         // Revertir la imagen si hay error
         setProfileImage(null);
@@ -103,12 +101,12 @@ export default function CardPerfilCandidato({ jobSeekerData, candidatoId }) {
         throw new Error('No se pudo obtener el ID del candidato');
       }
 
-      console.log('Guardando datos:', dataToUpdate);
+
 
       // Hacer la petición PATCH
       const result = await updateJobSeeker(candidatoId, dataToUpdate);
 
-      console.log('Datos actualizados exitosamente:', result);
+
 
       // Actualizar los datos originales con los nuevos datos
       Object.assign(jobSeekerData, dataToUpdate);
@@ -118,7 +116,7 @@ export default function CardPerfilCandidato({ jobSeekerData, candidatoId }) {
       setIsEditing(false);
 
     } catch (err) {
-      console.error('Error al guardar:', err);
+
       setError(err.message || 'Error al guardar los datos');
     } finally {
       setIsLoading(false);

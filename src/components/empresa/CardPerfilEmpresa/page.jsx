@@ -2,6 +2,17 @@ import Image from "next/image"
 import { useState } from "react"
 import updateCompany from "@/functions/post/updateCompany"
 
+// Sanitize HTML - basic cleanup for safe rendering
+const sanitizeHtml = (html) => {
+    if (!html) return ''
+    // Remove potentially dangerous tags/attributes but keep basic formatting
+    return html
+        .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '') // Remove scripts
+        .replace(/on\w+="[^"]*"/gi, '') // Remove event handlers
+        .replace(/on\w+='[^']*'/gi, '') // Remove event handlers (single quotes)
+        .trim()
+}
+
 export default function CardPerfilEmpresa({ companyData, empresaId }) {
 
     const [isEditing, setIsEditing] = useState(false);
@@ -58,9 +69,9 @@ export default function CardPerfilEmpresa({ companyData, empresaId }) {
                     throw new Error('No se pudo obtener el ID de la empresa');
                 }
 
-                console.log('Actualizando imagen de perfil:', imageData);
+
                 const result = await updateCompany(empresaId, imageData);
-                console.log('Imagen actualizada exitosamente:', result);
+
 
                 // Actualizar los datos originales
                 if (companyData) {
@@ -68,7 +79,7 @@ export default function CardPerfilEmpresa({ companyData, empresaId }) {
                 }
 
             } catch (err) {
-                console.error('Error al actualizar la imagen:', err);
+
                 setError(err.message || 'Error al actualizar la imagen');
                 // Revertir la imagen si hay error
                 setProfileImage(null);
@@ -102,12 +113,12 @@ export default function CardPerfilEmpresa({ companyData, empresaId }) {
                 throw new Error('No se pudo obtener el ID de la empresa');
             }
 
-            console.log('Guardando datos:', dataToUpdate);
+
 
             // Hacer la petición PATCH
             const result = await updateCompany(empresaId, dataToUpdate);
 
-            console.log('Datos actualizados exitosamente:', result);
+
 
             // Actualizar los datos originales con los nuevos datos
             Object.assign(companyData, dataToUpdate);
@@ -117,7 +128,7 @@ export default function CardPerfilEmpresa({ companyData, empresaId }) {
             setIsEditing(false);
 
         } catch (err) {
-            console.error('Error al guardar:', err);
+
             setError(err.message || 'Error al guardar los datos');
         } finally {
             setIsLoading(false);
@@ -336,7 +347,10 @@ export default function CardPerfilEmpresa({ companyData, empresaId }) {
                             placeholder="Describe tu empresa, misión, visión, valores..."
                         />
                     ) : (
-                        <p className="text-gray-700">{companyData?.comment || 'No especificada'}</p>
+                        <div
+                            className="prose max-w-none text-gray-700 leading-relaxed [&_p]:mb-3 [&_ul]:list-disc [&_ul]:ml-6 [&_ol]:list-decimal [&_ol]:ml-6 [&_li]:mb-1 [&_strong]:font-semibold [&_em]:italic [&_a]:text-blue-600 [&_a]:underline"
+                            dangerouslySetInnerHTML={{ __html: sanitizeHtml(companyData?.comment) || 'No especificada' }}
+                        />
                     )}
                 </div>
             </div>

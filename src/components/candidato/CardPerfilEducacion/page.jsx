@@ -31,7 +31,7 @@ export default function CardPerfilEducacion({ jobSeekerData, candidatoId, onData
       const skills = await getSkills()
       setSkillsOptions(skills || [])
     } catch (error) {
-      console.error('Error loading skills:', error)
+
       setError('Error al cargar las habilidades disponibles')
     } finally {
       setIsLoadingSkills(false)
@@ -190,10 +190,10 @@ export default function CardPerfilEducacion({ jobSeekerData, candidatoId, onData
       }
 
       const result = await response.json()
-      console.log('Education saved successfully:', result)
+
       return result
     } catch (error) {
-      console.error('Error saving education:', error)
+
       throw error
     }
   }
@@ -219,7 +219,7 @@ export default function CardPerfilEducacion({ jobSeekerData, candidatoId, onData
 
       // Add new education to local state
       if (result && result.education_ids) {
-        console.log('Education saved successfully:', result)
+
 
         // Add the new education item to local state
         const newEducationItem = {
@@ -244,7 +244,7 @@ export default function CardPerfilEducacion({ jobSeekerData, candidatoId, onData
       })
       setShowEducationForm(false)
     } catch (error) {
-      console.error('Error saving education:', error)
+
       setError('Error al guardar la educación. Por favor, inténtalo de nuevo.')
     } finally {
       setIsSavingEducation(false)
@@ -275,10 +275,10 @@ export default function CardPerfilEducacion({ jobSeekerData, candidatoId, onData
       }
 
       const result = await response.json()
-      console.log('Education deleted successfully:', result)
+
       return result
     } catch (error) {
-      console.error('Error deleting education:', error)
+
       throw error
     }
   }
@@ -300,10 +300,10 @@ export default function CardPerfilEducacion({ jobSeekerData, candidatoId, onData
       }
 
       const result = await response.json()
-      console.log('Experience deleted successfully:', result)
+
       return result
     } catch (error) {
-      console.error('Error deleting experience:', error)
+
       throw error
     }
   }
@@ -325,10 +325,10 @@ export default function CardPerfilEducacion({ jobSeekerData, candidatoId, onData
       }
 
       const result = await response.json()
-      console.log('Language deleted successfully:', result)
+
       return result
     } catch (error) {
-      console.error('Error deleting language:', error)
+
       throw error
     }
   }
@@ -421,7 +421,7 @@ export default function CardPerfilEducacion({ jobSeekerData, candidatoId, onData
       setError(null)
 
     } catch (error) {
-      console.error('Error deleting item:', error)
+
       setError('Error al eliminar el elemento. Por favor, inténtalo de nuevo.')
     } finally {
       setIsDeleting(false)
@@ -523,10 +523,10 @@ export default function CardPerfilEducacion({ jobSeekerData, candidatoId, onData
       }
 
       const result = await response.json()
-      console.log('Experience saved successfully:', result)
+
       return result
     } catch (error) {
-      console.error('Error saving experience:', error)
+
       throw error
     }
   }
@@ -551,10 +551,10 @@ export default function CardPerfilEducacion({ jobSeekerData, candidatoId, onData
       }
 
       const result = await response.json()
-      console.log('Language saved successfully:', result)
+
       return result
     } catch (error) {
-      console.error('Error saving language:', error)
+
       throw error
     }
   }
@@ -579,10 +579,10 @@ export default function CardPerfilEducacion({ jobSeekerData, candidatoId, onData
       }
 
       const result = await response.json()
-      console.log('Skills updated successfully:', result)
+
       return result
     } catch (error) {
-      console.error('Error updating skills:', error)
+
       throw error
     }
   }
@@ -608,7 +608,7 @@ export default function CardPerfilEducacion({ jobSeekerData, candidatoId, onData
 
       // Add new experience to local state
       if (result && result.experience_ids) {
-        console.log('Experience saved successfully:', result)
+
 
         // Add the new experience item to local state
         const newExperienceItem = {
@@ -633,7 +633,7 @@ export default function CardPerfilEducacion({ jobSeekerData, candidatoId, onData
       })
       setShowExperienceForm(false)
     } catch (error) {
-      console.error('Error saving experience:', error)
+
       setError('Error al guardar la experiencia. Por favor, inténtalo de nuevo.')
     } finally {
       setIsSavingExperience(false)
@@ -658,7 +658,7 @@ export default function CardPerfilEducacion({ jobSeekerData, candidatoId, onData
 
       // Add new language to local state
       if (result && result.language_ids) {
-        console.log('Language saved successfully:', result)
+
 
         // Add the new language item to local state
         const newLanguageItem = {
@@ -676,7 +676,7 @@ export default function CardPerfilEducacion({ jobSeekerData, candidatoId, onData
       })
       setShowLanguageForm(false)
     } catch (error) {
-      console.error('Error saving language:', error)
+
       setError('Error al guardar el idioma. Por favor, inténtalo de nuevo.')
     } finally {
       setIsSavingLanguage(false)
@@ -724,7 +724,7 @@ export default function CardPerfilEducacion({ jobSeekerData, candidatoId, onData
 
       // Update local state
       if (result) {
-        console.log('Skills updated successfully:', result)
+
         setSkillsData(prev => [...prev, { id: selectedSkill.id, name: selectedSkill.name }])
       }
 
@@ -734,7 +734,34 @@ export default function CardPerfilEducacion({ jobSeekerData, candidatoId, onData
       setShowSuggestions(false)
       setFilteredSkills([])
     } catch (error) {
-      console.error('Error saving skill:', error)
+
+      setError('Error al guardar la habilidad. Por favor, inténtalo de nuevo.')
+    } finally {
+      setIsSavingSkill(false)
+    }
+  }
+
+  // Add skill directly from list click (modal)
+  const handleAddSkillFromList = async (skill) => {
+    if (skillsData.some(s => (s.id && s.id === skill.id) || s.name === skill.name)) {
+      return
+    }
+
+    setIsSavingSkill(true)
+    setError(null)
+
+    try {
+      const newSkillsArray = [
+        ...skillsData.map(s => s.id),
+        skill.id
+      ]
+
+      const result = await updateSkills(newSkillsArray)
+
+      if (result) {
+        setSkillsData(prev => [...prev, { id: skill.id, name: skill.name }])
+      }
+    } catch (error) {
       setError('Error al guardar la habilidad. Por favor, inténtalo de nuevo.')
     } finally {
       setIsSavingSkill(false)
@@ -929,70 +956,82 @@ export default function CardPerfilEducacion({ jobSeekerData, candidatoId, onData
                 )}
               </>
             ) : (
-              <div className="relative">
-                <div className="flex flex-col sm:flex-row gap-2 items-stretch sm:items-center">
-                  <div className="flex-1 relative">
-                    <input
-                      type="text"
-                      value={skillInput}
-                      onChange={(e) => handleSkillInputChange(e.target.value)}
-                      onFocus={() => {
-                        if (skillInput.length > 0 && filteredSkills.length > 0) {
-                          setShowSuggestions(true)
-                        }
-                      }}
-                      onBlur={() => {
-                        // Delay hiding suggestions to allow clicking on them
-                        setTimeout(() => setShowSuggestions(false), 200)
-                      }}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                      placeholder={isLoadingSkills ? 'Cargando habilidades...' : 'Escribe una habilidad...'}
-                      disabled={isSavingSkill || isLoadingSkills}
-                    />
+              <>
+                {/* Skills Modal */}
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                  <div className="bg-white rounded-xl p-6 w-full max-w-xl mx-4">
+                    <div className="flex justify-between items-center mb-4">
+                      <h3 className="text-xl font-bold text-primary">Agregar Habilidades</h3>
+                      <button
+                        onClick={handleCancelAddSkill}
+                        className="text-gray-500 hover:text-gray-700 text-2xl"
+                      >
+                        ×
+                      </button>
+                    </div>
 
-                    {/* Suggestions dropdown */}
-                    {showSuggestions && filteredSkills.length > 0 && (
-                      <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-48 overflow-y-auto">
-                        {filteredSkills.map((skill) => (
-                          <div
-                            key={skill.id}
-                            onClick={() => handleSkillSelect(skill)}
-                            className="px-3 py-2 hover:bg-gray-100 cursor-pointer text-sm"
-                          >
-                            {skill.name}
-                          </div>
-                        ))}
+                    <div className="mb-4">
+                      <input
+                        type="text"
+                        value={skillInput}
+                        onChange={(e) => handleSkillInputChange(e.target.value)}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                        placeholder={isLoadingSkills ? 'Cargando habilidades...' : 'Buscar habilidad...'}
+                        disabled={isLoadingSkills}
+                      />
+                    </div>
+
+                    <div className="border border-gray-200 rounded-lg max-h-80 overflow-y-auto">
+                      {isLoadingSkills ? (
+                        <div className="p-4 text-sm text-gray-500">Cargando habilidades...</div>
+                      ) : (
+                        (() => {
+                          const availableSkills = skillsOptions.filter(skill => !skillsData.some(addedSkill => (addedSkill.id && addedSkill.id === skill.id) || addedSkill.name === skill.name))
+                          const displayed = (skillInput.trim().length > 0)
+                            ? availableSkills.filter(skill => skill.name.toLowerCase().includes(skillInput.toLowerCase()))
+                            : availableSkills
+                          if (displayed.length === 0) {
+                            return <div className="p-4 text-sm text-gray-500">No hay habilidades para mostrar</div>
+                          }
+                          return (
+                            <ul className="divide-y divide-gray-100">
+                              {displayed.map((skill) => (
+                                <li key={skill.id} className="flex items-center justify-between px-4 py-2">
+                                  <span className="text-sm text-gray-800">{skill.name}</span>
+                                  <button
+                                    onClick={() => handleAddSkillFromList(skill)}
+                                    disabled={isSavingSkill}
+                                    className="w-8 h-8 flex items-center justify-center rounded-full bg-primary text-white hover:bg-primary/90 disabled:opacity-50"
+                                    title="Agregar"
+                                  >
+                                    +
+                                  </button>
+                                </li>
+                              ))}
+                            </ul>
+                          )
+                        })()
+                      )}
+                    </div>
+
+                    {error && (
+                      <div className="mt-3 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+                        {error}
                       </div>
                     )}
-                  </div>
-                  <div className="flex flex-col sm:flex-row gap-2">
-                    <button
-                      onClick={handleSaveSkill}
-                      disabled={isSavingSkill || !skillInput.trim() || isLoadingSkills}
-                      className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
-                    >
-                      {isSavingSkill ? (
-                        <>
-                          <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                          </svg>
-                          Guardando...
-                        </>
-                      ) : (
-                        'Guardar'
-                      )}
-                    </button>
-                    <button
-                      onClick={handleCancelAddSkill}
-                      disabled={isSavingSkill}
-                      className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      Cancelar
-                    </button>
+
+                    <div className="flex justify-end gap-2 mt-4">
+                      <button
+                        onClick={handleCancelAddSkill}
+                        disabled={isSavingSkill}
+                        className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        Cerrar
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </>
             )}
 
             {/* Error message */}

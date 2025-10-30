@@ -3,12 +3,12 @@ import Image from "next/image"
 import { BiSolidQuoteLeft } from "react-icons/bi"
 import { BiSolidQuoteRight } from "react-icons/bi"
 
-export default function HeaderHome() {
+export default function HeaderHome({ imgHeader = "/img/headerHome3.png", bgSearcher, initialFilters = {} }) {
   return (
     <div className="w-full h-[800px] sm:h-[700px] md:h-[600px] flex justify-center items-center  relative">
       <Image
         className="hidden sm:block"
-        src="/img/headerHome3.png"
+        src={imgHeader}
         alt="headerBackground"
         layout="fill"
         objectFit="cover"
@@ -38,7 +38,7 @@ export default function HeaderHome() {
           </h1>
         </div>
         <div className="w-full flex justify-center">
-          <SearcherGeneral />
+          <SearcherGeneral bgSearcher={bgSearcher} initialFilters={initialFilters} />
         </div>
       </div>
     </div>

@@ -7,7 +7,7 @@ import {
 } from "react-icons/hi"
 import { FaHouseChimney } from "react-icons/fa6"
 
-export default function DrawerMenuHome({ isOpen, setIsOpen }) {
+export default function DrawerMenuHome({ isOpen, setIsOpen, hasSession = false, profileUrl = "" }) {
   const handleClose = () => setIsOpen(false)
   return (
     <Drawer open={isOpen} onClose={handleClose}>
@@ -24,12 +24,34 @@ export default function DrawerMenuHome({ isOpen, setIsOpen }) {
                   <Sidebar.Item href="/" icon={FaHouseChimney}>
                     inicio
                   </Sidebar.Item>
-                  <Sidebar.Item href="/candidato/registro" icon={HiUsers}>
-                    Buscar Empleo
-                  </Sidebar.Item>
-                  <Sidebar.Item href="/empresa/registro" icon={HiShoppingBag}>
-                    Registrar Empresa
-                  </Sidebar.Item>
+                  {hasSession ? (
+                    <>
+                      <Sidebar.Item href="/jobOffers" icon={HiUsers}>
+                        Buscar Empleo
+                      </Sidebar.Item>
+                      <Sidebar.Item href={profileUrl} icon={HiShoppingBag}>
+                        Perfil
+                      </Sidebar.Item>
+                    </>
+                  ) : (
+                    <>
+                      <Sidebar.Item href="/jobOffers" icon={HiUsers}>
+                        Buscar Empleo
+                      </Sidebar.Item>
+                      <Sidebar.Item href="/candidato/registro" icon={HiUsers}>
+                        Candidato - Registrar
+                      </Sidebar.Item>
+                      <Sidebar.Item href="/candidato/login" icon={HiUsers}>
+                        Candidato - Iniciar sesión
+                      </Sidebar.Item>
+                      <Sidebar.Item href="/empresa/registro" icon={HiShoppingBag}>
+                        Empresa - Registrar
+                      </Sidebar.Item>
+                      <Sidebar.Item href="/empresa/login" icon={HiShoppingBag}>
+                        Empresa - Iniciar sesión
+                      </Sidebar.Item>
+                    </>
+                  )}
                 </Sidebar.ItemGroup>
                 <Sidebar.ItemGroup>
                   <Sidebar.Item href="/node_modules" icon={HiClipboard}>

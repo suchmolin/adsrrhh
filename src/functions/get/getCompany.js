@@ -6,14 +6,12 @@ export default async function getCompany(idempresa) {
     }
     
     const url = `${baseUrl}/hr/company?id=${idempresa}`
-    console.log("Fetching company from:", url)
     
     const resp = await fetch(url)
     if (!resp.ok) {
       throw new Error(`HTTP error! status: ${resp.status}`)
     }
     const json = await resp.json()
-    console.log("JSON:", json)
     return json
   } catch (error) {
     console.error("Error fetching company data:", error)

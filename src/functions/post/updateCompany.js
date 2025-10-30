@@ -1,8 +1,6 @@
 export default async function updateCompany(idempresa, updatedData) {
   try {
     const url = `/api/company?id=${idempresa}`
-    console.log("Updating company at:", url)
-    console.log("Data to update:", updatedData)
     
     // Crear FormData para manejar archivos
     const formData = new FormData()
@@ -26,7 +24,6 @@ export default async function updateCompany(idempresa, updatedData) {
     }
     
     const json = await resp.json()
-    console.log("Update response:", json)
     return json
   } catch (error) {
     console.error("Error updating company data:", error)
