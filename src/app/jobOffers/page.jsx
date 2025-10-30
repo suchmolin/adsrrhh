@@ -1,7 +1,7 @@
 "use client"
 
 import { useSearchParams } from "next/navigation"
-import { useEffect, useState } from "react"
+import { Suspense, useEffect, useState } from "react"
 import dynamic from "next/dynamic"
 import HeaderHome from "@/components/home/HeaderHome/page";
 import FooterHome from "@/components/shared/FooterHome/page";
@@ -20,7 +20,7 @@ const JobOffersSection = dynamic(
     }
 )
 
-export default function JobOffersPage() {
+function JobOffersContent() {
     const searchParams = useSearchParams()
     const [initialFilters, setInitialFilters] = useState({})
     const [isClient, setIsClient] = useState(false)
@@ -49,7 +49,6 @@ export default function JobOffersPage() {
             <NavbarHome />
             <HeaderHome imgHeader="/img/headerHome3.png" bgSearcher="bg-primary" initialFilters={initialFilters} />
 
-            {/* Indicador de filtros aplicados */}
             {isClient && (initialFilters.name || initialFilters.ubication) && (
                 <div className="bg-blue-50 border-l-4 border-blue-400 p-4 mx-4 mt-4 rounded">
                     <div className="flex items-center">
@@ -73,5 +72,17 @@ export default function JobOffersPage() {
             <JobOffersSection initialFilters={initialFilters} />
             <FooterHome />
         </>
+    )
+}
+
+export default function JobOffersPage() {
+    return (
+        <Suspense fallback={
+            <div className="flex justify-center items-center h-64">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-900"></div>
+            </div>
+        }>
+            <JobOffersContent />
+        </Suspense>
     )
 }
