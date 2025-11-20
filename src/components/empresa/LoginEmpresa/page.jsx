@@ -2,6 +2,8 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { getTokenData } from "@/utils/jwt"
+import { setCookie } from "@/utils/cookies"
 
 export default function LoginEmpresa() {
     const [formData, setFormData] = useState({
@@ -42,14 +44,35 @@ export default function LoginEmpresa() {
                 throw new Error(data.error || "Error en el login")
             }
 
-            if (data.id) {
-                // Create session cookie for company
-                document.cookie = `empresa_session=${data.id}; path=/; max-age=${7 * 24 * 60 * 60}; secure; samesite=strict`
+            // The response now contains a JWT token instead of id
+            const token = data.token || data.access_token || data.jwt_token
+            
+            if (!token) {
+                throw new Error("Token no recibido del servidor")
+            }
 
-                // Redirect to company profile
-                router.push(`/empresa/perfil/${data.id}`)
-            } else {
-                throw new Error("Usuario o Contraseña incorrectos")
+            // Decode token to get user_id and rol
+            const tokenData = getTokenData(token)
+            
+            if (!tokenData || !tokenData.user_id) {
+                throw new Error("Token inválido o sin información de usuario")
+            }
+
+            // Verify that the role is company - only redirect if role matches
+            if (tokenData.rol !== 'company') {
+                throw new Error("Este usuario no es una empresa")
+            }
+
+            // Only proceed with redirect if role is company
+            if (tokenData.rol === 'company') {
+                // Save token in session cookie
+                setCookie('session_token', token, 7)
+                
+                // Verify cookie was set before redirecting
+                console.log('Token saved, user_id:', tokenData.user_id, 'rol:', tokenData.rol)
+                
+                // Use window.location for a full page reload to ensure cookie is available
+                window.location.href = `/empresa/perfil/${tokenData.user_id}`
             }
         } catch (err) {
             console.error("Login error:", err)

@@ -1,13 +1,13 @@
 import { createAuthHeaders } from '@/utils/auth'
 
-export default async function getCompany(idempresa) {
+export default async function getJobSeekerCV(idcandidato) {
   try {
-    if (!idempresa) {
-      throw new Error('Company ID is required')
+    if (!idcandidato) {
+      throw new Error('Job seeker ID is required')
     }
     
     // Use Next.js API route instead of direct backend call
-    const url = `/api/company?id=${idempresa}`
+    const url = `/api/jobSeeker/cv_file?id=${idcandidato}`
     
     // Include authorization headers with Bearer token
     const headers = createAuthHeaders({
@@ -28,7 +28,8 @@ export default async function getCompany(idempresa) {
     const json = await resp.json()
     return json
   } catch (error) {
-    console.error("Error fetching company data:", error)
+    console.error("Error fetching job seeker CV:", error)
     throw error
   }
 }
+

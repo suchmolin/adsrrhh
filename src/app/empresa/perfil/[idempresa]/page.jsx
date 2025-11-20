@@ -13,7 +13,7 @@ import getJobOffers from "@/functions/get/getJobOffers"
 import dynamic from "next/dynamic"
 import NoSSR from "@/components/shared/NoSSR"
 import { useRouter } from "next/navigation"
-import { hasValidEmpresaSession, getCookie } from "@/utils/cookies"
+import { hasValidEmpresaSession, getUserIdFromToken, getSessionToken } from "@/utils/cookies"
 
 // Create a client-only wrapper to prevent hydration issues
 const ClientOnly = ({ children, fallback = null }) => {
@@ -49,14 +49,25 @@ export default function PerfilEmpresa({ params }) {
     const resolvedParams = use(params)
 
     const checkSession = () => {
-        if (!hasValidEmpresaSession()) {
+        // First, verify that session_token cookie exists
+        const sessionToken = getSessionToken()
+        if (!sessionToken) {
+            console.log('No session_token cookie found')
             router.push('/empresa/login')
             return false
         }
 
-        // Verify that the session ID matches the company ID in the URL
-        const sessionId = getCookie('empresa_session')
-        if (sessionId && resolvedParams.idempresa && sessionId !== resolvedParams.idempresa) {
+        // Then verify it's a valid company session
+        if (!hasValidEmpresaSession()) {
+            console.log('Invalid company session')
+            router.push('/empresa/login')
+            return false
+        }
+
+        // Verify that the user_id from token matches the company ID in the URL
+        const userId = getUserIdFromToken()
+        if (userId && resolvedParams.idempresa && userId.toString() !== resolvedParams.idempresa.toString()) {
+            console.log('User ID mismatch:', userId, 'vs', resolvedParams.idempresa)
             router.push('/empresa/login')
             return false
         }

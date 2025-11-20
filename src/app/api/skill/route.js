@@ -1,3 +1,5 @@
+import { createServerAuthHeaders } from '@/utils/serverAuth'
+
 export async function POST(request) {
   try {
     const { searchParams } = new URL(request.url)
@@ -21,11 +23,14 @@ export async function POST(request) {
     const url = `${baseUrl}/hr/job_seeker/lines?id=${id}`
     console.log("Saving skill at:", url)
     
+    // Get auth headers with Bearer token
+    const headers = await createServerAuthHeaders({
+      'Content-Type': 'application/json',
+    })
+    
     const response = await fetch(url, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: headers,
       body: JSON.stringify(body),
       cache: "no-cache",
     })
@@ -73,11 +78,14 @@ export async function PUT(request) {
     const url = `${baseUrl}/hr/job_seeker?id=${id}`
     console.log("Updating skills at:", url)
     
+    // Get auth headers with Bearer token
+    const headers = await createServerAuthHeaders({
+      'Content-Type': 'application/json',
+    })
+    
     const response = await fetch(url, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: headers,
       body: JSON.stringify(body),
       cache: "no-cache",
     })

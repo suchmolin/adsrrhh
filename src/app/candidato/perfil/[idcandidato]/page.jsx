@@ -9,7 +9,7 @@ import getJobSeeker from "@/functions/get/getJobSeeker"
 import dynamic from "next/dynamic"
 import NoSSR from "@/components/shared/NoSSR"
 import { useRouter } from "next/navigation"
-import { hasValidSession, getCookie } from "@/utils/cookies"
+import { hasValidCandidatoSession, getUserIdFromToken, getSessionToken } from "@/utils/cookies"
 import NavbarHome from "@/components/shared/NavbarHome/page"
 
 // Create a client-only wrapper to prevent hydration issues
@@ -40,14 +40,25 @@ export default function PerfilCandidato({ params }) {
   const resolvedParams = use(params)
 
   const checkSession = () => {
-    if (!hasValidSession()) {
+    // First, verify that session_token cookie exists
+    const sessionToken = getSessionToken()
+    if (!sessionToken) {
+      console.log('No session_token cookie found')
       router.push('/candidato/login')
       return false
     }
 
-    // Verify that the session ID matches the candidate ID in the URL
-    const sessionId = getCookie('candidato_session')
-    if (sessionId && resolvedParams.idcandidato && sessionId !== resolvedParams.idcandidato) {
+    // Then verify it's a valid candidate session
+    if (!hasValidCandidatoSession()) {
+      console.log('Invalid candidate session')
+      router.push('/candidato/login')
+      return false
+    }
+
+    // Verify that the user_id from token matches the candidate ID in the URL
+    const userId = getUserIdFromToken()
+    if (userId && resolvedParams.idcandidato && userId.toString() !== resolvedParams.idcandidato.toString()) {
+      console.log('User ID mismatch:', userId, 'vs', resolvedParams.idcandidato)
       router.push('/candidato/login')
       return false
     }

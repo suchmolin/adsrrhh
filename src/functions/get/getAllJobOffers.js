@@ -20,6 +20,12 @@ export default async function getAllJobOffers(filters = {}) {
             console.log("Domain string being sent:", domainString)
         }
         
+        // Add candidate ID parameter if provided
+        if (filters.candidateId) {
+            queryParams += `&id=${filters.candidateId}`
+            console.log("Candidate ID being sent:", filters.candidateId)
+        }
+        
         const url = `/api/allJobOffers?${queryParams}`
         console.log("Full URL being requested:", url)
         

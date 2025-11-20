@@ -1,3 +1,5 @@
+import { createServerAuthHeaders } from '@/utils/serverAuth'
+
 export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url)
@@ -17,10 +19,13 @@ export async function GET(request) {
     const url = `${baseUrl}/hr/company/job_offer?id=${id}&page=${page}&items_per_page=${itemsPerPage}`
     console.log("Full URL:", url)
     
+    // Get auth headers with Bearer token
+    const headers = await createServerAuthHeaders()
+    
     const response = await fetch(url, {
       method: "GET",
-      mode: "no-cors",
       cache: "no-cache",
+      headers: headers,
     })
     
     if (!response.ok) {
@@ -61,12 +66,16 @@ export async function POST(request) {
     console.log("Creating job offer:", body)
     console.log("Company ID:", companyId)
     
+    // Get auth headers with Bearer token
+    const headers = await createServerAuthHeaders({
+      "Content-Type": "application/json",
+    })
+    
     const response = await fetch(url, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: headers,
       body: JSON.stringify(body),
+      cache: "no-cache",
     })
 
     console.log("Response:", response)
@@ -113,12 +122,16 @@ export async function PUT(request) {
     console.log("Job offer ID:", jobOfferId)
     console.log("Update URL:", url)
     
+    // Get auth headers with Bearer token
+    const headers = await createServerAuthHeaders({
+      "Content-Type": "application/json",
+    })
+    
     const response = await fetch(url, {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: headers,
       body: JSON.stringify(body),
+      cache: "no-cache",
     })
 
     if (!response.ok) {
@@ -159,11 +172,15 @@ export async function DELETE(request) {
     console.log("Deleting job offer with ID:", jobOfferId)
     console.log("Delete URL:", url)
     
+    // Get auth headers with Bearer token
+    const headers = await createServerAuthHeaders({
+      "Content-Type": "application/json",
+    })
+    
     const response = await fetch(url, {
       method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: headers,
+      cache: "no-cache",
     })
 
     if (!response.ok) {

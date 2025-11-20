@@ -1,16 +1,30 @@
+import { createAuthHeaders } from '@/utils/auth'
+
 export default async function getJobSeeker(idcandidato) {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL
-    if (!baseUrl) {
-      throw new Error('API base URL is not configured')
+    if (!idcandidato) {
+      throw new Error('Job seeker ID is required')
     }
     
-    const url = `${baseUrl}/hr/job_seeker?id=${idcandidato}`
+    // Use Next.js API route instead of direct backend call
+    const url = `/api/jobSeeker?id=${idcandidato}`
     
-    const resp = await fetch(url)
+    // Include authorization headers with Bearer token
+    const headers = createAuthHeaders({
+      'Content-Type': 'application/json',
+    })
+    
+    const resp = await fetch(url, {
+      method: 'GET',
+      headers: headers,
+      cache: 'no-cache',
+    })
+    
     if (!resp.ok) {
-      throw new Error(`HTTP error! status: ${resp.status}`)
+      const errorData = await resp.json().catch(() => ({}))
+      throw new Error(errorData.error || `HTTP error! status: ${resp.status}`)
     }
+    
     const json = await resp.json()
     return json
   } catch (error) {

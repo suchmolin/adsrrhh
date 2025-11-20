@@ -1,3 +1,5 @@
+import { createServerAuthHeaders } from '@/utils/serverAuth'
+
 export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url)
@@ -15,9 +17,13 @@ export async function GET(request) {
     const url = `${baseUrl}/hr/company?id=${id}`
     console.log("Full URL:", url)
     
+    // Get auth headers with Bearer token
+    const headers = await createServerAuthHeaders()
+    
     const response = await fetch(url, {
       mode: "no-cors",
       cache: "no-cache",
+      headers: headers,
     })
 
     if (!response.ok) {
@@ -62,12 +68,15 @@ export async function PUT(request) {
     const url = `${baseUrl}/hr/company?id=${id}`
     console.log("Updating company at:", url)
     
+    // Get auth headers with Bearer token
+    const authHeaders = await createServerAuthHeaders()
+    
     // Check if image_1920 is present in the FormData
     const hasImage = formData.has('image_1920')
     console.log("Has image_1920:", hasImage)
     
     let requestBody
-    let headers = {}
+    let headers = { ...authHeaders }
     
     if (hasImage) {
       // If image_1920 is present, send as FormData

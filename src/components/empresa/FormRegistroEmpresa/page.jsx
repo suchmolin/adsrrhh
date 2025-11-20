@@ -124,7 +124,7 @@ export default function FormRegistroCandidato() {
                 required
               />
               <div className="text-xs text-gray-500">
-                <p>{"(6 - 12 caracteres)"}</p>
+                <p>{"(6 - 15 caracteres, mayúscula, minúscula y símbolo requeridos)"}</p>
               </div>
             </div>
             <div className="w-full mb-4">

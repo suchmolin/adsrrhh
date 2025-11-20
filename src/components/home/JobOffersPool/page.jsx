@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import JobOfferCard from "@/components/shared/JobOfferCard/page"
 import getAllJobOffers from "@/functions/get/getAllJobOffers"
+import { getUserIdFromToken, hasValidCandidatoSession } from "@/utils/cookies"
 
 export default function JobOffersPool({ filters = {}, onResetFilters }) {
     const [jobOffers, setJobOffers] = useState([])
@@ -49,7 +50,14 @@ export default function JobOffersPool({ filters = {}, onResetFilters }) {
             setLoading(true)
             setError(null)
 
-            const data = await getAllJobOffers(filters)
+            // Get candidate ID from token if exists
+            const candidateId = hasValidCandidatoSession() ? getUserIdFromToken() : null
+            const filtersWithCandidateId = {
+                ...filters,
+                ...(candidateId && { candidateId })
+            }
+
+            const data = await getAllJobOffers(filtersWithCandidateId)
 
             // Handle different response formats
             let offers = []

@@ -4,13 +4,11 @@ import Image from "next/image"
 import Link from "next/link"
 import { FaUser, FaSignOutAlt } from "react-icons/fa"
 import { useState, useRef, useEffect } from "react"
-import { useRouter } from "next/navigation"
-import { deleteCookie } from "@/utils/cookies"
+import { logout } from "@/utils/cookies"
 
 export default function NavbarPerfilCandidato() {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false)
     const dropdownRef = useRef(null)
-    const router = useRouter()
 
     // Cerrar dropdown al hacer clic fuera
     useEffect(() => {
@@ -27,10 +25,8 @@ export default function NavbarPerfilCandidato() {
     }, [])
 
     const handleLogout = () => {
-        // Eliminar cookie de sesión
-        deleteCookie('candidato_session')
-        // Redirigir al login
-        router.push('/candidato/login')
+        // Use centralized logout function which deletes session_token and all other cookies
+        logout()
     }
 
     return (

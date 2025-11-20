@@ -1,11 +1,120 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, Fragment } from "react"
 import Image from "next/image"
+import { useRouter } from "next/navigation"
 import ConfirmationModal from "../ConfirmationModal/page"
+import CandidatesModal from "../CandidatesModal/page"
+import { hasValidEmpresaSession, getUserIdFromToken, hasValidCandidatoSession } from "@/utils/cookies"
 
 export default function JobOfferModal({ offer, companyData, isOpen, onClose, onEdit, onDelete, showEditButtons = false }) {
+    const router = useRouter()
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+    const [isCompanyUser, setIsCompanyUser] = useState(false)
+    const [showSuccessModal, setShowSuccessModal] = useState(false)
+    const [isApplying, setIsApplying] = useState(false)
+    const [applyError, setApplyError] = useState(null)
+    const [candidates, setCandidates] = useState([])
+    const [loadingCandidates, setLoadingCandidates] = useState(false)
+    const [showCandidatesModal, setShowCandidatesModal] = useState(false)
+
+    // Debug: Log when showCandidatesModal changes
+    useEffect(() => {
+        console.log('showCandidatesModal changed to:', showCandidatesModal)
+    }, [showCandidatesModal])
+
+    useEffect(() => {
+        setIsCompanyUser(hasValidEmpresaSession())
+    }, [])
+
+    useEffect(() => {
+        // Reset error when modal opens/closes
+        if (!isOpen) {
+            setApplyError(null)
+            setIsApplying(false)
+            setCandidates([])
+        }
+    }, [isOpen])
+
+    // Fetch candidates when modal opens from company profile
+    useEffect(() => {
+        const fetchCandidates = async () => {
+            // Only fetch if modal is open, offer has an ID, and it's opened from company profile
+            // showEditButtons is true ONLY when opened from company profile page
+            if (!isOpen || !offer?.id || !showEditButtons) {
+                return
+            }
+
+            setLoadingCandidates(true)
+            try {
+                const response = await fetch(`/api/hr/company/job_offer/candidates?id=${offer.id}`)
+
+                if (!response.ok) {
+                    throw new Error(`Error al obtener candidatos: ${response.status}`)
+                }
+
+                const data = await response.json()
+                // Handle both array and object with array property
+                const candidatesList = Array.isArray(data) ? data : (data.candidates || data.data || [])
+                console.log('Candidates fetched:', candidatesList.length, candidatesList)
+                setCandidates(candidatesList)
+            } catch (error) {
+                console.error('Error fetching candidates:', error)
+                setCandidates([])
+            } finally {
+                setLoadingCandidates(false)
+            }
+        }
+
+        fetchCandidates()
+    }, [isOpen, offer?.id, showEditButtons])
+
+    const handleApply = async () => {
+        if (!hasValidCandidatoSession()) {
+            router.push('/candidato/login')
+            return
+        }
+
+        const candidatoId = getUserIdFromToken()
+
+        if (!candidatoId) {
+            setApplyError('No se pudo obtener el ID del candidato')
+            return
+        }
+
+        if (!offer.id) {
+            setApplyError('No se pudo obtener el ID de la oferta')
+            return
+        }
+
+        setIsApplying(true)
+        setApplyError(null)
+
+        try {
+            const response = await fetch(`/api/hr/application?id=${offer.id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    applicant_id: parseInt(candidatoId)
+                })
+            })
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({ error: 'Error al aplicar a la oferta' }))
+                throw new Error(errorData.error || 'Error al aplicar a la oferta')
+            }
+
+            // Success - show success modal
+            setShowSuccessModal(true)
+        } catch (error) {
+            console.error('Error applying to job offer:', error)
+            setApplyError(error.message || 'Error al aplicar a la oferta')
+        } finally {
+            setIsApplying(false)
+        }
+    }
 
     if (!isOpen || !offer) return null
 
@@ -76,246 +185,336 @@ export default function JobOfferModal({ offer, companyData, isOpen, onClose, onE
     }
 
     return (
-        <div className="fixed inset-0 z-50 overflow-y-auto">
-            {/* Backdrop */}
-            <div
-                className="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
-                onClick={onClose}
-            ></div>
+        <Fragment>
+            <div className="fixed inset-0 z-50 overflow-y-auto">
+                {/* Backdrop */}
+                <div
+                    className="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
+                    onClick={onClose}
+                ></div>
 
-            {/* Modal */}
-            <div className="flex min-h-full items-center justify-center p-4">
-                <div className="relative bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-                    {/* Header */}
-                    <div className="flex items-center justify-between p-6 border-b border-gray-200">
-                        <h2 className="text-2xl font-bold text-gray-900">
-                            Detalles de la Oferta
-                        </h2>
-                        <button
-                            onClick={onClose}
-                            className="text-gray-400 hover:text-gray-600 transition-colors"
-                        >
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        </button>
-                    </div>
+                {/* Modal */}
+                <div className="flex min-h-full items-center justify-center p-4">
+                    <div className="relative bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+                        {/* Header */}
+                        <div className="flex items-center justify-between p-6 border-b border-gray-200">
+                            <h2 className="text-2xl font-bold text-gray-900">
+                                Detalles de la Oferta
+                            </h2>
+                            <button
+                                onClick={onClose}
+                                className="text-gray-400 hover:text-gray-600 transition-colors"
+                            >
+                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
 
-                    {/* Content */}
-                    <div className="p-6 space-y-6">
-                        {/* Company and Job Info */}
-                        <div className="flex items-start gap-4">
-                            {/* Company Logo */}
-                            <div className="flex-shrink-0">
-                                <div className="w-20 h-20 rounded-full bg-white border border-gray-200 flex items-center justify-center overflow-hidden relative">
-                                    {(companyData?.image_1920 || offer.company_logo) ? (
-                                        <Image
-                                            src={companyData?.image_1920
-                                                ? `data:image/jpeg;base64,${companyData.image_1920}`
-                                                : `data:image/jpeg;base64,${offer.company_logo || offer.company_image}`}
-                                            alt={companyData?.name || offer.company_name || 'Logo'}
-                                            fill
-                                            style={{ objectFit: 'cover' }}
-                                        />
-                                    ) : (
-                                        <div className="text-primary font-bold text-lg text-center p-2">
-                                            {(companyData?.name || offer.company_name)?.substring(0, 3).toUpperCase() || 'EMP'}
-                                        </div>
+                        {/* Content */}
+                        <div className="p-6 space-y-6">
+                            {/* Company and Job Info */}
+                            <div className="flex items-start gap-4">
+                                {/* Company Logo */}
+                                <div className="flex-shrink-0">
+                                    <div className="w-20 h-20 rounded-full bg-white border border-gray-200 flex items-center justify-center overflow-hidden relative">
+                                        {(companyData?.image_1920 || offer.company_logo) ? (
+                                            <Image
+                                                src={companyData?.image_1920
+                                                    ? `data:image/jpeg;base64,${companyData.image_1920}`
+                                                    : `data:image/jpeg;base64,${offer.company_logo || offer.company_image}`}
+                                                alt={companyData?.name || offer.company_name || 'Logo'}
+                                                fill
+                                                style={{ objectFit: 'cover' }}
+                                            />
+                                        ) : (
+                                            <div className="text-primary font-bold text-lg text-center p-2">
+                                                {(companyData?.name || offer.company_name)?.substring(0, 3).toUpperCase() || 'EMP'}
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+
+                                {/* Job Details */}
+                                <div className="flex-1">
+                                    <h3 className="text-2xl font-bold text-blue-900 mb-2">
+                                        {offer.name || offer.job_title || 'Título no especificado'}
+                                    </h3>
+                                    <p className="text-lg text-gray-600 mb-2">
+                                        {offer.company_name || 'Empresa'}
+                                    </p>
+                                    <p className="text-sm text-gray-500">
+                                        • {calculateDaysActive(offer.create_date)}
+                                    </p>
+                                    {/* Show candidates count ONLY when opened from company profile */}
+                                    {showEditButtons && (
+                                        <p className="text-sm text-gray-500 mt-1">
+                                            • {loadingCandidates ? (
+                                                <span className="text-gray-400">Cargando candidatos...</span>
+                                            ) : candidates.length > 0 ? (
+                                                <button
+                                                    type="button"
+                                                    onClick={(e) => {
+                                                        e.preventDefault()
+                                                        e.stopPropagation()
+                                                        console.log('Click detected! Candidates:', candidates.length, 'showCandidatesModal:', showCandidatesModal)
+                                                        console.log('Opening candidates modal, candidates count:', candidates.length)
+                                                        setShowCandidatesModal(true)
+                                                        console.log('State updated, showCandidatesModal should be true')
+                                                    }}
+                                                    className="cursor-pointer hover:text-blue-600 hover:underline transition-colors text-left bg-transparent border-none p-0 text-inherit"
+                                                    style={{ userSelect: 'none' }}
+                                                >
+                                                    {candidates.length} {candidates.length === 1 ? 'candidato ha aplicado' : 'candidatos han aplicado'}
+                                                </button>
+                                            ) : (
+                                                <span>0 candidatos han aplicado</span>
+                                            )}
+                                        </p>
                                     )}
                                 </div>
                             </div>
 
-                            {/* Job Details */}
-                            <div className="flex-1">
-                                <h3 className="text-2xl font-bold text-blue-900 mb-2">
-                                    {offer.name || offer.job_title || 'Título no especificado'}
-                                </h3>
-                                <p className="text-lg text-gray-600 mb-2">
-                                    {offer.company_name || 'Empresa'}
-                                </p>
-                                <p className="text-sm text-gray-500">
-                                    • {calculateDaysActive(offer.create_date)}
-                                </p>
-                            </div>
-                        </div>
-
-                        {/* Key Information */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                            {/* Salary */}
-                            <div className="bg-blue-50 p-4 rounded-lg">
-                                <div className="flex items-center gap-2 mb-1">
-                                    <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
-                                    </svg>
-                                    <span className="font-semibold text-blue-900">Salario</span>
-                                </div>
-                                <p className="text-lg font-bold text-blue-800">
-                                    {formatSalary(offer.salary)}
-                                </p>
-                            </div>
-
-                            {/* Modality */}
-                            <div className="bg-green-50 p-4 rounded-lg">
-                                <div className="flex items-center gap-2 mb-1">
-                                    <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                                    </svg>
-                                    <span className="font-semibold text-green-900">Modalidad</span>
-                                </div>
-                                <p className="text-lg font-bold text-green-800">
-                                    {formatModality(offer.modality)}
-                                </p>
-                            </div>
-
-                            {/* Location */}
-                            <div className="bg-purple-50 p-4 rounded-lg">
-                                <div className="flex items-center gap-2 mb-1">
-                                    <svg className="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    </svg>
-                                    <span className="font-semibold text-purple-900">Ubicación</span>
-                                </div>
-                                <p className="text-lg font-bold text-purple-800">
-                                    {offer.ubication || 'No especificada'}
-                                </p>
-                            </div>
-
-                            {/* Job Type */}
-                            <div className="bg-orange-50 p-4 rounded-lg">
-                                <div className="flex items-center gap-2 mb-1">
-                                    <svg className="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                    <span className="font-semibold text-orange-900">Tipo de Jornada</span>
-                                </div>
-                                <p className="text-lg font-bold text-orange-800">
-                                    {formatJobType(offer.job_type || offer.type_of_workday)}
-                                </p>
-                            </div>
-
-                            {/* Experience Level */}
-                            <div className="bg-indigo-50 p-4 rounded-lg">
-                                <div className="flex items-center gap-2 mb-1">
-                                    <svg className="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                                    </svg>
-                                    <span className="font-semibold text-indigo-900">Nivel de Experiencia</span>
-                                </div>
-                                <p className="text-lg font-bold text-indigo-800">
-                                    {formatExperienceLevel(offer.experience_level || offer.experience)}
-                                </p>
-                            </div>
-                        </div>
-
-                        {/* Skills */}
-                        {offer.skill_ids && offer.skill_ids.length > 0 && (
-                            <div>
-                                <h4 className="text-lg font-semibold text-gray-900 mb-3">Habilidades Requeridas</h4>
-                                <div className="flex flex-wrap gap-2">
-                                    {offer.skill_ids.map((skill, index) => (
-                                        <span
-                                            key={skill.id || index}
-                                            className="px-3 py-2 bg-blue-100 text-blue-800 text-sm font-medium rounded-lg border border-blue-200"
-                                        >
-                                            {skill.name}
-                                        </span>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-
-                        {/* Description */}
-                        {offer.description && (
-                            <div>
-                                <h4 className="text-lg font-semibold text-gray-900 mb-3">Descripción del Puesto</h4>
-                                <div
-                                    className="prose max-w-none text-gray-700 leading-relaxed [&_p]:mb-3 [&_ul]:list-disc [&_ul]:ml-6 [&_ol]:list-decimal [&_ol]:ml-6 [&_li]:mb-1 [&_strong]:font-semibold [&_em]:italic [&_a]:text-blue-600 [&_a]:underline"
-                                    dangerouslySetInnerHTML={{ __html: sanitizeHtml(offer.description) }}
-                                />
-                            </div>
-                        )}
-
-                        {/* Additional Info */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            {offer.applications_count && (
-                                <div className="bg-gray-50 p-4 rounded-lg">
-                                    <h5 className="font-semibold text-gray-900 mb-1">Solicitudes</h5>
-                                    <p className="text-gray-700">{offer.applications_count} personas han aplicado</p>
-                                </div>
-                            )}
-
-                            {offer.create_date && (
-                                <div className="bg-gray-50 p-4 rounded-lg">
-                                    <h5 className="font-semibold text-gray-900 mb-1">Fecha de Publicación</h5>
-                                    <p className="text-gray-700">
-                                        {new Date(offer.create_date).toLocaleDateString('es-VE', {
-                                            year: 'numeric',
-                                            month: 'long',
-                                            day: 'numeric'
-                                        })}
+                            {/* Key Information */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                {/* Salary */}
+                                <div className="bg-blue-50 p-4 rounded-lg">
+                                    <div className="flex items-center gap-2 mb-1">
+                                        <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+                                        </svg>
+                                        <span className="font-semibold text-blue-900">Salario</span>
+                                    </div>
+                                    <p className="text-lg font-bold text-blue-800">
+                                        {formatSalary(offer.salary)}
                                     </p>
                                 </div>
+
+                                {/* Modality */}
+                                <div className="bg-green-50 p-4 rounded-lg">
+                                    <div className="flex items-center gap-2 mb-1">
+                                        <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                        </svg>
+                                        <span className="font-semibold text-green-900">Modalidad</span>
+                                    </div>
+                                    <p className="text-lg font-bold text-green-800">
+                                        {formatModality(offer.modality)}
+                                    </p>
+                                </div>
+
+                                {/* Location */}
+                                <div className="bg-purple-50 p-4 rounded-lg">
+                                    <div className="flex items-center gap-2 mb-1">
+                                        <svg className="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        </svg>
+                                        <span className="font-semibold text-purple-900">Ubicación</span>
+                                    </div>
+                                    <p className="text-lg font-bold text-purple-800">
+                                        {offer.ubication || 'No especificada'}
+                                    </p>
+                                </div>
+
+                                {/* Job Type */}
+                                <div className="bg-orange-50 p-4 rounded-lg">
+                                    <div className="flex items-center gap-2 mb-1">
+                                        <svg className="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        <span className="font-semibold text-orange-900">Tipo de Jornada</span>
+                                    </div>
+                                    <p className="text-lg font-bold text-orange-800">
+                                        {formatJobType(offer.job_type || offer.type_of_workday)}
+                                    </p>
+                                </div>
+
+                                {/* Experience Level */}
+                                <div className="bg-indigo-50 p-4 rounded-lg">
+                                    <div className="flex items-center gap-2 mb-1">
+                                        <svg className="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                                        </svg>
+                                        <span className="font-semibold text-indigo-900">Nivel de Experiencia</span>
+                                    </div>
+                                    <p className="text-lg font-bold text-indigo-800">
+                                        {formatExperienceLevel(offer.experience_level || offer.experience)}
+                                    </p>
+                                </div>
+                            </div>
+
+                            {/* Skills */}
+                            {offer.skill_ids && offer.skill_ids.length > 0 && (
+                                <div>
+                                    <h4 className="text-lg font-semibold text-gray-900 mb-3">Habilidades Requeridas</h4>
+                                    <div className="flex flex-wrap gap-2">
+                                        {offer.skill_ids.map((skill, index) => (
+                                            <span
+                                                key={skill.id || index}
+                                                className="px-3 py-2 bg-blue-100 text-blue-800 text-sm font-medium rounded-lg border border-blue-200"
+                                            >
+                                                {skill.name}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Description */}
+                            {offer.description && (
+                                <div>
+                                    <h4 className="text-lg font-semibold text-gray-900 mb-3">Descripción del Puesto</h4>
+                                    <div
+                                        className="prose max-w-none text-gray-700 leading-relaxed [&_p]:mb-3 [&_ul]:list-disc [&_ul]:ml-6 [&_ol]:list-decimal [&_ol]:ml-6 [&_li]:mb-1 [&_strong]:font-semibold [&_em]:italic [&_a]:text-blue-600 [&_a]:underline"
+                                        dangerouslySetInnerHTML={{ __html: sanitizeHtml(offer.description) }}
+                                    />
+                                </div>
+                            )}
+
+                            {/* Additional Info */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                {offer.applications_count && (
+                                    <div className="bg-gray-50 p-4 rounded-lg">
+                                        <h5 className="font-semibold text-gray-900 mb-1">Solicitudes</h5>
+                                        <p className="text-gray-700">{offer.applications_count} personas han aplicado</p>
+                                    </div>
+                                )}
+
+                                {offer.create_date && (
+                                    <div className="bg-gray-50 p-4 rounded-lg">
+                                        <h5 className="font-semibold text-gray-900 mb-1">Fecha de Publicación</h5>
+                                        <p className="text-gray-700">
+                                            {new Date(offer.create_date).toLocaleDateString('es-VE', {
+                                                year: 'numeric',
+                                                month: 'long',
+                                                day: 'numeric'
+                                            })}
+                                        </p>
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* Application Status */}
+                            {offer.has_applied && (
+                                <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                                    <div className="flex items-center gap-3">
+                                        <svg className="w-6 h-6 text-green-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        <div>
+                                            <h5 className="font-semibold text-green-900 mb-1">Ya has aplicado a esta oferta</h5>
+                                            <p className="text-green-700 text-sm">Tu solicitud ha sido enviada exitosamente.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Error Message */}
+                        {applyError && (
+                            <div className="mx-6 mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+                                {applyError}
+                            </div>
+                        )}
+
+                        {/* Footer */}
+                        <div className="flex justify-end gap-3 p-6 border-t border-gray-200 bg-gray-50">
+                            <button
+                                onClick={onClose}
+                                className="px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                            >
+                                Cerrar
+                            </button>
+
+                            {showEditButtons ? (
+                                <>
+                                    <button
+                                        onClick={() => {
+                                            onEdit && onEdit(offer)
+                                            onClose()
+                                        }}
+                                        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold"
+                                    >
+                                        <svg className="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                        </svg>
+                                        Editar
+                                    </button>
+                                    <button
+                                        onClick={() => setShowDeleteConfirm(true)}
+                                        className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-semibold"
+                                    >
+                                        <svg className="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                        </svg>
+                                        Eliminar
+                                    </button>
+                                </>
+                            ) : (
+                                !isCompanyUser && (
+                                    offer.has_applied ? (
+                                        <button
+                                            disabled
+                                            className="px-6 py-2 bg-gray-400 text-white rounded-lg font-semibold cursor-not-allowed opacity-75"
+                                        >
+                                            Ya has aplicado
+                                        </button>
+                                    ) : (
+                                        <button
+                                            onClick={handleApply}
+                                            disabled={isApplying}
+                                            className="px-6 py-2 bg-blue-900 text-white rounded-lg hover:bg-blue-800 transition-colors font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+                                        >
+                                            {isApplying ? 'Aplicando...' : 'Aplicar Ahora'}
+                                        </button>
+                                    )
+                                )
                             )}
                         </div>
                     </div>
-
-                    {/* Footer */}
-                    <div className="flex justify-end gap-3 p-6 border-t border-gray-200 bg-gray-50">
-                        <button
-                            onClick={onClose}
-                            className="px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-                        >
-                            Cerrar
-                        </button>
-
-                        {showEditButtons ? (
-                            <>
-                                <button
-                                    onClick={() => {
-                                        onEdit && onEdit(offer)
-                                        onClose()
-                                    }}
-                                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold"
-                                >
-                                    <svg className="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                    </svg>
-                                    Editar
-                                </button>
-                                <button
-                                    onClick={() => setShowDeleteConfirm(true)}
-                                    className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-semibold"
-                                >
-                                    <svg className="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                    </svg>
-                                    Eliminar
-                                </button>
-                            </>
-                        ) : (
-                            <button className="px-6 py-2 bg-blue-900 text-white rounded-lg hover:bg-blue-800 transition-colors font-semibold">
-                                Aplicar Ahora
-                            </button>
-                        )}
-                    </div>
                 </div>
+
+                {/* Confirmation Modal */}
+                <ConfirmationModal
+                    isOpen={showDeleteConfirm}
+                    onClose={() => setShowDeleteConfirm(false)}
+                    onConfirm={() => {
+                        onDelete && onDelete(offer)
+                        onClose()
+                    }}
+                    title="Eliminar Oferta Laboral"
+                    message="¿Estás seguro de que quieres eliminar esta oferta laboral? Esta acción no se puede deshacer."
+                    confirmText="Eliminar"
+                    cancelText="Cancelar"
+                    type="danger"
+                />
+
+                {/* Success Modal */}
+                <ConfirmationModal
+                    isOpen={showSuccessModal}
+                    onClose={() => {
+                        setShowSuccessModal(false)
+                        onClose()
+                    }}
+                    onConfirm={() => {
+                        setShowSuccessModal(false)
+                        onClose()
+                    }}
+                    title="¡Aplicación Exitosa!"
+                    message="Te has aplicado satisfactoriamente a la oferta de trabajo."
+                    confirmText="Aceptar"
+                    cancelText=""
+                    type="success"
+                />
             </div>
 
-            {/* Confirmation Modal */}
-            <ConfirmationModal
-                isOpen={showDeleteConfirm}
-                onClose={() => setShowDeleteConfirm(false)}
-                onConfirm={() => {
-                    onDelete && onDelete(offer)
-                    onClose()
-                }}
-                title="Eliminar Oferta Laboral"
-                message="¿Estás seguro de que quieres eliminar esta oferta laboral? Esta acción no se puede deshacer."
-                confirmText="Eliminar"
-                cancelText="Cancelar"
-                type="danger"
+            {/* Candidates Modal - rendered outside main modal to avoid z-index issues */}
+            <CandidatesModal
+                isOpen={showCandidatesModal}
+                onClose={() => setShowCandidatesModal(false)}
+                candidates={candidates}
             />
-        </div>
+        </Fragment>
     )
 }

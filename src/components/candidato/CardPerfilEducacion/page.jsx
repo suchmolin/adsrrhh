@@ -2,7 +2,7 @@ import Image from "next/image"
 import { useState, useEffect } from "react"
 import getSkills from "@/functions/get/getSkills"
 
-export default function CardPerfilEducacion({ jobSeekerData, candidatoId, onDataRefresh }) {
+export default function CardPerfilEducacion({ jobSeekerData, candidatoId, onDataRefresh, readOnly = false }) {
   // Extract education and experience data from jobSeekerData
   const initialEducationData = jobSeekerData?.education_ids || []
   const initialExperienceData = jobSeekerData?.experience_ids || []
@@ -800,42 +800,48 @@ export default function CardPerfilEducacion({ jobSeekerData, candidatoId, onData
                           <p className="text-sm text-gray-600 mt-1">{education.description}</p>
                         )}
                       </div>
-                      <button
-                        onClick={() => handleDeleteClick(education, 'education')}
-                        className="ml-4 p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-full transition-colors opacity-0 group-hover:opacity-100"
-                        title="Eliminar educación"
-                      >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                        </svg>
-                      </button>
+                      {!readOnly && (
+                        <button
+                          onClick={() => handleDeleteClick(education, 'education')}
+                          className="ml-4 p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-full transition-colors opacity-0 group-hover:opacity-100"
+                          title="Eliminar educación"
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                          </svg>
+                        </button>
+                      )}
                     </div>
                   </div>
                 ))}
-                <button
-                  onClick={() => {
-                    setShowEducationForm(true)
-                    setError(null)
-                  }}
-                  className="mt-3 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium"
-                >
-                  + Agregar Educación
-                </button>
+                {!readOnly && (
+                  <button
+                    onClick={() => {
+                      setShowEducationForm(true)
+                      setError(null)
+                    }}
+                    className="mt-3 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium"
+                  >
+                    + Agregar Educación
+                  </button>
+                )}
               </>
             ) : (
               <div className="text-center py-6">
                 <div className="text-gray-500 italic mb-4">
                   No tienes información de educación registrada
                 </div>
-                <button
-                  onClick={() => {
-                    setShowEducationForm(true)
-                    setError(null)
-                  }}
-                  className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium"
-                >
-                  + Agregar Educación
-                </button>
+                {!readOnly && (
+                  <button
+                    onClick={() => {
+                      setShowEducationForm(true)
+                      setError(null)
+                    }}
+                    className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium"
+                  >
+                    + Agregar Educación
+                  </button>
+                )}
               </div>
             )}
           </div>
@@ -851,42 +857,48 @@ export default function CardPerfilEducacion({ jobSeekerData, candidatoId, onData
                         <p className="font-bold">{language.name}</p>
                         <p className="text-sm text-gray-700">{getLanguageLevelName(language.level)}</p>
                       </div>
-                      <button
-                        onClick={() => handleDeleteClick(language, 'language')}
-                        className="ml-4 p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-full transition-colors opacity-0 group-hover:opacity-100"
-                        title="Eliminar idioma"
-                      >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                        </svg>
-                      </button>
+                      {!readOnly && (
+                        <button
+                          onClick={() => handleDeleteClick(language, 'language')}
+                          className="ml-4 p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-full transition-colors opacity-0 group-hover:opacity-100"
+                          title="Eliminar idioma"
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                          </svg>
+                        </button>
+                      )}
                     </div>
                   </div>
                 ))}
-                <button
-                  onClick={() => {
-                    setShowLanguageForm(true)
-                    setError(null)
-                  }}
-                  className="mt-3 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium"
-                >
-                  + Agregar Idioma
-                </button>
+                {!readOnly && (
+                  <button
+                    onClick={() => {
+                      setShowLanguageForm(true)
+                      setError(null)
+                    }}
+                    className="mt-3 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium"
+                  >
+                    + Agregar Idioma
+                  </button>
+                )}
               </>
             ) : (
               <div className="text-center py-6">
                 <div className="text-gray-500 italic mb-4">
                   No tienes información de idiomas registrada
                 </div>
-                <button
-                  onClick={() => {
-                    setShowLanguageForm(true)
-                    setError(null)
-                  }}
-                  className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium"
-                >
-                  + Agregar Idioma
-                </button>
+                {!readOnly && (
+                  <button
+                    onClick={() => {
+                      setShowLanguageForm(true)
+                      setError(null)
+                    }}
+                    className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium"
+                  >
+                    + Agregar Idioma
+                  </button>
+                )}
               </div>
             )}
           </div>
@@ -903,15 +915,17 @@ export default function CardPerfilEducacion({ jobSeekerData, candidatoId, onData
                       <p className="px-2 py-1 bg-gray-200 text-primary text-center rounded-2xl font-bold pr-8">
                         {skill.name}
                       </p>
-                      <button
-                        onClick={() => handleDeleteClick(skill, 'skill')}
-                        className="absolute right-1 top-1/2 transform -translate-y-1/2 w-4 h-4 text-red-500 hover:text-red-700 rounded-full hover:bg-red-100 transition-colors opacity-0 group-hover:opacity-100"
-                        title="Eliminar habilidad"
-                      >
-                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                      </button>
+                      {!readOnly && (
+                        <button
+                          onClick={() => handleDeleteClick(skill, 'skill')}
+                          className="absolute right-1 top-1/2 transform -translate-y-1/2 w-4 h-4 text-red-500 hover:text-red-700 rounded-full hover:bg-red-100 transition-colors opacity-0 group-hover:opacity-100"
+                          title="Eliminar habilidad"
+                        >
+                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        </button>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -919,43 +933,45 @@ export default function CardPerfilEducacion({ jobSeekerData, candidatoId, onData
             )}
 
             {/* Add skill form or button */}
-            {!showAddSkill ? (
+            {!readOnly && (
               <>
-                {skillsData && skillsData.length > 0 ? (
+                {!showAddSkill ? (
                   <>
-                    {skillsOptions.filter(skill => !skillsData.some(addedSkill =>
-                      (addedSkill.id && addedSkill.id === skill.id) ||
-                      addedSkill.name === skill.name
-                    )).length === 0 ? (
-                      <div className="text-center py-2">
-                        <p className="text-gray-500 text-sm italic">
-                          Todas las habilidades disponibles han sido agregadas
-                        </p>
-                      </div>
+                    {skillsData && skillsData.length > 0 ? (
+                      <>
+                        {skillsOptions.filter(skill => !skillsData.some(addedSkill =>
+                          (addedSkill.id && addedSkill.id === skill.id) ||
+                          addedSkill.name === skill.name
+                        )).length === 0 ? (
+                          <div className="text-center py-2">
+                            <p className="text-gray-500 text-sm italic">
+                              Todas las habilidades disponibles han sido agregadas
+                            </p>
+                          </div>
+                        ) : (
+                          <button
+                            onClick={handleAddSkillClick}
+                            className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium"
+                          >
+                            + Agregar Habilidad
+                          </button>
+                        )}
+                      </>
                     ) : (
-                      <button
-                        onClick={handleAddSkillClick}
-                        className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium"
-                      >
-                        + Agregar Habilidad
-                      </button>
+                      <div className="text-center py-6">
+                        <div className="text-gray-500 italic mb-4">
+                          No tienes habilidades registradas
+                        </div>
+                        <button
+                          onClick={handleAddSkillClick}
+                          className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium"
+                        >
+                          + Agregar Habilidad
+                        </button>
+                      </div>
                     )}
                   </>
                 ) : (
-                  <div className="text-center py-6">
-                    <div className="text-gray-500 italic mb-4">
-                      No tienes habilidades registradas
-                    </div>
-                    <button
-                      onClick={handleAddSkillClick}
-                      className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium"
-                    >
-                      + Agregar Habilidad
-                    </button>
-                  </div>
-                )}
-              </>
-            ) : (
               <>
                 {/* Skills Modal */}
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -1032,6 +1048,8 @@ export default function CardPerfilEducacion({ jobSeekerData, candidatoId, onData
                   </div>
                 </div>
               </>
+                )}
+              </>
             )}
 
             {/* Error message */}
@@ -1045,7 +1063,7 @@ export default function CardPerfilEducacion({ jobSeekerData, candidatoId, onData
       </div>
 
       {/* Education Form Modal */}
-      {showEducationForm && (
+      {showEducationForm && !readOnly && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-xl p-6 w-full max-w-md mx-4">
             <div className="flex justify-between items-center mb-4">
@@ -1194,7 +1212,7 @@ export default function CardPerfilEducacion({ jobSeekerData, candidatoId, onData
       )}
 
       {/* Experience Form Modal */}
-      {showExperienceForm && (
+      {showExperienceForm && !readOnly && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-xl p-6 w-full max-w-md mx-4">
             <div className="flex justify-between items-center mb-4">
@@ -1337,7 +1355,7 @@ export default function CardPerfilEducacion({ jobSeekerData, candidatoId, onData
       )}
 
       {/* Language Form Modal */}
-      {showLanguageForm && (
+      {showLanguageForm && !readOnly && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-xl p-6 w-full max-w-md mx-4">
             <div className="flex justify-between items-center mb-4">
@@ -1432,7 +1450,7 @@ export default function CardPerfilEducacion({ jobSeekerData, candidatoId, onData
       )}
 
       {/* Delete Confirmation Modal */}
-      {showDeleteModal && (
+      {showDeleteModal && !readOnly && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-xl p-6 w-full max-w-md mx-4">
             <div className="flex items-center mb-4">
@@ -1539,42 +1557,48 @@ export default function CardPerfilEducacion({ jobSeekerData, candidatoId, onData
                         </p>
                       )}
                     </div>
-                    <button
-                      onClick={() => handleDeleteClick(experience, 'experience')}
-                      className="ml-4 p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-full transition-colors opacity-0 group-hover:opacity-100"
-                      title="Eliminar experiencia"
-                    >
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                      </svg>
-                    </button>
+                    {!readOnly && (
+                      <button
+                        onClick={() => handleDeleteClick(experience, 'experience')}
+                        className="ml-4 p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-full transition-colors opacity-0 group-hover:opacity-100"
+                        title="Eliminar experiencia"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                      </button>
+                    )}
                   </div>
                 </div>
-              ))}
-              <button
-                onClick={() => {
-                  setShowExperienceForm(true)
-                  setError(null)
-                }}
-                className="mt-3 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium"
-              >
-                + Agregar Experiencia Laboral
-              </button>
+                ))}
+              {!readOnly && (
+                <button
+                  onClick={() => {
+                    setShowExperienceForm(true)
+                    setError(null)
+                  }}
+                  className="mt-3 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium"
+                >
+                  + Agregar Experiencia Laboral
+                </button>
+              )}
             </>
           ) : (
             <div className="text-center py-6">
               <div className="text-gray-500 italic mb-4">
                 No tienes información de experiencia laboral registrada
               </div>
-              <button
-                onClick={() => {
-                  setShowExperienceForm(true)
-                  setError(null)
-                }}
-                className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium"
-              >
-                + Agregar Experiencia Laboral
-              </button>
+              {!readOnly && (
+                <button
+                  onClick={() => {
+                    setShowExperienceForm(true)
+                    setError(null)
+                  }}
+                  className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium"
+                >
+                  + Agregar Experiencia Laboral
+                </button>
+              )}
             </div>
           )}
         </div>

@@ -5,7 +5,7 @@ import NavbarHomeResp from "../NavbarHomeResp/page"
 import Image from "next/image"
 import { useEffect, useRef, useState } from "react"
 import { FaUser } from "react-icons/fa"
-import { getCookie, logout } from "@/utils/cookies"
+import { getUserIdFromToken, getRoleFromToken, logout, hasValidSession } from "@/utils/cookies"
 
 export default function NavbarHome() {
   const [session, setSession] = useState({ hasSession: false, profileUrl: "" })
@@ -17,12 +17,21 @@ export default function NavbarHome() {
   const companyMenuRef = useRef(null)
 
   useEffect(() => {
-    const candidatoId = getCookie("candidato_session")
-    const empresaId = getCookie("empresa_session")
-    if (candidatoId) {
-      setSession({ hasSession: true, profileUrl: `/candidato/perfil/${candidatoId}` })
-    } else if (empresaId) {
-      setSession({ hasSession: true, profileUrl: `/empresa/perfil/${empresaId}` })
+    if (hasValidSession()) {
+      const userId = getUserIdFromToken()
+      const role = getRoleFromToken()
+      
+      if (userId && role) {
+        if (role === 'job_seeker') {
+          setSession({ hasSession: true, profileUrl: `/candidato/perfil/${userId}` })
+        } else if (role === 'company') {
+          setSession({ hasSession: true, profileUrl: `/empresa/perfil/${userId}` })
+        } else {
+          setSession({ hasSession: false, profileUrl: "" })
+        }
+      } else {
+        setSession({ hasSession: false, profileUrl: "" })
+      }
     } else {
       setSession({ hasSession: false, profileUrl: "" })
     }

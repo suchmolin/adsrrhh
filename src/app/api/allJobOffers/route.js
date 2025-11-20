@@ -4,6 +4,7 @@ export async function GET(request) {
     const page = searchParams.get('page') || '1'
     const itemsPerPage = searchParams.get('items_per_page') || '12'
     const domain = searchParams.get('domain')
+    const candidateId = searchParams.get('id') // ID del candidato
     
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL
     console.log("Base URL:", baseUrl)
@@ -17,6 +18,12 @@ export async function GET(request) {
       console.log("Domain filter:", domain)
     }
     
+    // Add candidate ID parameter if provided
+    if (candidateId) {
+      queryParams += `&user_id=${candidateId}`
+      console.log("Candidate ID:", candidateId)
+    }
+    
     const url = `${baseUrl}/hr/all_job_offer?${queryParams}`
     console.log("Full URL:", url)
     
@@ -25,7 +32,6 @@ export async function GET(request) {
       mode: "no-cors",
       cache: "no-cache",
     })
-
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`)
     }

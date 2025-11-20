@@ -1,6 +1,7 @@
 import valEmail from "./email"
 import validateExistIdCandidate from "./emailExistIdCand"
 import validateExistEmail from "./emailExistRegisterCand"
+import { validatePasswordStrength } from "./passwordStrength"
 
 const resetErrorFrom = (setError) => {
   setError({ status: false, msg: "" })
@@ -37,8 +38,10 @@ export const validateFirstForm = async (
     document.getElementById("email").classList.add("border-red-400")
     return
   }
-  if (data.password.length < 6 || data.password.length > 12) {
-    setError({ status: true, msg: "Contraseña inválida" })
+  // Validar fortaleza de la contraseña
+  const passwordValidation = validatePasswordStrength(data.password)
+  if (!passwordValidation.isValid) {
+    setError({ status: true, msg: passwordValidation.message })
     document.getElementById("password").classList.add("border-red-400")
     return
   }
