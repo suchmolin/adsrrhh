@@ -19,7 +19,7 @@ export async function PUT(request) {
       throw new Error('API base URL is not configured')
     }
     
-    const url = `${baseUrl}/hr/job_seeker_update?id=${id}`
+    const url = `${baseUrl}/hr/job_seeker?id=${id}`
     console.log("Updating job seeker CV at:", url)
     
     // Get auth headers with Bearer token

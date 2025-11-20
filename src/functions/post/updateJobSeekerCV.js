@@ -12,7 +12,7 @@ export default async function updateJobSeekerCV(idcandidato, file) {
     
     // Crear FormData con el archivo
     const formData = new FormData()
-    formData.append('file', file)
+    formData.append('cv_file', file)
     
     const resp = await fetch(url, {
       method: 'PUT',
